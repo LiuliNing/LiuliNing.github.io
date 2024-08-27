@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>领域驱动名词与术语 - Alex&#39;s Bolg</title><meta name="Description" content="领域驱动名词与术语"><meta property="og:title" content="领域驱动名词与术语" />
+<meta property="og:description" content="领域驱动名词与术语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-29T21:40:32+08:00" />
+<meta property="article:modified_time" content="2023-07-29T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="领域驱动名词与术语"/>
+<meta name="twitter:description" content="领域驱动名词与术语"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" /><link rel="next" href="http://LiuliNing.github.io/sentinel-%E7%86%94%E6%96%AD%E9%99%90%E6%B5%81/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "领域驱动名词与术语",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "领域驱动设计","wordcount":  1791 ,
+        "url": "http:\/\/LiuliNing.github.io\/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD\/","datePublished": "2023-07-29T21:40:32+08:00","dateModified": "2023-07-29T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "领域驱动名词与术语"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">领域驱动名词与术语</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>领域驱动设计</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-29">2023-07-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1791 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>领域驱动名词与术语</p>
+<h1 id="名词与术语"><strong>名词与术语</strong></h1>
+<p>l Event Storming（事件风暴）：事件风暴是一项团队活动，旨在通过领域事件识别出聚合根，进而划分微服务的限界上下文。在活动中，团队先通过头脑风暴的形式罗列出领域中所有的领域事件，整合之后形成最终的领域事件集合，然后对于每一个事件，标注出导致该事件的命令（Command），再然后为每个事件标注出命令发起方的角色，命令可以是用户发起，也可以是第三方系统调用或者是定时器触发等。最后对事件进行分类整理出聚合根以及限界上下文。</p>
+<p>l Entity（实体）：每个实体是唯一的，并且可以相当长的一段时间内持续地变化。我们可以对实体做多次修改，故一个实体对象可能和它先前的状态大不相同。但是，由于它们拥有相同的身份标识，他们依然是同一个实体。例如一件商品在电商商品上下文中是一个实体，通过商品中台唯一的商品id来标示这个实体。</p>
+<p>l ValueObject（值对象）：值对象用于度量和描述事物，当你只关心某个对象的属性时，该对象便可作为一个值对象。实体与值对象的区别在于唯一的身份标识和可变性。当一个对象用于描述一个事物，但是又没有唯一标示，那么它就是一个值对象。例如商品中的商品类别，类别就没有一个唯一标识，通过图书、服装等这些值就能明确表示这个商品类别。</p>
+<p>l Aggregate（聚合）：聚合是实体的升级，是由一组与生俱来就密切相关实体和值对象组合而成的，整个组合的最上层实体就是聚合。</p>
+<p>l Bounded Context（限界上下文）：用来封装通用语言和领域对象，为领域提供上下文语境，保证在领域之内的一些术语、业务相关对象等（通用语言）有一个确切的含义，没有二义性。使团队所有成员能够明确地知道什么必须保持一致，什么必须独立开发。</p>
+<p>l 云原生：一种基于容器、微服务和DevOps等现代技术的应用开发和部署方法，旨在实现高可靠性、弹性和可扩展性。</p>
+<p>l 微服务：将系统拆分成多个小而自治的服务并独立部署、运行、维护的一种服务架构风格，能够提高灵活性、复用性和可测试性。</p>
+<p>l 领域驱动设计（DDD）：一种软件开发方法论，它以业务领域为中心，强调深入理解领域知识，并采用建模的方式将领域知识转化为高质量和完备性的系统设计。</p>
+<p>l 领域：领域表示一个现实世界中的业务活动范围。</p>
+<p>l 子域：子域是大型领域中相对独立的子领域，通常专注于单一的业务问题，是领域内的更小粒度划分。</p>
+<p>l <strong>核心域：核心域指提供主要价值且区别于竞争对手的最重要领域。</strong></p>
+<p>l <strong>通用域：通用域则是所有项目和组织都具备的基础、通用的功能部分。</strong></p>
+<p>l <strong>支撑域：支撑域则是专注于支持核心业务以及支持日常运营和维护等内部需求和工具领域。</strong></p>
+<p>l <strong>战略设计：确定整体战略，划分领域、子域、业务依赖等。</strong></p>
+<p>l <strong>战术设计：针对每个子域进行更细粒度的设计。</strong></p>
+<p>l <strong>限界上下文：用于区分不同的业务领域和子系统，明确各自的作用范围和交互方式。</strong></p>
+<p>l <strong>领域模型：反映业务规则和相关行为的模型，通常由实体、值对象、服务、聚合等组成。</strong></p>
+<p>l <strong>实体：代表需要跟踪和管理的业务对象，具有唯一标识符、属性和行为等</strong>。</p>
+<p>l **值对象：只有属性没有唯一标识符和行为，**通常是不可变的对象类型。值对象在领域模型中很重要，它们通常是不可变的，并表示在业务流程中经常使用的值，如日期、时间、电话号码等。</p>
+<p>l <strong>聚合：将多个相关实体和值对象封装成单个操作及处理的事务单元</strong>。</p>
+<p>l <strong>聚合根：聚合中的一个实体或值对象，通过根来保证整个聚合的完整性及一致性。</strong></p>
+<p>l <strong>领域事件：发生于领域模型中的代表业务动作的事件，可以用于解耦设计和建立异步处理机制。</strong></p>
+<p>l <strong>领域服务：协调多个实体和聚合之间交互和操作的业务逻辑过程。领域服务是处理跨多个实体和聚合的逻辑操作的一种方式。领域服务可以协调和执行不同的命令和查询，并将其组合成一个长时间运行的事务。</strong></p>
+<p>l 应用服务：负责应用程序的具体逻辑和处理，通常与用户界面进行交互。</p>
+<p>l 命令：领域对象执行某个行为的请求，类似于面向对象编程中的方法调用。</p>
+<p>l 工厂：创建领域对象的一种设计模式，它可以隐藏复杂的构造逻辑并提高代码的可测试性。</p>
+<p>l 仓储：负责存储和查询领域对象的一类组件，通常是一种数据访问接口，它封装了与底层数据存储交互的全部细节。</p>
+<p>l 界限映射(Bounded contexts mapping)：通过在不同领域上下文之间建立显式的联系来确保整个系统具有一致性。映射可以是直接映射，反映了两个上下文之间共享元素的关系。也可以是转译映射，在某些阶段为缓解代码集成而代表关节。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" data-title="领域驱动名词与术语" data-hashtags="领域驱动设计"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" data-hashtag="领域驱动设计"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" data-title="领域驱动名词与术语"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" data-title="领域驱动名词与术语"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/ddd%E7%9A%84%E5%90%8D%E8%AF%8D%E4%B8%8E%E6%9C%AF%E8%AF%AD/" data-title="领域驱动名词与术语"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">领域驱动设计</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/sentinel-%E7%86%94%E6%96%AD%E9%99%90%E6%B5%81/" class="next" rel="next" title="Sentinel 熔断限流学习">Sentinel 熔断限流学习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

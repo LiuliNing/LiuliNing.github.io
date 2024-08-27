@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Ubuntu1804研发环境搭建 - Alex&#39;s Bolg</title><meta name="Description" content="Alex&#39;s Bolg"><meta property="og:title" content="Ubuntu1804研发环境搭建" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-01T21:40:32+08:00" />
+<meta property="article:modified_time" content="2021-11-01T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="Ubuntu1804研发环境搭建"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><link rel="prev" href="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" /><link rel="next" href="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Ubuntu1804研发环境搭建",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "运维","wordcount":  7283 ,
+        "url": "http:\/\/LiuliNing.github.io\/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA\/","datePublished": "2021-11-01T21:40:32+08:00","dateModified": "2021-11-01T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Ubuntu1804研发环境搭建</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%BF%90%E7%BB%B4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>运维</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-11-01">2021-11-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;7283 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;15 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#jdk安装">JDK安装</a></li>
+    <li><a href="#安装mysql">安装mysql</a></li>
+    <li><a href="#maven">maven</a></li>
+    <li><a href="#jenkins">jenkins</a></li>
+    <li><a href="#nginx">Nginx：</a></li>
+    <li><a href="#redis">Redis</a></li>
+    <li><a href="#安装禅道项目管理">安装禅道项目管理</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#1系统配置">1.系统配置</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#11服务器ip冲突centos7修改静态ip">1.1服务器ip冲突，centos7修改静态ip</a></li>
+            <li><a href="#12无法挂载外部硬盘">1.2无法挂载外部硬盘</a></li>
+            <li><a href="#13新装系统无法ssh访问无法ping通内部网络">1.3新装系统无法ssh访问，无法ping通内部网络</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#2mysql">2.MySQl</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#mysql8运行group-by异常--5升级8后-语法模式调整需要手动改sqlmode">mysql8运行group by异常  （5升级8后 语法模式调整，需要手动改sqlmode）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#3-挂载在snap的devloop占用100">3 挂载在snap的/dev/loop占用100%</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#查看已安装的jdk">查看已安装的jdk</a></li>
+    <li><a href="#安装rpm">安装rpm</a></li>
+    <li><a href="#重启jenkins">重启jenkins</a></li>
+    <li><a href="#apt命令无效">apt命令无效</a></li>
+    <li><a href="#查看文件大小">查看文件大小</a></li>
+    <li><a href="#压缩">压缩</a></li>
+    <li><a href="#文件操作">文件操作</a></li>
+    <li><a href="#端口">端口</a></li>
+    <li><a href="#防火墙">防火墙</a></li>
+    <li><a href="#磁盘">磁盘</a></li>
+    <li><a href="#tomcat">Tomcat</a></li>
+    <li><a href="#mysql">Mysql</a></li>
+    <li><a href="#系统时间">系统时间</a></li>
+    <li><a href="#scp移动文件">SCP移动文件</a></li>
+    <li><a href="#fdisk-挂载硬盘">FDisk 挂载硬盘</a></li>
+    <li><a href="#heading"></a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#定时任务-cron">定时任务 cron</a></li>
+    <li><a href="#mysql自动备份">mysql自动备份</a></li>
+    <li><a href="#系统日志发送-邮件服务搭建">系统日志发送-邮件服务搭建</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Author:JDZT.LLN
+</span></span><span class="line"><span class="cl">CreateDate:2020-12-05
+</span></span><span class="line"><span class="cl">UpdateDate:2021-03-21
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="一服务器环境安装">一：服务器环境安装</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">系统环境:ubuntu-18.04.5-live-server-amd64
+</span></span><span class="line"><span class="cl">安装过程:参考链接：https://blog.csdn.net/github_38336924/article/details/82427252
+</span></span><span class="line"><span class="cl">Xshell连接设置:参考链接：https://blog.csdn.net/sunset108/article/details/40818815
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="jdk安装">JDK安装</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">卸载服务器自带openJDK,安装当前项目开发使用版本，当前为	JDK1.8
+</span></span><span class="line"><span class="cl">通过xftp将下载的jdk文件(注意jdk版本要和系统位数一致，64位系统使用64位的包)，放入服务器中指定文件夹
+</span></span><span class="line"><span class="cl">如果上传失败，检查文件夹权限，并修改权限
+</span></span><span class="line"><span class="cl">上传成功后，进行文件解压缩
+</span></span><span class="line"><span class="cl">配置环境变量文件
+</span></span><span class="line"><span class="cl">进入配置文件:vim /etc/profile
+</span></span><span class="line"><span class="cl">文件尾部添加:
+</span></span><span class="line"><span class="cl">export JAVA_HOME=/java/jdk8  (jdk安装路径)
+</span></span><span class="line"><span class="cl">export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</span></span><span class="line"><span class="cl">export PATH=$PATH:$JAVA_HOME/bin
+</span></span><span class="line"><span class="cl">export JRE_HOME=$JAVA_HOME/jre
+</span></span><span class="line"><span class="cl">刷新文件:
+</span></span><span class="line"><span class="cl">	source /etc/profile
+</span></span><span class="line"><span class="cl">测试是否安装完成
+</span></span><span class="line"><span class="cl">	java -version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装mysql">安装mysql</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">血泪教训：ubuntu默认安装 mysql5 !!!  一定要注意版本
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">安装参考链接：
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/wm609972715/article/details/83759266
+</span></span><span class="line"><span class="cl">ubuntu安装-卸载mysql8
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/zhangxuel1ang/p/13456116.html	https://www.cnblogs.com/yxym2016/p/12669532.html
+</span></span><span class="line"><span class="cl">修改可远程访问,允许mysql远程连接：参考链接：
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/winterking3/article/details/86080434
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/devjiajun/articles/9635464.html
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/weixx3/article/details/80782479
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/wzwyc/p/10121409.html
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">安装后操作
+</span></span><span class="line"><span class="cl">1.注释bind-address = 127.0.0.1。
+</span></span><span class="line"><span class="cl">代码如下:
+</span></span><span class="line"><span class="cl">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+</span></span><span class="line"><span class="cl">将bind-address = 127.0.0.1注释掉（即在行首加#）
+</span></span><span class="line"><span class="cl">除了注视掉这句话之外，还可以把后面的IP地址修改成允许连接的IP地址。
+</span></span><span class="line"><span class="cl">但是，如果只是开发用的数据库，为了方便起见，还是推荐直接注释掉。
+</span></span><span class="line"><span class="cl">从上面的注释中，可以看出，旧版本的MySQL（从一些资料上显示是5.0及其以前的版本）上使用的是skip-networking。所以，善意提醒一下，使用旧版本的小伙伴请注意一下。
+</span></span><span class="line"><span class="cl">2.登录进数据库：
+</span></span><span class="line"><span class="cl">mysql -u root -p
+</span></span><span class="line"><span class="cl">切换到数据库mysql。SQL如下：
+</span></span><span class="line"><span class="cl">use mysql;
+</span></span><span class="line"><span class="cl">3.增加允许远程访问的用户或者允许现有用户的远程访问。
+</span></span><span class="line"><span class="cl">删除匿名用户后，给root授予在任意主机（%）访问任意数据库的所有权限。SQL语句如下：
+</span></span><span class="line"><span class="cl">grant all privileges on *.* to &#39;root&#39;@&#39;%&#39; identified by &#39;@Lisijiang1994321ZaQ!&#39; with grant option;
+</span></span><span class="line"><span class="cl">grant all privileges on *.* to &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; with grant option;
+</span></span><span class="line"><span class="cl">@Lisijiang1994321ZaQ!
+</span></span><span class="line"><span class="cl">update user set host=% where user=root;
+</span></span><span class="line"><span class="cl">flush privileges;
+</span></span><span class="line"><span class="cl">4.退出数据库
+</span></span><span class="line"><span class="cl">exit
+</span></span><span class="line"><span class="cl">5.重启数据库
+</span></span><span class="line"><span class="cl">sudo service mysql restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">create user &#39;root&#39;@&#39;%&#39; identified by &#39;@Lisijiang1994321ZaQ!&#39;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>卸载mysql</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考：https://www.cnblogs.com/pighui/p/10422927.html
+</span></span><span class="line"><span class="cl">1.卸载mysql 以下命令分开执行
+</span></span><span class="line"><span class="cl">sudo apt-get autoremove --purge mysql-server
+</span></span><span class="line"><span class="cl">sudo apt-get autoremove --purge mysql-server-*
+</span></span><span class="line"><span class="cl">sudo apt-get autoremove --purge mysql-client
+</span></span><span class="line"><span class="cl">sudo apt-get autoremove --purge mysql-client-*
+</span></span><span class="line"><span class="cl">sudo apt-get remove mysql-common
+</span></span><span class="line"><span class="cl">2.删除数据
+</span></span><span class="line"><span class="cl">dpkg -l |grep ^rc|awk &#39;{print $2}&#39; |sudo xargs dpkg -P 
+</span></span><span class="line"><span class="cl">注意，清楚的过程中会弹出几个窗口，内容大概是问你是否需要清除用户数据之类的，要选择yes！
+</span></span><span class="line"><span class="cl">3.删除目录
+</span></span><span class="line"><span class="cl">sudo rm -rf /etc/mysql
+</span></span><span class="line"><span class="cl">sudo rm -rf /var/lib/mysql
+</span></span><span class="line"><span class="cl">4.清除残留
+</span></span><span class="line"><span class="cl">sudo apt autoremove
+</span></span><span class="line"><span class="cl">sudo apt autoreclean
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="maven">maven</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">下载maven最新jar.gz压缩包，解压到指定路径
+</span></span><span class="line"><span class="cl">分别在系统配置文件中进行环境变量的配置
+</span></span><span class="line"><span class="cl">vim /etc/profile  
+</span></span><span class="line"><span class="cl">vim ~/.bashrc
+</span></span><span class="line"><span class="cl">添加配置信息,MAVEN_HOME 为解压后的maven路径
+</span></span><span class="line"><span class="cl">MAVEN_HOME=/www/maven3.6.3  
+</span></span><span class="line"><span class="cl">PATH=${MAVEN_HOME}/bin:${PATH}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="jenkins">jenkins</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">安装流程官方说明：
+</span></span><span class="line"><span class="cl">https://pkg.jenkins.io/debian-stable/
+</span></span><span class="line"><span class="cl"># 安装命令
+</span></span><span class="line"><span class="cl">  wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+</span></span><span class="line"><span class="cl">  deb https://pkg.jenkins.io/debian-stable binary/
+</span></span><span class="line"><span class="cl">  sudo apt-get update
+</span></span><span class="line"><span class="cl">  sudo apt-get install jenkins
+</span></span><span class="line"><span class="cl">启动
+</span></span><span class="line"><span class="cl">service jenkins start
+</span></span><span class="line"><span class="cl">systemctl restart jenkins
+</span></span><span class="line"><span class="cl">重启
+</span></span><span class="line"><span class="cl">service jenkins restart
+</span></span><span class="line"><span class="cl">停止
+</span></span><span class="line"><span class="cl">service jenkins stop
+</span></span><span class="line"><span class="cl">安装后配置密码
+</span></span><span class="line"><span class="cl">sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+</span></span><span class="line"><span class="cl">修改端口
+</span></span><span class="line"><span class="cl">vim /etc/sysconfig/jenkins
+</span></span><span class="line"><span class="cl">或vim /etc/default/jenkins
+</span></span><span class="line"><span class="cl">修改JENKINS_PORT=&#34;9090&#34;
+</span></span><span class="line"><span class="cl">查看日志
+</span></span><span class="line"><span class="cl">vim /var/log/jenkins/jenkins.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="nginx">Nginx：</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ps aux | grep nginx
+</span></span><span class="line"><span class="cl">nginx -s stop 立即停止nginx
+</span></span><span class="line"><span class="cl">nginx -s quit 这种方法较stop相比就比较温和一些了，需要进程完成当前工作后再停止
+</span></span><span class="line"><span class="cl">killall nginx 这种方法是比较野蛮的，在上面使用没有效果时，我们用这种方法还是比较好的
+</span></span><span class="line"><span class="cl">systemctl stop nginx.service
+</span></span><span class="line"><span class="cl">systemctl restart nginx.service
+</span></span><span class="line"><span class="cl">nginx -s reload 重新载入配置文件
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="redis">Redis</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 安装
+</span></span><span class="line"><span class="cl">sudo apt-get install redis-server
+</span></span><span class="line"><span class="cl">进入
+</span></span><span class="line"><span class="cl"> cd /etc/init.d/
+</span></span><span class="line"><span class="cl">//直接启动
+</span></span><span class="line"><span class="cl">./redis-server  
+</span></span><span class="line"><span class="cl">//后台配置文件启动
+</span></span><span class="line"><span class="cl">./redis-server redis.conf  
+</span></span><span class="line"><span class="cl">启动、停止redis
+</span></span><span class="line"><span class="cl">/etc/init.d/redis-server stop
+</span></span><span class="line"><span class="cl">/etc/init.d/redis-server start
+</span></span><span class="line"><span class="cl">卸载
+</span></span><span class="line"><span class="cl">sudo apt-get purge --auto-remove redis-server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装禅道项目管理">安装禅道项目管理</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">参考官方文档
+</span></span><span class="line"><span class="cl">https://www.zentao.net/book/zentaopmshelp/40.html
+</span></span><span class="line"><span class="cl">下载官方linux一键安装包，解压至 /opt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#修改默认端口，防止和已安装服务冲突</span>
+</span></span><span class="line"><span class="cl">/opt/zbox/zbox -ap <span class="m">10024</span> -mp <span class="m">3307</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#启动</span>
+</span></span><span class="line"><span class="cl">sh /opt/zbox/zbox start
+</span></span><span class="line"><span class="cl"><span class="c1">#停止</span>
+</span></span><span class="line"><span class="cl">sh /opt/zbox/zbox stop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#配置自启动</span>
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/lizhe_dashuju/article/details/56484733
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. 在/etc/init.d目录下创建chandao文件
+</span></span><span class="line"><span class="cl">内容如下：
+</span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl">/opt/zbox/zbox restart
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">然后增加全选
+</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> chandao
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2. 运行runlevel命令，查看现在的run level是多少，
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Linux系统有7个运行级别<span class="o">(</span>runlevel<span class="o">)</span>
+</span></span><span class="line"><span class="cl">运行级别0：系统停机状态，系统默认运行级别不能设为0，否则不能正常启动
+</span></span><span class="line"><span class="cl">运行级别1：单用户工作状态，root权限，用于系统维护，禁止远程登陆
+</span></span><span class="line"><span class="cl">运行级别2：多用户状态<span class="o">(</span>没有NFS<span class="o">)</span>
+</span></span><span class="line"><span class="cl">运行级别3：完全的多用户状态<span class="o">(</span>有NFS<span class="o">)</span>，登陆后进入控制台命令行模式
+</span></span><span class="line"><span class="cl">运行级别4：系统未使用，保留
+</span></span><span class="line"><span class="cl">运行级别5：X11控制台，登陆后进入图形GUI模式
+</span></span><span class="line"><span class="cl">运行级别6：系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">eg： 显示  N <span class="m">5</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">3. 既然是5,就在/etc/rc5.d目录下，创建一个链接
+</span></span><span class="line"><span class="cl">ln -s /etc/init.d/chandao S99chandao
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">4. 重启服务器，检查禅到是否开启
+</span></span><span class="line"><span class="cl">检查浏览器地址是否能打开禅道
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="二出现的异常及解决方案">二：出现的异常及解决方案</h1>
+<h2 id="1系统配置">1.系统配置</h2>
+<h4 id="11服务器ip冲突centos7修改静态ip">1.1服务器ip冲突，centos7修改静态ip</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">修网络配置文件
+</span></span><span class="line"><span class="cl">	vim /etc/sysconfig/network-scripts/ifcfg-ens33
+</span></span><span class="line"><span class="cl">        BOOTPROTO=&#34;static&#34; # 使用静态IP地址，默认为dhcp IPADDR=&#34;19.37.33.66&#34; # 设置的静态IP地址
+</span></span><span class="line"><span class="cl">        NETMASK=&#34;255.255.255.0&#34; # 子网掩码 
+</span></span><span class="line"><span class="cl">        GATEWAY=&#34;19.37.33.1&#34; # 网关地址 
+</span></span><span class="line"><span class="cl">        DNS1=&#34;192.168.241.2&#34; # DNS服务器（此设置没有用到，所以我的里面没有添加）
+</span></span><span class="line"><span class="cl">        ONBOOT=yes  #设置网卡启动方式为 开机启动 并且可以通过系统服务管理器 systemctl 控制网卡
+</span></span><span class="line"><span class="cl">修改映射文件
+</span></span><span class="line"><span class="cl">	NETWORKING=yes
+</span></span><span class="line"><span class="cl">	GATEWAY=19.37.33.1  # 网关地址 同上
+</span></span><span class="line"><span class="cl">重启网络服务
+</span></span><span class="line"><span class="cl">	service network restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="12无法挂载外部硬盘">1.2无法挂载外部硬盘</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mount: unknown filesystem type ‘ntfs’
+</span></span><span class="line"><span class="cl">这是由于CentOS release 5.5(Final)上无法识别NTFS格式的分区（就是用U盘或者移动硬盘挂载，系统无法识别）
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">解放方案：
+</span></span><span class="line"><span class="cl">	安装ntfs-3g插件
+</span></span><span class="line"><span class="cl">使用插件命令
+</span></span><span class="line"><span class="cl">此时依然报错
+</span></span><span class="line"><span class="cl">    Mount is denied because the NTFS volume is already exclusively opened.
+</span></span><span class="line"><span class="cl">    The volume may be already mounted, or another software may use it which
+</span></span><span class="line"><span class="cl">    could be identified for example by the help of the &#39;fuser&#39; command.
+</span></span><span class="line"><span class="cl">	大意为sdb1挂载的盘上有正在运行的任务，所以需要先停止再进行挂载操作
+</span></span><span class="line"><span class="cl">fuser -m -u /dev/sdb2
+</span></span><span class="line"><span class="cl">杀死查询出来的进程，再次执行挂载
+</span></span><span class="line"><span class="cl">mount -t ntfs-3g /dev/sdb2 /opt/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="13新装系统无法ssh访问无法ping通内部网络">1.3新装系统无法ssh访问，无法ping通内部网络</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">解放方法：
+</span></span><span class="line"><span class="cl">安装openssh-client工具和openssh-server工具,并在系统ssh配置中添加允许远程访问
+</span></span><span class="line"><span class="cl">参考方案：
+</span></span><span class="line"><span class="cl">https://jingyan.baidu.com/article/60ccbceb1fae7f25cbb19767.html
+</span></span><span class="line"><span class="cl">//无法连接ssh
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/qq_23730693/article/details/107732884
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo apt-get install openssh-server
+</span></span><span class="line"><span class="cl">#如果安装失败，先卸载openssh-client，再安装
+</span></span><span class="line"><span class="cl">sudo apt-get purge openssh-client
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2mysql">2.MySQl</h2>
+<h4 id="mysql8运行group-by异常--5升级8后-语法模式调整需要手动改sqlmode">mysql8运行group by异常  （5升级8后 语法模式调整，需要手动改sqlmode）</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mysql8 无法使用group by 语句
+</span></span><span class="line"><span class="cl">异常信息：this is incompatible with sql_mode=only_full_group_by
+</span></span><span class="line"><span class="cl">修改 配置文件中的 sql_mode
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">vim /etc/my.cnf 
+</span></span><span class="line"><span class="cl">[mysqld]
+</span></span><span class="line"><span class="cl">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ubuntu启动mysql报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Job for mysql.service failed because the control process exited with error code.
+</span></span><span class="line"><span class="cl">See &#34;systemctl status mysql.service&#34; and &#34;journalctl -xe&#34; for details.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>mysql设置大小写忽略、设置端口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim /etc/mysql/mysql.conf.d/mysqld.cnf
+</span></span><span class="line"><span class="cl">在[mysqld]标签下添加
+</span></span><span class="line"><span class="cl">#默认0  1代表忽略
+</span></span><span class="line"><span class="cl">lower_case_table_names=1   
+</span></span><span class="line"><span class="cl">port            = 11001
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">大小写忽略需要在数据库初始化时配置，如果在已经使用数据库后配置，将报错。
+</span></span><span class="line"><span class="cl">需要先备份数据库，然后清理 /var/lib/mysql/中的内容，重新设置数据库相关配置信息。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-挂载在snap的devloop占用100">3 挂载在snap的/dev/loop占用100%</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://www.cnblogs.com/raina/p/12613164.html
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">运行 df 命令时添加选项，不显示它就好了：
+</span></span><span class="line"><span class="cl">df -x squashfs -h
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">如果嫌弃每次输选项麻烦，可以在 &#34;~/.bashrc&#34; 文件里起别名：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">echo &#34;alias df=&#39;df -x squashfs -x tmpfs -x devtmpfs&#39;&#34; &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">source ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="三命令">三：命令</h1>
+<h2 id="查看已安装的jdk">查看已安装的jdk</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rpm -qa|grep jdk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装rpm">安装rpm</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apt install rpm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="重启jenkins">重启jenkins</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">systemctl restart jenkins                      
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="apt命令无效">apt命令无效</h2>
+<pre><code>apt-get update
+apt-get upgrade
+</code></pre>
+<h2 id="查看文件大小">查看文件大小</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">//数字为深度
+</span></span><span class="line"><span class="cl">du -h --max-depth=2  
+</span></span><span class="line"><span class="cl">//当前路径下文件夹大小
+</span></span><span class="line"><span class="cl">du -s -h ./*
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="压缩">压缩</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tar -cvf filename.tar dir  #将目录dir中压缩到filename.tar中，保留原文件
+</span></span><span class="line"><span class="cl">tar -zxvf filename.tar.gz #解压到当前目录，保留原文件
+</span></span><span class="line"><span class="cl">tar -zxvf filename.tar.gz -C dir #解压到dir目录，保留原文件
+</span></span><span class="line"><span class="cl">解压zip文件
+</span></span><span class="line"><span class="cl">unzip 文件名
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="文件操作">文件操作</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">删除文件夹下某个文件之外（1.txt）的其他所有文件
+</span></span><span class="line"><span class="cl">ls | grep -v &#34;1.txt&#34; | xargs rm -rf
+</span></span><span class="line"><span class="cl">删除文件夹中的所有文件，不删除文件夹
+</span></span><span class="line"><span class="cl">ls | xargs rm -rf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="端口">端口</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">端口使用情况
+</span></span><span class="line"><span class="cl">netstat -ntap | grep 8899
+</span></span><span class="line"><span class="cl">端口是否开放
+</span></span><span class="line"><span class="cl">firewall-cmd --list-ports
+</span></span><span class="line"><span class="cl">开放tcp端口
+</span></span><span class="line"><span class="cl">firewall-cmd --permanent --zone=public --add-port=8899/tcp
+</span></span><span class="line"><span class="cl">停止指定端口的服务
+</span></span><span class="line"><span class="cl">sudo kill -9 \$(netstat -nlp | grep :6003 | awk &#39;{print \$7}&#39; | awk -F&#34;/&#34; &#39;{ print \$1 }&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="防火墙">防火墙</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">关闭防火墙：
+</span></span><span class="line"><span class="cl">ufw disable
+</span></span><span class="line"><span class="cl">查看防火墙状态：
+</span></span><span class="line"><span class="cl">ufw status
+</span></span><span class="line"><span class="cl">开启防火墙
+</span></span><span class="line"><span class="cl">ufw enable
+</span></span><span class="line"><span class="cl">开启端口
+</span></span><span class="line"><span class="cl">ufw allow 9000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="磁盘">磁盘</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">parted -l
+</span></span><span class="line"><span class="cl">fdisk -l
+</span></span><span class="line"><span class="cl">查看磁盘空间大小
+</span></span><span class="line"><span class="cl">df -h
+</span></span><span class="line"><span class="cl">查看当前文件夹所有文件大小
+</span></span><span class="line"><span class="cl">du -sh
+</span></span><span class="line"><span class="cl">查看指定文件夹大小
+</span></span><span class="line"><span class="cl">du -h /data
+</span></span><span class="line"><span class="cl">查看指定文件夹下所有文件的大小
+</span></span><span class="line"><span class="cl">du -h /data/
+</span></span><span class="line"><span class="cl">查看指定文件大小
+</span></span><span class="line"><span class="cl">du -h data.log查看目录挂载点df /data加上-kh以g单位显示df /data -kh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="tomcat">Tomcat</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">linux下启动tomcat服务
+</span></span><span class="line"><span class="cl"> Linux下tomcat服务的启动、关闭与错误跟踪，使用PuTTy远程连接到服务器以后，通常通过以下几种方式启动关闭tomcat服务：
+</span></span><span class="line"><span class="cl">切换到tomcat主目录下的bin目录（cd usr/local/tomcat/bin）
+</span></span><span class="line"><span class="cl">1，启动tomcat服务
+</span></span><span class="line"><span class="cl">方式一：直接启动 ./startup.sh
+</span></span><span class="line"><span class="cl">方式二：作为服务启动 nohup ./startup.sh &amp;
+</span></span><span class="line"><span class="cl">方式三：控制台动态输出方式启动 ./catalina.sh run 动态地显示tomcat后台的控制台输出信息,Ctrl+C后退出并关闭服务
+</span></span><span class="line"><span class="cl">解释：
+</span></span><span class="line"><span class="cl">通过方式一、方式三启动的tomcat有个弊端，当客户端连接断开的时候，tomcat服务也会立即停止，通过方式二可以作为linux服务一直运行
+</span></span><span class="line"><span class="cl">通过方式一、方式二方式启动的tomcat，其日志会写到相应的日志文件中，而不能动态地查看tomcat控制台的输出信息与错误情况，通过方式三可以以控制台模式启动tomcat服务，
+</span></span><span class="line"><span class="cl">直接看到程序运行时后台的控制台输出信息，不必每次都要很麻烦的打开catalina.out日志文件进行查看，这样便于跟踪查阅后台输出信息。tomcat控制台信息包括log4j和System.out.println()等输出的信息。
+</span></span><span class="line"><span class="cl">2，关闭tomcat服务
+</span></span><span class="line"><span class="cl">./shutdown.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="mysql">Mysql</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">查看数据库运行状态
+</span></span><span class="line"><span class="cl">sudo service mysql status  
+</span></span><span class="line"><span class="cl">启动数据库服务
+</span></span><span class="line"><span class="cl">sudo service mysql start  
+</span></span><span class="line"><span class="cl">停止数据库服务
+</span></span><span class="line"><span class="cl">sudo service mysql stop 
+</span></span><span class="line"><span class="cl">重启数据库服务
+</span></span><span class="line"><span class="cl">sudo service mysql restart 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">数据文件夹
+</span></span><span class="line"><span class="cl">cd /var/lib/mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="系统时间">系统时间</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#设置时间同步网络
+</span></span><span class="line"><span class="cl">cd /usr/share/zoneinfo
+</span></span><span class="line"><span class="cl">tzselect
+</span></span><span class="line"><span class="cl">#选择时区，亚洲4，中国9，北京1
+</span></span><span class="line"><span class="cl">sudo timedatectl set-timezone Asia/Shanghai
+</span></span><span class="line"><span class="cl">sudo ntpdate -u ntp.ntsc.ac.cn
+</span></span><span class="line"><span class="cl">#没有ntpdate命令的话, 先安装一下, 执行
+</span></span><span class="line"><span class="cl">sudo apt install ntpdate
+</span></span><span class="line"><span class="cl">date
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">timedatectl status查看当前时间状态
+</span></span><span class="line"><span class="cl">sudo date -s MM/DD/YY //修改日期
+</span></span><span class="line"><span class="cl">sudo date -s hh:mm:ss //修改时间
+</span></span><span class="line"><span class="cl">sudo hwclock --systohc //修改生效
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="scp移动文件">SCP移动文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp /test.txt root@192.168.1.102:~/test.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="fdisk-挂载硬盘">FDisk 挂载硬盘</h2>
+<p>本操作以该场景为例：当云服务器挂载了一块新的数据盘时，使用fdisk分区工具将该数据盘设为主分区，分区形式默认设置为MBR，文件系统设为ext4格式，挂载在“/mnt/sdc”下，并设置开机启动自动挂载。</p>
+<p>执行以下命令，查看新增数据盘。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fdisk -l
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@ecs-test-0001 ~]# fdisk -l
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Disk /dev/vda: 42.9 GB, 42949672960 bytes, 83886080 sectors
+</span></span><span class="line"><span class="cl">Units = sectors of 1 * 512 = 512 bytes
+</span></span><span class="line"><span class="cl">Sector size (logical/physical): 512 bytes / 512 bytes
+</span></span><span class="line"><span class="cl">I/O size (minimum/optimal): 512 bytes / 512 bytes
+</span></span><span class="line"><span class="cl">Disk label type: dos
+</span></span><span class="line"><span class="cl">Disk identifier: 0x000bcb4e
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   Device Boot      Start         End      Blocks   Id  System
+</span></span><span class="line"><span class="cl">/dev/vda1   *        2048    83886079    41942016   83  Linux
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Disk /dev/vdb: 107.4 GB, 107374182400 bytes, 209715200 sectors
+</span></span><span class="line"><span class="cl">Units = sectors of 1 * 512 = 512 bytes
+</span></span><span class="line"><span class="cl">Sector size (logical/physical): 512 bytes / 512 bytes
+</span></span><span class="line"><span class="cl">I/O size (minimum/optimal): 512 bytes / 512 bytes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示当前的云服务器有两块磁盘，**“/dev/vda”<strong>是系统盘，</strong>“/dev/vdb”**是新增数据盘。</p>
+<p>执行以下命令，进入fdisk分区工具，开始对新增数据盘执行分区操作。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fdisk 新增数据盘
+</span></span><span class="line"><span class="cl">以新挂载的数据盘“/dev/vdb”为例：
+</span></span><span class="line"><span class="cl">fdisk /dev/vdb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@ecs-test-0001 ~]# fdisk /dev/vdb
+</span></span><span class="line"><span class="cl">Welcome to fdisk (util-linux 2.23.2).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Changes will remain in memory only, until you decide to write them.
+</span></span><span class="line"><span class="cl">Be careful before using the write command.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Device does not contain a recognized partition table
+</span></span><span class="line"><span class="cl">Building a new DOS disklabel with disk identifier 0x38717fc1.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Command (m for help): 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入“n”，按“Enter”，开始新建分区。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Command (m for help): n
+</span></span><span class="line"><span class="cl">Partition type:
+</span></span><span class="line"><span class="cl">   p   primary (0 primary, 0 extended, 4 free)
+</span></span><span class="line"><span class="cl">   e   extended
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">表示磁盘有两种分区类型：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- “p”表示主分区。
+</span></span><span class="line"><span class="cl">- “e”表示扩展分区。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">说明：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">磁盘使用MBR分区形式，最多可以创建4个主分区，或者3个主分区加1个扩展分区，扩展分区不可以直接使用，需要划分成若干个逻辑分区才可以使用。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">磁盘使用GPT分区形式时，没有主分区、扩展分区以及逻辑分区之分。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以创建一个主要分区为例，输入“p”，按“Enter”，开始创建一个主分区。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Select (default p): p
+</span></span><span class="line"><span class="cl">Partition number (1-4, default 1): 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>**“Partition number”**表示主分区编号，可以选择1-4。</p>
+<p>以分区编号选择“1”为例，输入主分区编号“1”，按“Enter”。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Partition number (1-4, default 1): 1
+</span></span><span class="line"><span class="cl">First sector (2048-209715199, default 2048):
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>**“First sector”**表示起始磁柱值，可以选择2048-209715199，默认为2048。</p>
+<p>以选择默认起始磁柱值2048为例，按“Enter”。</p>
+<p>系统会自动提示分区可用空间的起始磁柱值和截止磁柱值，可以在该区间内自定义，或者使用默认值。起始磁柱值必须小于分区的截止磁柱值。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">First sector (2048-209715199, default 2048):
+</span></span><span class="line"><span class="cl">Using default value 2048
+</span></span><span class="line"><span class="cl">Last sector, +sectors or +size{K,M,G} (2048-209715199, default 209715199):+500G
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>**“Last sector”**表示截止磁柱值，可以选择2048-209715199，默认为209715199。</p>
+<p>选择增加500G的磁盘分区 ，输入+500G ，按“Enter”。</p>
+<p>系统会自动提示分区可用空间的起始磁柱值和截止磁柱值，可以在该区间内自定义，或者使用默认值。起始磁柱值必须小于分区的截止磁柱值。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Last sector, +sectors or +size{K,M,G} (2048-209715199, default 209715199):
+</span></span><span class="line"><span class="cl">Using default value 209715199
+</span></span><span class="line"><span class="cl">Partition 1 of type Linux and of size 100 GiB is set
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Command (m for help):
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示分区完成，即为数据盘新建了1个分区。输入“p”，按“Enter”，查看新建分区的详细信息。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Command (m for help): p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Disk /dev/vdb: 107.4 GB, 107374182400 bytes, 209715200 sectors
+</span></span><span class="line"><span class="cl">Units = sectors of 1 * 512 = 512 bytes
+</span></span><span class="line"><span class="cl">Sector size (logical/physical): 512 bytes / 512 bytes
+</span></span><span class="line"><span class="cl">I/O size (minimum/optimal): 512 bytes / 512 bytes
+</span></span><span class="line"><span class="cl">Disk label type: dos
+</span></span><span class="line"><span class="cl">Disk identifier: 0x38717fc1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   Device Boot      Start         End      Blocks   Id  System
+</span></span><span class="line"><span class="cl">/dev/vdb1            2048   209715199   104856576   83  Linux
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Command (m for help):
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示新建分区**“/dev/vdb1”**的详细信息。输入“w”，按“Enter”，将分区结果写入分区表中。</p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Command (m for help): w
+</span></span><span class="line"><span class="cl">The partition table has been altered!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Calling ioctl() to re-read partition table.
+</span></span><span class="line"><span class="cl">Syncing disks.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示分区创建完成。</p>
+<p>说明：</p>
+<p>如果之前分区操作有误，请输入“q”，则会退出fdisk分区工具，之前的分区结果将不会被保留。</p>
+<p>执行以下命令，将新的分区表变更同步至操作系统。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">partprobe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行以下命令，将新建分区文件系统设为系统所需格式。</p>
+<p><strong>mkfs</strong> <strong>-t</strong> <em>文件系统格式</em> <strong>/dev/vdb1</strong></p>
+<p>以设置文件系统为“ext4”为例：</p>
+<p><strong>mkfs -t ext4 /dev/vdb1</strong></p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@ecs-test-0001 ~]# mkfs -t ext4 /dev/vdb1
+</span></span><span class="line"><span class="cl">mke2fs 1.42.9 (28-Dec-2013)
+</span></span><span class="line"><span class="cl">Filesystem label=
+</span></span><span class="line"><span class="cl">OS type: Linux
+</span></span><span class="line"><span class="cl">Block size=4096 (log=2)
+</span></span><span class="line"><span class="cl">Fragment size=4096 (log=2)
+</span></span><span class="line"><span class="cl">Stride=0 blocks, Stripe width=0 blocks
+</span></span><span class="line"><span class="cl">6553600 inodes, 26214144 blocks
+</span></span><span class="line"><span class="cl">1310707 blocks (5.00%) reserved for the super user
+</span></span><span class="line"><span class="cl">First data block=0
+</span></span><span class="line"><span class="cl">Maximum filesystem blocks=2174746624
+</span></span><span class="line"><span class="cl">800 block groups
+</span></span><span class="line"><span class="cl">32768 blocks per group, 32768 fragments per group
+</span></span><span class="line"><span class="cl">8192 inodes per group
+</span></span><span class="line"><span class="cl">Superblock backups stored on blocks:
+</span></span><span class="line"><span class="cl">        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+</span></span><span class="line"><span class="cl">        4096000, 7962624, 11239424, 20480000, 23887872
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Allocating group tables: done
+</span></span><span class="line"><span class="cl">Writing inode tables: done
+</span></span><span class="line"><span class="cl">Creating journal (32768 blocks): done
+</span></span><span class="line"><span class="cl">Writing superblocks and filesystem accounting information: done
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>格式化需要等待一段时间，请观察系统运行状态，不要退出。</p>
+<p>须知：</p>
+<p>不同文件系统支持的分区大小不同，请根据您的业务需求选择合适的文件系统。</p>
+<p>执行以下命令，新建挂载目录。</p>
+<p><strong>mkdir</strong> <em>挂载目录</em></p>
+<p>以新建挂载目录“/mnt/sdc”为例：</p>
+<p><strong>mkdir /mnt/sdc</strong></p>
+<p>执行以下命令，将新建分区挂载到创建的目录下。</p>
+<p><strong>mount</strong> <em>磁盘分区</em> <em>挂载目录</em></p>
+<p>以挂载新建分区“/dev/vdb1”至“/mnt/sdc”为例：</p>
+<p><strong>mount /dev/vdb1 /mnt/sdc</strong></p>
+<p>执行以下命令，查看挂载结果。</p>
+<p><strong>df -TH</strong></p>
+<p>回显类似如下信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[root@ecs-test-0001 ~]# df -TH
+</span></span><span class="line"><span class="cl">Filesystem     Type      Size  Used Avail Use% Mounted on
+</span></span><span class="line"><span class="cl">/dev/vda1      ext4       43G  1.9G   39G   5% /
+</span></span><span class="line"><span class="cl">devtmpfs       devtmpfs  2.0G     0  2.0G   0% /dev
+</span></span><span class="line"><span class="cl">tmpfs          tmpfs     2.0G     0  2.0G   0% /dev/shm
+</span></span><span class="line"><span class="cl">tmpfs          tmpfs     2.0G  9.1M  2.0G   1% /run
+</span></span><span class="line"><span class="cl">tmpfs          tmpfs     2.0G     0  2.0G   0% /sys/fs/cgroup
+</span></span><span class="line"><span class="cl">tmpfs          tmpfs     398M     0  398M   0% /run/user/0
+</span></span><span class="line"><span class="cl">/dev/vdb1      ext4      106G   63M  101G   1% /mnt/sdc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示新建分区**“/dev/vdb1”**已挂载至“/mnt/sdc”。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">fdisk 命令说明
+</span></span><span class="line"><span class="cl">  DOS (MBR)
+</span></span><span class="line"><span class="cl">   a   开关 可启动 标志
+</span></span><span class="line"><span class="cl">   b   编辑嵌套的 BSD 磁盘标签
+</span></span><span class="line"><span class="cl">   c   开关 dos 兼容性标志
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  常规
+</span></span><span class="line"><span class="cl">   d   删除分区
+</span></span><span class="line"><span class="cl">   F   列出未分区的空闲区
+</span></span><span class="line"><span class="cl">   l   列出已知分区类型
+</span></span><span class="line"><span class="cl">   n   添加新分区
+</span></span><span class="line"><span class="cl">   p   打印分区表
+</span></span><span class="line"><span class="cl">   t   更改分区类型
+</span></span><span class="line"><span class="cl">   v   检查分区表
+</span></span><span class="line"><span class="cl">   i   打印某个分区的相关信息
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  杂项
+</span></span><span class="line"><span class="cl">   m   打印此菜单
+</span></span><span class="line"><span class="cl">   u   更改 显示/记录 单位
+</span></span><span class="line"><span class="cl">   x   更多功能(仅限专业人员)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  脚本
+</span></span><span class="line"><span class="cl">   I   从 sfdisk 脚本文件加载磁盘布局
+</span></span><span class="line"><span class="cl">   O   将磁盘布局转储为 sfdisk 脚本文件
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  保存并退出
+</span></span><span class="line"><span class="cl">   w   将分区表写入磁盘并退出
+</span></span><span class="line"><span class="cl">   q   退出而不保存更改
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  新建空磁盘标签
+</span></span><span class="line"><span class="cl">   g   新建一份 GPT 分区表
+</span></span><span class="line"><span class="cl">   G   新建一份空 GPT (IRIX) 分区表
+</span></span><span class="line"><span class="cl">   o   新建一份的空 DOS 分区表
+</span></span><span class="line"><span class="cl">   s   新建一份空 Sun 分区表
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">挂载ntfs硬盘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="heading"></h2>
+<h1 id="四运维方案">四：运维方案</h1>
+<h2 id="定时任务-cron">定时任务 cron</h2>
+<p>目的：定时备份数据库binlog文件以及全量文件，定时删除15天前的备份文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cron是被默认安装并启动的。而 ubuntu 下启动，停止与重启cron，均是通过调用/etc/init.d/中的脚本进行
+</span></span><span class="line"><span class="cl">service cron start  	/*启动服务*/
+</span></span><span class="line"><span class="cl">service cron stop 		/*关闭服务*/ 
+</span></span><span class="line"><span class="cl">service cron restart 	/ *重启服务*/
+</span></span><span class="line"><span class="cl">service cron reload		/*重新载入配置*/ 
+</span></span><span class="line"><span class="cl">pgrep cron  		    /* 可以通过以下命令查看cron是否在运行（如果在运行，则会返回一个进程ID）*/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">crontab 命令用于安装、删除或者列出用于驱动cron后台进程的表格。也就是说，用户把需要执行的命令序列放到crontab文件中以获得执行，每个用户都可以有自己的crontab文件。以下是这个命令的一些参数与说明：
+</span></span><span class="line"><span class="cl">    crontab -u /*设定某个用户的cron服务*/ 
+</span></span><span class="line"><span class="cl">    crontab -l /*列出某个用户cron服务的详细内容*/ 
+</span></span><span class="line"><span class="cl">    crontab -r /*删除某个用户的cron服务*/ 
+</span></span><span class="line"><span class="cl">    crontab -e /*编辑某个用户的cron服务*/ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="mysql自动备份">mysql自动备份</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/usr/bin/mysqldump -u root -p123456 -B -F -R -x  easysitedb | gzip &gt; /mysql_backup/easysitedb_$(date +%Y%m%d).tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql -uroot -p@Lisijiang1994321ZaQ! -e&#34;flush logs&#34;
+</span></span><span class="line"><span class="cl">chmod 777 /var/lib/mysql/binlog.*
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker exec -it /usr/bin/mysqldump -u root -p数据库密码 -B -F -R -x  plm | gzip &gt; /opt/mysql/mysql_backup/plm$(date +%Y%m%d).tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker exec -it mysql mysql -u root -p@Lisijiang1994321ZaQ! -e&#34;flush logs&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">0 3 * * 6 /etc/cron/mysql_backup/mysqlautoback.sh
+</span></span><span class="line"><span class="cl">0 23 * * * /etc/cron/mysqlbinlogautoback.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="系统日志发送-邮件服务搭建">系统日志发送-邮件服务搭建</h2>
+<p>目的：定时扫描系统日志，将日志文件发送至邮箱</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">思路
+</span></span><span class="line"><span class="cl">1.配置邮件服务器
+</span></span><span class="line"><span class="cl">2.配置扫描服务器状态脚本，并发送邮件，添加为定时任务计划
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">邮件服务搭建参考博客
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/mdx20072419/article/details/103901254
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/weixin_39278265/article/details/98593267
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">搭建邮件服务
+</span></span><span class="line"><span class="cl">编辑源
+</span></span><span class="line"><span class="cl">	sudo vi  /etc/apt/sources.list
+</span></span><span class="line"><span class="cl">添加deb信息
+</span></span><span class="line"><span class="cl">	deb http://cz.archive.ubuntu.com/ubuntu xenial main universe
+</span></span><span class="line"><span class="cl">更新源
+</span></span><span class="line"><span class="cl">	sudo apt-get update
+</span></span><span class="line"><span class="cl">安装heirloom-mailx
+</span></span><span class="line"><span class="cl">	sudo apt install heirloom-mailx
+</span></span><span class="line"><span class="cl">配置外部SMTP
+</span></span><span class="line"><span class="cl">	vim /etc/s-nail.rc
+</span></span><span class="line"><span class="cl">添加内容：
+</span></span><span class="line"><span class="cl">    set from=&#34;623872553@qq.com&#34;  //修改为自己的邮箱
+</span></span><span class="line"><span class="cl">    set smtp=&#34;smtps://smtp.qq.com:465&#34; //默认smtp服务地址
+</span></span><span class="line"><span class="cl">    set smtp-auth-user=&#34;623872553@qq.com&#34; 修改为自己的邮箱
+</span></span><span class="line"><span class="cl">    set smtp-auth-password=&#34;aaaaaaaaaa&#34; //qq邮箱授权码,邮箱设置里需要手动开启，然后发短信确认
+</span></span><span class="line"><span class="cl">    set smtp-auth=login  	
+</span></span><span class="line"><span class="cl">测试发送
+</span></span><span class="line"><span class="cl">    发送文字
+</span></span><span class="line"><span class="cl">    echo &#34;邮件内容&#34; | s-nail  -s &#34;邮件主题&#34; 623872553@qq.com
+</span></span><span class="line"><span class="cl">    发送文件，会变成bin结尾的文件，接收下载之后修改文件后缀名可以恢复使用
+</span></span><span class="line"><span class="cl">	s-nail  -s &#34;邮件主题&#34; 623872553@qq.com  &lt; /www/test.jar		
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1">#Author:                    jdzt.lln
+</span></span></span><span class="line"><span class="cl"><span class="c1">#Date:                      2021-04-02
+</span></span></span><span class="line"><span class="cl"><span class="c1">#FileName:                  systeminfo.sh
+</span></span></span><span class="line"><span class="cl"><span class="c1">#---------------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">export</span><span class="w"> </span><span class="n">Start_Color</span><span class="o">=</span><span class="s2">&#34;\e[1;32m&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">export</span><span class="w"> </span><span class="n">End_Color</span><span class="o">=</span><span class="s2">&#34;\e[0m&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Ipaddr</span><span class="o">=`</span><span class="n">ifconfig</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="o">-</span><span class="n">Eo</span><span class="w"> </span><span class="o">--</span><span class="n">color</span><span class="o">=</span><span class="n">auto</span><span class="w"> </span><span class="s2">&#34;(\&lt;([1-9]|[1-9][0-9]|[1-9][0-9]{2}|2[0-4][0-9]|25[0-5])\&gt;\.){3}\&lt;([1-9]|[1-9][0-9]|[1-9][0-9]{2}|2[0-4][0-9]|25[0-5])\&gt;&#34;</span><span class="o">|</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">KerneVer</span><span class="o">=`</span><span class="n">uname</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Cpu_Info</span><span class="o">=`</span><span class="n">lscpu</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="s2">&#34;Model name:&#34;</span><span class="o">|</span><span class="n">tr</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s2">&#34; &#34;</span><span class="w"> </span><span class="o">|</span><span class="n">cut</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="n">f2</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">Mem_Info</span><span class="o">=`</span><span class="n">free</span><span class="w"> </span><span class="o">-</span><span class="n">mh</span><span class="o">|</span><span class="n">tr</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s2">&#34; &#34;</span><span class="o">|</span><span class="n">cut</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="s2">&#34; &#34;</span><span class="w"> </span><span class="o">-</span><span class="n">f2</span><span class="w"> </span><span class="o">|</span><span class="n">head</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="o">|</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">HD_Info</span><span class="o">=`</span><span class="n">lsblk</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="s2">&#34;^sd\{1,\}&#34;</span><span class="o">|</span><span class="w"> </span><span class="n">tr</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s2">&#34; &#34;</span><span class="o">|</span><span class="n">cut</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="s2">&#34; &#34;</span><span class="w"> </span><span class="o">-</span><span class="n">f1</span><span class="p">,</span><span class="mi">4</span><span class="o">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System Hostname is : $Start_Color `hostname` $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System IP ADDER is : $Start_Color $Ipaddr $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System kerneVer is : $Start_Color $KerneVer $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System Cpu_Info is :$Start_Color $Cpu_Info $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System Mem_Info is : $Start_Color $Mem_Info $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="s2">&#34;The System HD_Info  is : $Start_Color \n$HD_Info $End_Color&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">disk</span><span class="p">.</span><span class="n">sh</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">Start_Color</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">End_Color</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">Ipaddr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">KerneVer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">Cpu_Info</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">Mem_Info</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">unset</span><span class="w"> </span><span class="n">HD_Info</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-11-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Ubuntu1804研发环境搭建" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Ubuntu1804研发环境搭建"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Ubuntu1804研发环境搭建"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Ubuntu1804研发环境搭建"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" class="prev" rel="prev" title="Ubuntu内核升级"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Ubuntu内核升级</a>
+            <a href="/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" class="next" rel="next" title="Python加密及Java调用方案">Python加密及Java调用方案<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

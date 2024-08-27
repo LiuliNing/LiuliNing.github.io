@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>多租户设计记录 - Alex&#39;s Bolg</title><meta name="Description" content="多租户设计记录"><meta property="og:title" content="多租户设计记录" />
+<meta property="og:description" content="多租户设计记录" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-29T21:40:32+08:00" />
+<meta property="article:modified_time" content="2022-07-29T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="多租户设计记录"/>
+<meta name="twitter:description" content="多租户设计记录"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" /><link rel="prev" href="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" /><link rel="next" href="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "多租户设计记录",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "架构","wordcount":  1399 ,
+        "url": "http:\/\/LiuliNing.github.io\/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1\/","datePublished": "2022-07-29T21:40:32+08:00","dateModified": "2022-07-29T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "多租户设计记录"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">多租户设计记录</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>分布式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-29">2022-07-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1399 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#方案一-单数据源单数据库单数据表">方案一： 单数据源单数据库单数据表</a></li>
+    <li><a href="#方案二单数据源单数据库多数据表">方案二：单数据源单数据库多数据表</a></li>
+    <li><a href="#方案三单数据源多数据库多数据表">方案三：单数据源多数据库多数据表</a></li>
+    <li><a href="#方案四单数据源多数据库多数据表">方案四：单数据源多数据库多数据表</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>多租户对于用户来说，最主要的一点就在于数据隔离，不可以说，我登了A用户的号，但是看到了B用户的数据。</p>
+<p>常见的大概就四种：</p>
+<h2 id="方案一-单数据源单数据库单数据表">方案一： 单数据源单数据库单数据表</h2>
+<p>所有租户使用同一数据源下同一数据库下共同数据表，在每一个数据表中增加一列租户ID，用以区分租户的数据。增删查改时，一定要带上租户ID，否则就会操作到其他租户的数据
+典型的解决方案就是通过AOP，隐式的为我们的每一个SQL带上这个租户ID。
+而在orm框架如mybatis中，可以拦截器插件进行SQL层面的拦截拼接，而MyBatis-Plus高版本则提供了更加方便的拦截器，并且已经将多租户插件放入JAR包，将该插件加入到MyBatis的拦截器链中，就可以不用再显式的拼接租户ID字段</p>
+<p>优缺点：
+该方案成本最低，安全性也是最低，所有数据都放在一起，单个租户的数据恢复和备份会很复杂。
+比如，有ABC三个租户共同使用，当C租户已经确定以后不再使用了，他的数据也不好从数据库中剔除。如果某一数据出现了问题，也不便于租户问题的排查。
+这就得保证对开发者的严苛要求，最主要还是增加了对数据的管理复杂度。尤其注意，尽量不要去手动显式的设置租户ID到SQL，否则一旦出现问题，纠正是很复杂的</p>
+<h2 id="方案二单数据源单数据库多数据表">方案二：单数据源单数据库多数据表</h2>
+<p>所有租户使用同一数据源下同一数据库下不同数据表
+比如租户A的用户表叫user_001，用户B的用户表叫user_002
+数据库难以实现连表查询，只能进行多次单表查询，对事务的控制基本为0。
+一般来说，对于小场景而言，这种架构的设计已经完全够用了
+新建租户时需要建表，每次建表，都要使用DDL建新租户所使用的所有表。</p>
+<p>优缺点：
+该方案提供了一定的数据隔离，但不是完全的隔离，由于数据库是共享的，所以成本也不是很高。</p>
+<h2 id="方案三单数据源多数据库多数据表">方案三：单数据源多数据库多数据表</h2>
+<p>所有租户使用同一数据源下不同数据库下不同数据表
+将租户数据彻底隔离，给每个租户创建一个数据库
+基本上和方案二类似
+在完成数据表的创建后，然后就是具体的增删改查问题。还是可以使用MyBatis插件，动态的改造表名，在表名前拼接上数据库名，具体的实现也是非常简单，直接拿方案二稍微改改即可。
+使用这种单数据源方案可以轻松实现跨数据库执行SQL和事务执行。</p>
+<p>优缺点：
+该方案其实和方案二大同小异，对单数据源来说，都不是彻底的隔离。成本和方案二差不多。</p>
+<h2 id="方案四单数据源多数据库多数据表">方案四：单数据源多数据库多数据表</h2>
+<p>所有租户使用不同数据源下不同数据库下不同数据表
+在单数据源中，跨数据库操作和数据库事务是已经被支持的。
+但是在多数据源中，传统的跨库操作和数据库事务已经难以适用，甚至有时候会出现动态的新增租户，并且租户数据源动态配置等问题。
+这时，光靠简单的几百行代码已经无法实现。以下是几个方案来：</p>
+<ul>
+<li>使用AOP加注解动态切换数据源</li>
+<li>使用MyBatis插件切换数据源（可以比较方便的判断SQL类型，区分读写操作）</li>
+<li>多个MyBatis配置来引入多个数据源（比较占内存）
+这种多数据源方案，目前也有一些开源项目实现了这一方案。就是为不同的租户提供独立的数据库，数据库由租户自己购买，或商家购买，然后配置到系统中，满足不同租户的独特需求，如果出现故障，数据恢复也比较简单。</li>
+</ul>
+<p>优缺点：
+这种方案增加了数据库的安装数量，单个数据库的资源利用率就不高了，而且数据库的数量一多，成本就高了，安全性的代价就是成本。还要考虑到多数据库的事务问题，多数据库的数据源切换问题，这代码复杂度和成本就上来了，相当费钱</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" data-title="多租户设计记录" data-hashtags="架构"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" data-hashtag="架构"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" data-title="多租户设计记录"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" data-title="多租户设计记录"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" data-title="多租户设计记录"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%9E%B6%E6%9E%84/">架构</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/elk%E6%97%A5%E5%BF%97/" class="prev" rel="prev" title="ELK日志框架集成"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>ELK日志框架集成</a>
+            <a href="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" class="next" rel="next" title="代码加密工具Proguard使用说明">代码加密工具Proguard使用说明<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

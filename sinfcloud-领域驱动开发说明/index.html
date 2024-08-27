@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>领域驱动开发说明 - Alex&#39;s Bolg</title><meta name="Description" content="领域驱动开发说明"><meta property="og:title" content="领域驱动开发说明" />
+<meta property="og:description" content="领域驱动开发说明" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" /><meta property="og:image" content="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/featured-image.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-29T21:40:32+08:00" />
+<meta property="article:modified_time" content="2023-07-29T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/featured-image.jpg"/>
+<meta name="twitter:title" content="领域驱动开发说明"/>
+<meta name="twitter:description" content="领域驱动开发说明"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" /><link rel="prev" href="http://LiuliNing.github.io/%E4%BF%A1%E5%88%9B/" /><link rel="next" href="http://LiuliNing.github.io/%E5%88%86%E5%B8%83%E5%BC%8F%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "领域驱动开发说明",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "领域驱动设计","wordcount":  3808 ,
+        "url": "http:\/\/LiuliNing.github.io\/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E\/","datePublished": "2023-07-29T21:40:32+08:00","dateModified": "2023-07-29T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "领域驱动开发说明"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">领域驱动开发说明</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>领域驱动设计</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-29">2023-07-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3808 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一基于领域驱动的代码结构说明">一、基于领域驱动的代码结构说明</a></li>
+    <li><a href="#11-单系统微服务结构说明">1.1 单系统（微服务）结构说明</a>
+      <ul>
+        <li><a href="#111-消费者结构说明">1.1.1 消费者结构说明</a></li>
+        <li><a href="#112-提供者结构说明">1.1.2 提供者结构说明</a></li>
+        <li><a href="#113-总调用链">1.1.3 总调用链</a></li>
+      </ul>
+    </li>
+    <li><a href="#12-微服务间调用示意图">1.2 微服务间调用示意图</a></li>
+    <li><a href="#13-包结构说明">1.3 包结构说明</a>
+      <ul>
+        <li><a href="#131-消费者结构">1.3.1 消费者结构</a></li>
+        <li><a href="#132-提供者结构">1.3.2 提供者结构</a></li>
+        <li><a href="#133-代码版本控制说明">1.3.3 代码版本控制说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#二与框架默认结构的对比和改造方案">二、与框架默认结构的对比和改造方案</a>
+      <ul>
+        <li><a href="#21-消费者">2.1 消费者</a>
+          <ul>
+            <li><a href="#211-消费者改造">2.1.1 消费者改造</a></li>
+            <li><a href="#212-消费者总体结构对比">2.1.2 消费者总体结构对比</a></li>
+          </ul>
+        </li>
+        <li><a href="#22-提供者">2.2 提供者</a>
+          <ul>
+            <li><a href="#221-提供者改造">2.2.1 提供者改造</a></li>
+            <li><a href="#222-提供者总体结构对比">2.2.2 提供者总体结构对比</a></li>
+          </ul>
+        </li>
+        <li><a href="#23-改造遇到的问题">2.3 改造遇到的问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#三开发注意事项">三、开发注意事项</a></li>
+    <li><a href="#参考内容">参考内容</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>领域驱动开发说明</p>
+<h1 id="sinfcloud-领域驱动开发说明">SinfCloud-领域驱动开发说明</h1>
+<p>CreateBy lln</p>
+<p>CreateTime 2023-06-26</p>
+<p>UpdateTime 2023-07-03</p>
+<hr>
+<p>文章内容说明：</p>
+<p>​	本文以不动产登记系统-档案管理子系统为例，分别进行与框架默认结构的对比和改造流程、单体微服务结构说明、服务间调用说明、代码包拆分说明、代码层级调用链说明，用于描述领域驱动在项目中落地的整体流程，以供设计人员、开发人员参考。</p>
+<p>关键字：【领域驱动设计】【框架改造】【代码结构】</p>
+<h2 id="一基于领域驱动的代码结构说明">一、基于领域驱动的代码结构说明</h2>
+<h2 id="11-单系统微服务结构说明">1.1 单系统（微服务）结构说明</h2>
+<p>​	下图为单个微服务的整体结构，描述了消费者和提供者的整体关系、消费者、提供者内部结构、代码包结构的情况。详细说明如下。</p>
+<img src=".\md截图\领域驱动落地-示意图-单体微服务结构图.drawio.png" alt="领域驱动落地-示意图-单体微服务结构图.drawio" style="zoom:%;" />
+<h3 id="111-消费者结构说明">1.1.1 消费者结构说明</h3>
+<p>​	【代码结构】消费者层，controller层负责当前微服务对外（指所有WEB端、移动端）提供接口，entitydto层负责处理外部接口调用后的数据转换和业务调用，拆解为多个不同的提供者实体（entitydo层），拆解后，调用不同的提供者服务（api层），向不同的提供者分发业务逻辑。</p>
+<img src=".\md截图\领域驱动落地-示意图-层级调用链-消费者.drawio.png"/>
+<h3 id="112-提供者结构说明">1.1.2 提供者结构说明</h3>
+<p>​	1、【整体架构-提供者版本控制】每个提供者内部通过划分版本包结构的方式，进行不同版本如V1_0、V2_0的划分。版本内部结构完全一致，如需更新应用版本时，将需要更新版本的相关代码进行拷贝复制至新版本包中，并更新接口层中的版本符号，完成后续应用接口开发和更新操作。</p>
+<p>​	2、【代码结构-接口层】infrastructure层中，controller包提供接口信息，包含所有的当前REST接口信息，并调用应用服务层(service层)中的方法进行业务处理；api层记录调用的其他提供者的RPC信息；</p>
+<p>dto层存储对接其他提供者服务的数据模型；convertor层处理对接其他提供者服务时的数据映射和转换。</p>
+<p>​	3、【代码结构-应用层】event层，负责触发和监听领域消息，根据实际业务场景，对不同聚合中的领域事件服务（Domain-service）进行业务层面的组装；组装业务后，由应用服务层（Application-service）进行统一调用，service层由接口层中的controller进行调用。service往往与controller提供的接口一一对应。</p>
+<p>​	4、【代码结构-领域层】entitydo领域事件层，调用entitypo（持久化对象层）进行CRUD操作,获取结果处理所有当前领域相关的业务逻辑，；entitypo（持久化对象层）只用于接收参数，组装SQL查询并返回结果，不处理任何逻辑。model层（数据库实体映射）存放entity（实体映射层，贫血对象）作为数据数据库表的一对一映射，ex（实体扩展）只用于处理非库表结构的字段增加和补充，不做业务逻辑处理和数据校验。service（领域服务层）调用组装各个领域事件（entitydo），组装各个领域的业务逻辑，最终完成整个领域服务业务逻辑，供应用层（Application-event）进行组装调用。</p>
+<p>​	5、【代码结构-基础层】infrastructure层严格意义上来说并不处于最下面一层。在上面三层中，所有的外部依赖（DB、缓存、中间件、服务调用）都使用接口的方式来避免和具体技术耦合。基础层提供了这些接口的具体实现，需要保障依赖关系不能倒置，即：除了基础层不能有对外部依赖的具体实现。</p>
+<img src=".\md截图\领域驱动落地-示意图-层级调用链-提供者.drawio.png"/>
+<h3 id="113-总调用链">1.1.3 总调用链</h3>
+<p>​	下图为整体业务流程的调用链说明。</p>
+<img src=".\md截图\领域驱动落地-示意图-层级调用链-总体.drawio.png"/>
+<h2 id="12-微服务间调用示意图">1.2 微服务间调用示意图</h2>
+<p>​	接口层（Interfaces）中的controller提供REST接口；api层进行RPC调用；需要适配的其他提供者实体模型，放入dto层存储，通过convertor层进行实体对象之间的转换。</p>
+<p>​	应用服务（Application-service）之间的数据传递，通过基础层提供的中间件服务，如Redis、RabbtiMq等组件进行调用。</p>
+<p>​	下图为微服务的间调用的关系图，描述了领域驱动架构中，微服务调用的关系。</p>
+<img src=".\md截图\领域驱动落地-示意图-领域驱动-微服务间调用示意图.drawio.png"/>
+<h2 id="13-包结构说明">1.3 包结构说明</h2>
+<p>​	下面基于不动产登记系统-档案管理子系统的领域设计，生成的基于领域驱动的代码结构，具体如下图。</p>
+<h3 id="131-消费者结构">1.3.1 消费者结构</h3>
+<p>​	下图为档案系统的消费者结构说明和代码层级图</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">|-- ./v1_0
+</span></span><span class="line"><span class="cl">    |-- ./api		    接口防腐层，定义了provider(生产者)的PRC调用信息
+</span></span><span class="line"><span class="cl">    |-- ./controller	web对外接口控制层
+</span></span><span class="line"><span class="cl">    |-- ./entitydo		领域对象，可以拆分为多个po（实体）对象
+</span></span><span class="line"><span class="cl">    |-- ./entitydto		数据传输对象，可以拆分为多个do（领域对象）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src=".\md截图\image-20230703155333441.png" alt="image-20230703155333441" style="zoom: 50%;" />
+<h3 id="132-提供者结构">1.3.2 提供者结构</h3>
+<p>​	下图为档案系统的提供者结构说明和代码层级图，与1.1 单系统（微服务）结构说明中的示意图对应。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">|-- ./v1_0								版本v1_0
+</span></span><span class="line"><span class="cl">|   |-- ./v1_0/app							应用层
+</span></span><span class="line"><span class="cl">|   |   |-- ./v1_0/app/event					组装领域事件
+</span></span><span class="line"><span class="cl">|   |   `-- ./v1_0/app/service				     应用服务
+</span></span><span class="line"><span class="cl">|   |-- ./v1_0/domain						领域对象层，包含多个业务聚合
+</span></span><span class="line"><span class="cl">|   |   |-- ./v1_0/domain/dabhgz				聚合：档案编号规则
+</span></span><span class="line"><span class="cl">|   |   |-- ./v1_0/domain/darq					聚合：档案容器
+</span></span><span class="line"><span class="cl">|   |   |-- ./v1_0/domain/dayjjl				聚合：档案移交记录
+</span></span><span class="line"><span class="cl">|   |   |-- ./v1_0/domain/dzjbxx				聚合：档案基本信息
+</span></span><span class="line"><span class="cl">|   |-- ./v1_0/infrastructure				基础支持层
+</span></span><span class="line"><span class="cl">|   |   `-- ./v1_0/infrastructure/util		 	公共工具层
+</span></span><span class="line"><span class="cl">|   `-- ./v1_0/interfaces					接口层
+</span></span><span class="line"><span class="cl">|       |-- ./v1_0/interfaces/api			 	接口防腐层(内部)
+</span></span><span class="line"><span class="cl">|       |-- ./v1_0/interfaces/controller	  	出入参转换器
+</span></span><span class="line"><span class="cl">|       |-- ./v1_0/interfaces/convertor		  	提供者对外接口层
+</span></span><span class="line"><span class="cl">|       |-- ./v1_0/interfaces/dto			 	数据传输模型
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">`-- ./v2_0								版本v2_0
+</span></span><span class="line"><span class="cl">	...
+</span></span><span class="line"><span class="cl">`-- ./v3_0								版本v3_0
+</span></span><span class="line"><span class="cl">	...		
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​	整体包结构图</p>
+<img src=".\md截图\image-20230703165656764.png" alt="image-20230703165656764" style="zoom: 50%;" />
+<p>​	包结构展开说明图</p>
+<img src=".\md截图\image-20230703163226011.png" alt="image-20230703163226011" style="zoom: 50%;" />
+<p>​	领域层包对象拆分逻辑，在目录2.2.2提供者改造方案中有详细描述。</p>
+<h3 id="133-代码版本控制说明">1.3.3 代码版本控制说明</h3>
+<p>​	在系统开发中，往往会随着业务需求的变化，对已有代码进行升级和迭代，形成两个类型的代码版本。</p>
+<p>​	API版本说明：</p>
+<p>​	将不同时期变化的代码，称之为“API版本”。API版本通过在消费者、提供者跟目录下，拆分新的代码包，如V1_0,V2_0等等进行管理,同时将相关的API的URL地址进行修改，从V1_0修改为V2_0。</p>
+<p>​	区域版本说明：</p>
+<p>​	如有某个地市级系统的业务，有区别于省级系统的定制化的专属需求，将不同地域的定制化版本，称之为“区域版本”。区域版本的控制，通过抽取公共开放代码，迁移至扩展开放版本中，将开放版本通过依赖引入至具体的某个区域定制版本中作为基础模块使用。具体设计内容参考《不动产登记云平台版本化管理及开发规范v1.0》的说明。（https://docs.qq.com/doc/DRFlqWEdqdnNRclpE）。</p>
+<p>​	为了更好的维护不同时期的代码版本、不同地域的代码版本，在代码架构中，使用如下图所示的方案，进行代码版本划分。</p>
+<p>​</p>
+<img src=".\md截图\领域驱动落地-示意图-代码版本控制示意图.drawio.png" />
+<h2 id="二与框架默认结构的对比和改造方案">二、与框架默认结构的对比和改造方案</h2>
+<p>​	与SinfCloud框架的默认生成结构相比，需要进行一些改变和重构，在不改变SinfCloud的原有框架设计的情况下，则需要对原有代码结构更进一步的进行软件包的拆分，才能够体现在领域驱动设计中的四层模型概念，也能与每个系统的领域驱动设计文档有所关联和映射。下面对提供者和消费者分别进行说明。</p>
+<h3 id="21-消费者">2.1 消费者</h3>
+<h4 id="211-消费者改造">2.1.1 消费者改造</h4>
+<p>​	与原结构相比，修改后的结构，去除了generate的包分类。按照领域驱动中，接口层的拆分规范进行包结构定义。</p>
+<img src=".\.\image-20230703172429754.png" />
+<h4 id="212-消费者总体结构对比">2.1.2 消费者总体结构对比</h4>
+<img src=".\md截图\领域驱动落地-示意图-消费者结构对比图.drawio.png" alt="领域驱动落地-示意图-消费者结构对比图.drawio" style="zoom: 67%;" />
+<h3 id="22-提供者">2.2 提供者</h3>
+<h4 id="221-提供者改造">2.2.1 提供者改造</h4>
+<p>​	提供者的改造基于领域驱动中的四层模型进行包结构的拆分。如图所示：</p>
+<img src=".\.\md截图\领域驱动落地-示意图-第 10 页.drawio.png" />
+<p>​	提供者中Domain层的聚合，基于领域设计中的聚合分析进行包结构的拆分，如图所示：</p>
+<img src=".\.\md截图\【领域驱动设计】不动产登记档案管理系统V2.8.1drawio-第 14 页.drawio.png" />
+<p>​	修改内容为：</p>
+<p>​	1、基于领域四层模型创建代码包。</p>
+<p>​	2、基于领域设计中的聚合分析，对框架默认包进行移动和重构。内容如下：</p>
+<p>​		2.1、将默认结构中，【entity】中的所有Ex类，移动至【domain】-【业务聚合包】-【po】-【ex】包中。需要基于设计来定义Ex所对应的聚合。</p>
+<p>​		2.2、将默认结构中，【entitydo】中的所有Do类，移动至【domain】-【业务聚合包】-【entitydo】包中。需要基于设计来定义Do类所对应的聚合。</p>
+<p>​		2.3、将默认结构中，【generate】-【controller】包中所有的Controller类，移动至【interfaces】-【controller】包中。</p>
+<p>​		2.4、将默认结构中，【generate】-【entity】包中所有的Po类，移动至【domain】-【业务聚合包】-【po】包中。需要基于设计来定义Po类所对应的聚合。</p>
+<p>​		2.5、将默认结构中，【generate】-【entity】包中所有的entity实体类，移动至【domain】-【业务聚合包】-【model】包中。需要基于设计来定义entity实体类所对应的聚合。</p>
+<p>如2.2.2 中结构对比图所示。</p>
+<h4 id="222-提供者总体结构对比">2.2.2 提供者总体结构对比</h4>
+<p>​	原有代码结构如图所示</p>
+<img src=".\md截图\领域驱动落地-示意图-提供者结构对比图.drawio.png" alt="领域驱动落地-示意图-提供者结构对比图.drawio" style="zoom: 67%;" />
+<h3 id="23-改造遇到的问题">2.3 改造遇到的问题</h3>
+<p>​	1、需要移动和重构的代码比较多，手动重构的话很容器有遗漏，或没有按照领域驱动设计图的聚合进行移动。但是代码生成器也无法按照领域设计进行代码生成。这块需要思考如何减少工作量。</p>
+<p>​	2、改造后的结构去除了默认生成的generate包结构，将其中的代码进行了拆分，是否需要保留generate这部分的设计，需要思考。</p>
+<p>​	3、领域驱动下的业务调用链比较长，如何在开发中进行规范话的管控，避免开发人员将所有逻辑堆砌到上层，将结果进行数据透传的为了DDD而DDD的错误操作，需要思考。</p>
+<h2 id="三开发注意事项">三、开发注意事项</h2>
+<p>​	1、使用IDEA进行开发时，需统一安装 Alibaba 代码质量检测插件 【Alibaba Java Coding Guidelines】</p>
+<p>​	2、尽量避免和处理编译器层面的Warnning警告提示</p>
+<p>​	3、尽量不要使用JsonObject或者Map进行数据透传</p>
+<p>​	4、在Ex层不要处理业务逻辑和SQL</p>
+<p>​	5、具体编码细节参考OA文档中的开发规范</p>
+<h2 id="参考内容">参考内容</h2>
+<p>关于DDD的认知
+<a href="https://www.bilibili.com/video/BV1Ns4y197WD/?spm_id_from=333.337.search-card.all.click&amp;vd_source=93189541b207f6eb4c8a443ffe4140e7" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1Ns4y197WD/?spm_id_from=333.337.search-card.all.click&vd_source=93189541b207f6eb4c8a443ffe4140e7</a>
+</p>
+<p><a href="https://mp.weixin.qq.com/s/g2k9LhmNwuBJ9h00fxul1w" target="_blank" rel="noopener noreffer">https://mp.weixin.qq.com/s/g2k9LhmNwuBJ9h00fxul1w</a>
+</p>
+<p>阿里COLA框架地址</p>
+<p><a href="https://github.com/alibaba/COLA" target="_blank" rel="noopener noreffer">https://github.com/alibaba/COLA</a>
+</p>
+<p>COLA架构的结构分析
+<a href="https://blog.csdn.net/significantfrank/article/details/110934799" target="_blank" rel="noopener noreffer">https://blog.csdn.net/significantfrank/article/details/110934799</a>
+</p>
+<p>COLA项目实践
+<a href="https://baijiahao.baidu.com/s?id=1717604031061047078&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener noreffer">https://baijiahao.baidu.com/s?id=1717604031061047078&wfr=spider&for=pc</a>
+</p>
+<p>SinfCloud的设计概念</p>
+<p><a href="https://note.youdao.com/s/XdBavsxl" target="_blank" rel="noopener noreffer">https://note.youdao.com/s/XdBavsxl</a>
+</p>
+<p>关于贫血模型和充血模型</p>
+<p><a href="https://blog.csdn.net/m0_51358164/article/details/125744851" target="_blank" rel="noopener noreffer">https://blog.csdn.net/m0_51358164/article/details/125744851</a>
+</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" data-title="领域驱动开发说明" data-hashtags="领域驱动设计"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" data-hashtag="领域驱动设计"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" data-title="领域驱动开发说明"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" data-title="领域驱动开发说明"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/sinfcloud-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" data-title="领域驱动开发说明"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">领域驱动设计</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E4%BF%A1%E5%88%9B/" class="prev" rel="prev" title="信创适配流程图"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>信创适配流程图</a>
+            <a href="/%E5%88%86%E5%B8%83%E5%BC%8F%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="next" rel="next" title="分布式常见问题记录">分布式常见问题记录<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

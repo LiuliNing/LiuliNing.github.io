@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Ubuntu内核升级 - Alex&#39;s Bolg</title><meta name="Description" content="Alex&#39;s Bolg"><meta property="og:title" content="Ubuntu内核升级" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-29T21:40:32+08:00" />
+<meta property="article:modified_time" content="2021-07-29T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="Ubuntu内核升级"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" /><link rel="prev" href="http://LiuliNing.github.io/sentinel-%E7%86%94%E6%96%AD%E9%99%90%E6%B5%81/" /><link rel="next" href="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Ubuntu内核升级",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "运维","wordcount":  2923 ,
+        "url": "http:\/\/LiuliNing.github.io\/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7\/","datePublished": "2021-07-29T21:40:32+08:00","dateModified": "2021-07-29T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Ubuntu内核升级</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%BF%90%E7%BB%B4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>运维</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-07-29">2021-07-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2923 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#第一部分需要重启的内核升级">第一部分：需要重启的内核升级</a>
+      <ul>
+        <li><a href="#方法-１--使用-dpkg-升级-linux-内核手动方式">方法 １ － 使用 dpkg 升级 Linux 内核（手动方式）</a></li>
+        <li><a href="#方法-2---用-apt-get-来升级-linux-内核推荐方法">方法 2 - 用 apt-get 来升级 Linux 内核（推荐方法）</a></li>
+        <li><a href="#方法-3---使用-ukuu-升级-linux-内核">方法 3 - 使用 Ukuu 升级 Linux 内核</a></li>
+        <li><a href="#方法-4---使用-uktools-升级-linux-内核">方法 4 - 使用 UKTools 升级 Linux 内核</a></li>
+        <li><a href="#方法-5---使用-linux-内核实用程序更新-linux-内核">方法 5 - 使用 Linux 内核实用程序更新 Linux 内核</a></li>
+      </ul>
+    </li>
+    <li><a href="#第二部分无需重启的内核升级">第二部分：无需重启的内核升级</a>
+      <ul>
+        <li><a href="#方法-6--使用-canonical-实时补丁服务来更新-linux-内核">方法 6 – 使用 Canonical 实时补丁服务来更新 Linux 内核</a></li>
+        <li><a href="#方法-７-使用-kernelcare-升级-linux-内核">方法 ７ －　使用 KernelCare 升级 Linux 内核</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>#Ubuntu内核升级</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考链接
+</span></span><span class="line"><span class="cl">https://linux.cn/article-12125-1.html
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这个指南里介绍了 7 种为 Ubuntu 升级 Linux 内核的不同方法。这 7 种方法里，有 5 种需要重启系统来使新内核生效，其他两种则不用。升级之前，强烈建议你将重要数据进行备份! 这里提到的所有方法只在 Ubuntu 中测试过。我们并不确定这些方法是不是也能适用于其他 Ubuntu 的特色发行版（如： Xubuntu）和衍生发行版（如：Linux Mint）。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第一部分需要重启的内核升级">第一部分：需要重启的内核升级</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">以下方法需要你重启系统以便新的内核生效。以下所有方法都建议在个人系统或测试系统中进行。重要的事儿再说一遍，请备份好你 Ubuntu 中的重要数据、配置文件和其他重要的东西。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-１--使用-dpkg-升级-linux-内核手动方式">方法 １ － 使用 dpkg 升级 Linux 内核（手动方式）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">这个方法可以帮助你从 kernel.ubuntu.com 网站手动下载可用的最新 Linux 内核。如果你打算安装最新版（而不是稳定版或者正式发布版），那这种方法对你会很有用。从以上链接下载 Linux 内核版本。编写这个指南的时候，最新的可用版本是 5.0-rc1，最新的稳定版是 v4.20。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">点击你所选择的 Linux 内核版本链接，找到你对应的架构（“Build for XXX”）的那部分。然后下载符合以下格式的两个文件（其中 X.Y.Z 是最高版本号）：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">linux-image-X.Y.Z-generic-*.deb
+</span></span><span class="line"><span class="cl">linux-modules-X.Y.Z-generic-.deb
+</span></span><span class="line"><span class="cl">在终端中改变到文件所在的目录，然后执行此命令手动安装内核：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo dpkg --install *.deb
+</span></span><span class="line"><span class="cl">重启系统，使用新内核：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo reboot
+</span></span><span class="line"><span class="cl">检查是否如你所愿：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">uname -r
+</span></span><span class="line"><span class="cl">对于分步的说明，请查看下列链接中对应的部分。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">在基于 RPM 和 DEB 的系统中安装 Linux 内核 4.15
+</span></span><span class="line"><span class="cl">以上的指南是针对的是 4.15 版本，不过安装最新版本的所有的步骤都是一样的。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">优势： 不必联网（你可以从任何系统中下载 Linux 内核来使用）
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 手动更新，需要重启系统。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-2---用-apt-get-来升级-linux-内核推荐方法">方法 2 - 用 apt-get 来升级 Linux 内核（推荐方法）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">这是在类 Ubuntu 系统中升级 Linux 内核的推荐方法。不同于上一个方法，这种方法会从 Ubuntu 官方仓库下载、安装内核版本，而不是从 kernel.ubuntu.com网站。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">要升级包括内核的整个系统，只需要执行：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> sudo apt-get update
+</span></span><span class="line"><span class="cl"> sudo apt-get upgrade
+</span></span><span class="line"><span class="cl">如果只希望升级内核，运行：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> sudo apt-get upgrade linux-image-generic
+</span></span><span class="line"><span class="cl">优势： 简单。推荐方法。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 需要联网，需要重启。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">从官方库中升级内核是最接近开箱即用的方法，并且不会出什么问题。如果是生产环境的系统，这是最为推荐的升级 Linux 内核的方法。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">方法 1 和方法 2 都需要用户去介入到升级 Linux 内核的过程中。而下边的方法（3、 4、 5）则几乎是全自动的。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-3---使用-ukuu-升级-linux-内核">方法 3 - 使用 Ukuu 升级 Linux 内核</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Ukuu是一个 Gtk GUI 和命令行工具，它可以从 kernel.ubuntu.com 下载最新的 Linux 主线内核，并自动安装到你的 Ubuntu 桌面版和服务器版中。Ukku 不仅简化了手动下载和安装新内核的过程，同时也会帮助你安全地移除旧的和不再需要的内核。更多细节可以参照以下指南。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Ukuu：在 Ubuntu 系统中安装和升级 Linux 内核的简单方法
+</span></span><span class="line"><span class="cl">优势： 易于安装使用。自动安装主线内核。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 需要联网，需要重启。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-4---使用-uktools-升级-linux-内核">方法 4 - 使用 UKTools 升级 Linux 内核</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">跟 Ukuu 差不多，UKTools 也会从 kernel.ubuntu.com 网站获取最新的稳定内核并且自动安装到 Ubuntu 以及类似于 Linux Mint 的延伸发行版中。关于UKTools的更多详情，请参见下面的链接。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UKTools：升级Ubuntu及其衍生产品中的最新Linux内核
+</span></span><span class="line"><span class="cl">优势： 简单，自动。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 需要联网，需要重启。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-5---使用-linux-内核实用程序更新-linux-内核">方法 5 - 使用 Linux 内核实用程序更新 Linux 内核</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Linux 内核实用程序是目前另一个用于升级类 Ubuntu 系统 Linux 内核的程序。实质上，它是一个由一系列 Bash 脚本构成的合集，用于编译并且可以选择性地为 Debian（LCTT 译注：Ubuntu 的上游发行版）及其衍生发行版升级内核。它包含三个实用程序，一个用于手动编译、安装来自于 http://www.kernel.org 网站的源码内核，另一个用于安装来自 https://kernel.ubuntu.com 网站的预编译的内核，第三个脚本用于移除旧内核。更多细节请浏览以下链接。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Linux 内核实用程序：编译和更新最新的 Linux 内核的脚本，适用于 Debian 及其衍生产品
+</span></span><span class="line"><span class="cl">优势： 简单，自动。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 需要联网，需要重启。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第二部分无需重启的内核升级">第二部分：无需重启的内核升级</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">我之前说过，上边所有的方法都需要你重启服务器（LCTT 译注：也可以是桌面版）来启用新内核。如果是个人系统或者测试系统，可以这么办。但对于无法停机的生产环境系统该怎么办呢？一点问题没有，这时候实时补丁livepatching就派上用场了。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">实时补丁（或者叫热补丁）允许你在不重启的情况下安装 Linux 更新或补丁，使你的服务器处于最新的安全级别。这对 web 主机、游戏服务器这类需要不间断在线的服务器来说是很有价值的。事实上，任何情况下，服务器都应该保持在不间断运行的状态下。由于 Linux 供应商只会在出于修复安全漏洞的目的下维护补丁，所以如果安全性是你最关注的问题时，这种方式再适合不过了。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">以下两种方法不需要重启，对于生产环境和执行关键任务的 Ubuntu 服务器的 Linux 内核更新非常有用。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-6--使用-canonical-实时补丁服务来更新-linux-内核">方法 6 – 使用 Canonical 实时补丁服务来更新 Linux 内核</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Canonical 实时补丁服务可以在不需要重启 Ubuntu 系统的情况下自动应用内核更新、补丁和安全补丁。它可以减少Ubuntu系统的停机时间，并保证系统的安全。Canonical 实时补丁服务可以在安装过程当中或安装之后进行设置。如果你使用的是 Ubuntu 桌面版，软件更新器会自动检查内核补丁的更新，并通知你。在基于控制台的系统中，则需要你定期运行 apt-get update 命令来进行升级。由于需要你手动运行 apt-get upgrade 命令它才会安装内核的安全补丁，所以算是半自动的。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">实时补丁对三个及以下系统免费，如果多于三个，你需要升级成名为 Ubuntu Advantage 的企业支持方案套件。这个套件包括 Kernel 实时补丁及以下服务：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">扩展安全维护 – Ubuntu 生命周期后的重要安全更新
+</span></span><span class="line"><span class="cl">Landscape – 针对大规模使用 Ubuntu 的系统管理工具
+</span></span><span class="line"><span class="cl">知识库 – 由 Ubuntu 专家撰写的私人文章和教程
+</span></span><span class="line"><span class="cl">电话和网站支持
+</span></span><span class="line"><span class="cl">价格
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Ubuntu Advantage 包含三种付费计划，即基本计划、标准计划和高级计划。最基础的计划（基本计划）从 单物理节点 225 美元/年和单VPS 75美元/年开始计价。对于 Ubuntu 服务器版和桌面版看上去没有按月订阅。你可以在此处浏览所有计划的细节信息。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">优势： 简单。半自动化。无需重启。支持三个免费系统。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： ４ 个以上主机的话非常昂贵。没有补丁回滚。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开启 Canonical 实时补丁
+</span></span><span class="line"><span class="cl">如果你想在安装后设置实时补丁服务，依照以下方法逐步执行：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">从 https://auth.livepatch.canonical.com/　获取一个密钥。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> sudo snap install canonical-livepatch
+</span></span><span class="line"><span class="cl"> sudo canonical-livepatch enable your-key
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法-７-使用-kernelcare-升级-linux-内核">方法 ７ －　使用 KernelCare 升级 Linux 内核</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">KernelCare 是最新的实时补丁方案。它是 CloudLinux 推出的产品。KernelCare 可以运行在 Ubuntu 和其他的 Linux 发行版中。它每四个小时检查一遍补丁的发布，并在无需确认的情况下安装它们。如果更新后存在问题，可以将补丁进行回滚。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">价格
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">费用，每台服务器：4 美元/月，45 美元/年。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">跟 Ubuntu 实时补丁相比，KernelCare 看起来非常便宜、实惠。好的方面在于也可以按月订阅。另一个前者不具备的功能是支持其他 Linux 发行版，如 Red Hat、CentOS、Debian、Oracle Linux、Amazon Linux 以及 OpenVZ、Proxmox 等虚拟化平台。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">你可以在此处了解 KernelCare 的所有特性和简介，以及所有的付费计划的细节。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">优势： 简单。全自动化。覆盖范围更广的操作系统。补丁回滚。无需重启。对非营利组织提供免费许可。价格低廉。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">缺点： 不是免费的（除了30天的试用期）。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开启 KernelCare 服务
+</span></span><span class="line"><span class="cl">在 https://cloudlinux.com/kernelcare-free-trial5　获取一个 30 天免费试用密钥。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">执行以下命令开启 KernelCare 并注册秘钥。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> sudo wget -qq -O - https://repo.cloudlinux.com/kernelcare/kernelcare_install.sh | bash
+</span></span><span class="line"><span class="cl"> sudo /usr/bin/kcarectl --register KEY
+</span></span><span class="line"><span class="cl">如果你正在寻找一种经济实惠且可靠的商业服务来保持 Linux 服务器上的 Linux 内核更新，那么 KernelCare 是个不错的选择。
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-07-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" data-title="Ubuntu内核升级" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" data-title="Ubuntu内核升级"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" data-title="Ubuntu内核升级"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/ubuntu%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7/" data-title="Ubuntu内核升级"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sentinel-%E7%86%94%E6%96%AD%E9%99%90%E6%B5%81/" class="prev" rel="prev" title="Sentinel 熔断限流学习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Sentinel 熔断限流学习</a>
+            <a href="/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="next" rel="next" title="Ubuntu1804研发环境搭建">Ubuntu1804研发环境搭建<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Dokcer研发环境搭建记录 - Alex&#39;s Bolg</title><meta name="Description" content="Alex&#39;s Bolg"><meta property="og:title" content="Dokcer研发环境搭建记录" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-29T21:40:32+08:00" />
+<meta property="article:modified_time" content="2021-11-29T21:40:32+08:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="Dokcer研发环境搭建记录"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><link rel="prev" href="http://LiuliNing.github.io/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/" /><link rel="next" href="http://LiuliNing.github.io/%E4%B8%87%E5%8E%86%E5%8D%81%E4%BA%94%E5%B9%B4/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Dokcer研发环境搭建记录",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "运维","wordcount":  5308 ,
+        "url": "http:\/\/LiuliNing.github.io\/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA\/","datePublished": "2021-11-29T21:40:32+08:00","dateModified": "2021-11-29T21:40:32+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Dokcer研发环境搭建记录</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E8%BF%90%E7%BB%B4/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>运维</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-11-29">2021-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;5308 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-安装及配置">1.1 安装及配置</a>
+      <ul>
+        <li><a href="#111-安装docker和docker-compose">1.1.1 安装docker和docker-compose</a></li>
+        <li><a href="#112配置docker镜像加速">1.1.2：配置docker镜像加速</a></li>
+        <li><a href="#113打包项目并在docker中运行">1.1.3：打包项目并在Docker中运行</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#1-安装docker">1 安装docker</a></li>
+    <li><a href="#2-设置镜像仓库">2 设置镜像仓库</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#3-安装mysql">3 安装mysql</a></li>
+    <li><a href="#4-安装redis">4 安装redis</a></li>
+    <li><a href="#5-安装nginx">5 安装nginx</a></li>
+    <li><a href="#6安装可视化界面-portainer">6安装可视化界面 portainer</a></li>
+    <li><a href="#7安装elasticsearch">7安装elasticsearch</a></li>
+    <li><a href="#8搭建nexus私服">8搭建nexus私服</a></li>
+    <li><a href="#9搭建jenkins自动化部署工具">9搭建jenkins自动化部署工具</a></li>
+    <li><a href="#10搭建sonarqube代码检测工具">10搭建sonarqube代码检测工具</a></li>
+    <li><a href="#11使用idea连接ubuntu中的docker容器">11使用IDEA连接ubuntu中的docker容器</a></li>
+    <li><a href="#12安装cnnal">12安装cnnal</a></li>
+    <li><a href="#13安装kkfile">13安装kkfile</a></li>
+    <li><a href="#14安装gitea">14安装Gitea</a></li>
+    <li><a href="#15安装tomcat">15安装tomcat</a></li>
+    <li><a href="#16安装showdoc">16安装showdoc</a></li>
+    <li><a href="#17-安装minio">17 安装minio</a></li>
+    <li><a href="#18-安装clickhouse">18 安装clickhouse</a></li>
+    <li><a href="#19-安装harbor">19 安装harbor</a></li>
+    <li><a href="#20-安装rancher">20 安装rancher</a></li>
+    <li><a href="#21-linux命令搜索">21 linux命令搜索</a></li>
+    <li><a href="#22-安装oracle19c">22 安装oracle19c</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1docker-运行时no-chaintargetmatch-by-that-name">1.docker 运行时No chain/target/match by that name</a></li>
+        <li><a href="#2安装sonar启动镜像报错">2.安装sonar启动镜像报错</a></li>
+        <li><a href="#3容器内部时区错误">3，容器内部时区错误</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="一-ubuntu1804-dokcer">一 Ubuntu1804-Dokcer</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Author: JDZT.lln
+</span></span><span class="line"><span class="cl">CreateDate: 2020-12-09
+</span></span><span class="line"><span class="cl">UpdateDate: 2021-10-17
+</span></span><span class="line"><span class="cl">说明:Ubuntu版本:18.04.5 LTS
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11-安装及配置">1.1 安装及配置</h2>
+<h3 id="111-安装docker和docker-compose">1.1.1 安装docker和docker-compose</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#安装docker 
+</span></span><span class="line"><span class="cl">sudo curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#安装docker-compose 
+</span></span><span class="line"><span class="cl">sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.22.0/docker-compose- `uname -s`-`uname -m` -o /usr/local/bin/docker-compose 
+</span></span><span class="line"><span class="cl">sudo curl -L https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64-$(uname -s)-$(uname -m) -o ./docker-compose-linux-x86_64
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#授权docker-compose 
+</span></span><span class="line"><span class="cl">sudo chmod +x /usr/local/bin/docker-compose
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="112配置docker镜像加速">1.1.2：配置docker镜像加速</h3>
+<p>编辑docker配置文件，若没有该文件则新建</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考文档
+</span></span><span class="line"><span class="cl">https://help.aliyun.com/document_detail/60750.html?spm=a2c4g.11186623.6.545.OY7haW
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>新建文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd /etc/docker
+</span></span><span class="line"><span class="cl">touch daemon.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编辑文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vim /etc/docker/daemon.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>加入配置信息，不同的云端(阿里|腾讯)配置不同的镜像，可配置多个镜像</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{ 
+</span></span><span class="line"><span class="cl">	&#34;registry-mirrors&#34;: [&#34;https://docker.mirrors.ustc.edu.cn&#34;,&#34;https://mirror.ccs.tencentyun.com&#34;] 
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">{ 
+</span></span><span class="line"><span class="cl">	&#34;log-driver&#34;:&#34;json-file&#34;, &#34;log-opts&#34;: {&#34;max-size&#34;:&#34;500m&#34;, &#34;max-file&#34;:&#34;3&#34;} 
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使配置生效</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">systemctl daemon-reload
+</span></span><span class="line"><span class="cl">systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="113打包项目并在docker中运行">1.1.3：打包项目并在Docker中运行</h3>
+<p>流程：打包项目jar包，编写Dockerfile文件，放入到同一个文件夹中，使用docker命令打包，运行，就可以外部访问</p>
+<p>Dockerfile 编写说明</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 基础镜像使用java
+</span></span><span class="line"><span class="cl">FROM java:8
+</span></span><span class="line"><span class="cl"># 作者
+</span></span><span class="line"><span class="cl">MAINTAINER jd-lln
+</span></span><span class="line"><span class="cl"># 定义卷
+</span></span><span class="line"><span class="cl">VOLUME /tmp
+</span></span><span class="line"><span class="cl"># 将jar包添加到容器中并更名为test1.jar
+</span></span><span class="line"><span class="cl">ADD easysite-exploration.jar easysite-exploration.jar 
+</span></span><span class="line"><span class="cl"># 指定容器内要暴露的端口
+</span></span><span class="line"><span class="cl">EXPOSE 8013
+</span></span><span class="line"><span class="cl">RUN echo &#34;Asia/Shanghai&#34; &gt; /etc/timezone
+</span></span><span class="line"><span class="cl">ENTRYPOINT [ &#34;sh&#34;, &#34;-c&#34;, &#34;java -jar easysite-exploration.jar&#34; ]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker打包命令
+</span></span><span class="line"><span class="cl">在放置jar包和Dockerfile的目录下，使用命令打包为镜像（注意命令后面有个 &#39;.&#39;,xxx/xxx为镜像名称，v1为版本号）
+</span></span><span class="line"><span class="cl">docker build -t xxx/xxx:v1 . 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.2：在Docker中安装ubuntu[~v.v~]</p>
+<p>拉取 Ubuntu 镜像</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">拉取最新镜像
+</span></span><span class="line"><span class="cl">docker pull ubuntu:latest
+</span></span><span class="line"><span class="cl">拉取指定镜像
+</span></span><span class="line"><span class="cl">docker pull ubuntu:18.04
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在docker的ubuntu中安装jdk</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">复制宿主机中的/java/jdk8.tar.gz 文件至 docker中ubuntu中的/java 文件夹中，ea49f55dde3d为镜像id
+</span></span><span class="line"><span class="cl">docker cp /java/jdk8.tar.gz ea49f55dde3d:/java/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">删除原装的openjdk
+</span></span><span class="line"><span class="cl">sudo apt-get purge openjdk*
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">解压文件、配置环境变量略
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>！！！特别注意！！！</p>
+<p>一定要提交对原镜像的修改，打包成新的镜像（否则在重启原镜像后，无法保留在原镜像上的所有修改，包含各种配置和安装的资源）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker commit -a=&#34;xxx&#34; -m=&#34;test&#34; c8314e7588ad xxx/test:0.1
+</span></span><span class="line"><span class="cl">打包命令          作者    描述信息  原镜像id   新的名字 版本号 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="二-centos7-docker">二 Centos7-Docker</h1>
+<h2 id="1-安装docker">1 安装docker</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/qq_26400011/article/details/113856681
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1、安装之前现卸载系统上原有的Docker
+</span></span><span class="line"><span class="cl">yum remove docker \
+</span></span><span class="line"><span class="cl">docker-client \
+</span></span><span class="line"><span class="cl">docker-client-latest \
+</span></span><span class="line"><span class="cl">docker-common \
+</span></span><span class="line"><span class="cl">docker-latest \
+</span></span><span class="line"><span class="cl">docker-latest-logrotate \
+</span></span><span class="line"><span class="cl">docker-logrotate \
+</span></span><span class="line"><span class="cl">docker-engine
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2、安装需要的安装包yum-utils
+</span></span><span class="line"><span class="cl">yum install -y yum-utils
+</span></span><span class="line"><span class="cl">3、设置镜像仓库地址
+</span></span><span class="line"><span class="cl">阿里云的镜像仓库地址
+</span></span><span class="line"><span class="cl">yum-config-manager \
+</span></span><span class="line"><span class="cl">--add-repo \
+</span></span><span class="line"><span class="cl">http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</span></span><span class="line"><span class="cl">4、安装docker相关的引擎
+</span></span><span class="line"><span class="cl">yum makecache fase 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-设置镜像仓库">2 设置镜像仓库</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vi /etc/docker/daemon.json 
+</span></span><span class="line"><span class="cl">添加 镜像路径
+</span></span><span class="line"><span class="cl">xxx为镜像url
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;registry-mirrors&#34;: [&#34;xxx&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;registry-mirrors&#34;: [&#34;https://nmg8n4ak.mirror.aliyuncs.com&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 中国科技大学       
+</span></span><span class="line"><span class="cl">https://docker.mirrors.ustc.edu.cn
+</span></span><span class="line"><span class="cl"># 网易 
+</span></span><span class="line"><span class="cl">http://hub-mirror.c.163.com
+</span></span><span class="line"><span class="cl"># 阿里云（需要注册账户来进行个人镜像路径获取）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="三-docker软件安装">三 docker软件安装</h1>
+<h2 id="3-安装mysql">3 安装mysql</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">安装最新版本
+</span></span><span class="line"><span class="cl">docker pull mysql:8.0.27
+</span></span><span class="line"><span class="cl">启动容器，将3306端口映射至外部3306端口，设置进入密码123456
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--name mysql:8.0.27 -p 3306:3306 \
+</span></span><span class="line"><span class="cl">-e MYSQL_ROOT_PASSWORD=123456 \
+</span></span><span class="line"><span class="cl">-v /opt/mysql/data:/var/lib/mysql \
+</span></span><span class="line"><span class="cl">-v /opt/mysql/conf.d:/etc/mysql/conf.d \
+</span></span><span class="line"><span class="cl">-d mysql \
+</span></span><span class="line"><span class="cl">--lower_case_table_names=1 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">参数说明
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">进入容器，配置mysql   
+</span></span><span class="line"><span class="cl">***为容器id
+</span></span><span class="line"><span class="cl">docker exec -it mysql /bin/bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">进入mysql，修改远程连接
+</span></span><span class="line"><span class="cl">mysql -uroot -p123456
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">更新root权限
+</span></span><span class="line"><span class="cl">update user set host=&#39;%&#39; where user=&#39;root&#39;;
+</span></span><span class="line"><span class="cl">alter user &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; password expire never;
+</span></span><span class="line"><span class="cl">alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">刷新权限配置
+</span></span><span class="line"><span class="cl">flush privileges;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">重启mysql后使用navicat工具测试连接
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-安装redis">4 安装redis</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 安装最新redis
+</span></span><span class="line"><span class="cl">docker pull redis
+</span></span><span class="line"><span class="cl"># 启动redis镜像
+</span></span><span class="line"><span class="cl">docker run -p 6379:6379 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--name redis \
+</span></span><span class="line"><span class="cl">-v /opt/redis/conf/redis.conf:/etc/redis/redis.conf \
+</span></span><span class="line"><span class="cl">-v /opt/redis/data:/data \
+</span></span><span class="line"><span class="cl">-d redis redis-server /etc/redis/redis.conf \
+</span></span><span class="line"><span class="cl">--appendonly yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 启动参数说明
+</span></span><span class="line"><span class="cl">-p 6379:6379 端口映射：前表示主机部分，：后表示容器部分。
+</span></span><span class="line"><span class="cl">--name redis  指定该容器名称，查看和进行操作都比较方便。
+</span></span><span class="line"><span class="cl">-v 挂载目录，规则与端口映射相同。
+</span></span><span class="line"><span class="cl">-d redis 表示后台启动redis
+</span></span><span class="line"><span class="cl">redis-server /etc/redis/redis.conf  以配置文件启动redis，加载容器内的conf文件（其实找到的是挂载的宿主机映射目录/opt/redis/redis.conf）
+</span></span><span class="line"><span class="cl">appendonly yes 开启redis 持久化
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 设置自启动
+</span></span><span class="line"><span class="cl">docker update --restart=always 镜像启动id
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5-安装nginx">5 安装nginx</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 下载最新nginx
+</span></span><span class="line"><span class="cl">docker pull nginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 将本地主配置文件、从配置文件、静态资源文件映射到容器内部，并启动容器
+</span></span><span class="line"><span class="cl">docker run --name nginx \
+</span></span><span class="line"><span class="cl">-p 80:80 \
+</span></span><span class="line"><span class="cl">-p 6001:6001 \
+</span></span><span class="line"><span class="cl">-p 7001:7001 \
+</span></span><span class="line"><span class="cl">-p 7070:7070 \
+</span></span><span class="line"><span class="cl">-p 10011:10011 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">-v /opt/nginx/docker.nginx.conf:/etc/nginx/nginx.conf \
+</span></span><span class="line"><span class="cl">-v /opt/nginx/docker-nginx-confs/:/opt/nginx/docker-nginx-confs/  \
+</span></span><span class="line"><span class="cl">-v /www/wwwroot/dists/:/www/wwwroot/dists \
+</span></span><span class="line"><span class="cl">-d nginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> docker run -p 80:80 -p 6001:6001 -p6002:6002 -p 7001:7001 -p 7070:7070 -p 10011:10011 --name nginx --restart=always --privileged=true -v /opt/nginx/docker.nginx.conf:/etc/nginx/nginx.conf -v /opt/nginx/docker-nginx-confs/:/opt/nginx/docker-nginx-confs/  -v /www/wwwroot/dists/:/www/wwwroot/dists -d nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6安装可视化界面-portainer">6安装可视化界面 portainer</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#下载镜像
+</span></span><span class="line"><span class="cl">dk pull portainer/portainer
+</span></span><span class="line"><span class="cl">#启动镜像
+</span></span><span class="line"><span class="cl">docker run -d -p 9000:9000 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /var/run/docker.sock:/var/run/docker.sock \
+</span></span><span class="line"><span class="cl">--name prtainer \
+</span></span><span class="line"><span class="cl">docker.io/portainer/portainer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7安装elasticsearch">7安装elasticsearch</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#设置max_map_count的值
+</span></span><span class="line"><span class="cl">sysctl -w vm.max_map_count=262144
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#拉取镜像
+</span></span><span class="line"><span class="cl">docker pull elasticsearch:7.7.0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#启动镜像
+</span></span><span class="line"><span class="cl">docker run --name els -d -e \
+</span></span><span class="line"><span class="cl">ES_JAVA_OPTS=&#34;-Xms512m -Xmx512m&#34; -e &#34;discovery.type=single-node&#34; \
+</span></span><span class="line"><span class="cl">-p 9200:9200 -p 9300:9300 elasticsearch:7.7.0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#访问
+</span></span><span class="line"><span class="cl">http://ip:9200/
+</span></span><span class="line"><span class="cl">出现以下内容代表启动成功
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;name&#34; : &#34;80e63ddf710f&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_name&#34; : &#34;docker-cluster&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_uuid&#34; : &#34;lEabtVF1Tfqgny2MCud7aA&#34;,
+</span></span><span class="line"><span class="cl">  &#34;version&#34; : {
+</span></span><span class="line"><span class="cl">    &#34;number&#34; : &#34;7.7.0&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_flavor&#34; : &#34;default&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_type&#34; : &#34;docker&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_hash&#34; : &#34;81a1e9eda8e6183f5237786246f6dced26a10eaf&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_date&#34; : &#34;2020-05-12T02:01:37.602180Z&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_snapshot&#34; : false,
+</span></span><span class="line"><span class="cl">    &#34;lucene_version&#34; : &#34;8.5.1&#34;,
+</span></span><span class="line"><span class="cl">    &#34;minimum_wire_compatibility_version&#34; : &#34;6.8.0&#34;,
+</span></span><span class="line"><span class="cl">    &#34;minimum_index_compatibility_version&#34; : &#34;6.0.0-beta1&#34;
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  &#34;tagline&#34; : &#34;You Know, for Search&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#安装elasticsearch-head 客户端可视化工具
+</span></span><span class="line"><span class="cl">docker pull mobz/elasticsearch-head:5-alpine
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">  --name=elasticsearch-head \
+</span></span><span class="line"><span class="cl">  --restart=always \
+</span></span><span class="line"><span class="cl">  -p 9100:9100 \
+</span></span><span class="line"><span class="cl">  docker.io/mobz/elasticsearch-head:5-alpine
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="8搭建nexus私服">8搭建nexus私服</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#参考博客
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/u012943767/article/details/79475718
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取最新镜像
+</span></span><span class="line"><span class="cl">docker pull sonatype/nexus3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#运行镜像 挂载磁盘信息、端口8081
+</span></span><span class="line"><span class="cl">docker run -d -p 8081:8081 \
+</span></span><span class="line"><span class="cl">--name nexus \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/nexus/data:/var/nexus-data \
+</span></span><span class="line"><span class="cl">sonatype/nexus3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d --name nexus3 \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-p 8081:8081 \
+</span></span><span class="line"><span class="cl">-p 10000:10000 \
+</span></span><span class="line"><span class="cl">-p 10010:10010 \
+</span></span><span class="line"><span class="cl">-p 10020:10020 \ 
+</span></span><span class="line"><span class="cl">-v /opt/nexus3/nexus-data:/var/nexus-data \
+</span></span><span class="line"><span class="cl">fe48ec3e44c6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dk exec -it nexus3 /bin/bash
+</span></span><span class="line"><span class="cl">dk cp nexus3:/nexus-data/  /opt/nexus/nexus-data/
+</span></span><span class="line"><span class="cl">#登录
+</span></span><span class="line"><span class="cl">默认账号：admin
+</span></span><span class="line"><span class="cl">默认密码：
+</span></span><span class="line"><span class="cl">	默认密码在容器内部的 /nexus-data/admin.password  文件中
+</span></span><span class="line"><span class="cl">	进入容器获取复制密码
+</span></span><span class="line"><span class="cl">#建立仓库
+</span></span><span class="line"><span class="cl">#设置中文
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">8081端口是nexus3的服务端口
+</span></span><span class="line"><span class="cl">10000端口用于host镜像仓库的服务端口
+</span></span><span class="line"><span class="cl">10010端口用于group镜像仓库的服务端口
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="9搭建jenkins自动化部署工具">9搭建jenkins自动化部署工具</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考博客
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/cristianoxm/article/details/125740894?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=java.net.UnknownHostException:&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-5-125740894.nonecase&amp;spm=1018.2226.3001.4187
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#下载镜像
+</span></span><span class="line"><span class="cl">docker pull jenkins/jenkins
+</span></span><span class="line"><span class="cl">#搭建目录
+</span></span><span class="line"><span class="cl">mkdir -p /data/jenkins
+</span></span><span class="line"><span class="cl">chmod 777 /data/jenkins
+</span></span><span class="line"><span class="cl">#启动镜像
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">-p 10240:8080 \
+</span></span><span class="line"><span class="cl">-p 10241:50000 \
+</span></span><span class="line"><span class="cl">-v /data/jenkins:/var/jenkins_home \
+</span></span><span class="line"><span class="cl">-v /etc/localtime:/etc/localtime \
+</span></span><span class="line"><span class="cl">--name jenkins jenkins/jenkins
+</span></span><span class="line"><span class="cl">#获取密码
+</span></span><span class="line"><span class="cl">docker logs jenkins
+</span></span><span class="line"><span class="cl">#修改镜像
+</span></span><span class="line"><span class="cl">vim /data/jenkins/hudson.model.UpdateCenter.xml
+</span></span><span class="line"><span class="cl">#替换url
+</span></span><span class="line"><span class="cl">https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+</span></span><span class="line"><span class="cl">#启动jenkins后，生成updates目录，进入目录
+</span></span><span class="line"><span class="cl">cd /data/jenkins/updates
+</span></span><span class="line"><span class="cl">#替换源
+</span></span><span class="line"><span class="cl">sed -i &#39;s/https:\/\/updates.jenkins.io\/download/http:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g&#39; /data/jenkins/updates/default.json &amp;&amp; sed -i &#39;s/http:\/\/www.google.com/https:\/\/www.baidu.com/g&#39; /data/jenkins/updates/default.json
+</span></span><span class="line"><span class="cl">#正式使用
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="10搭建sonarqube代码检测工具">10搭建sonarqube代码检测工具</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取postgres数据库
+</span></span><span class="line"><span class="cl">docker pull postgres 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#拉取sonarqube
+</span></span><span class="line"><span class="cl">docker pull sonarqube
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#启动数据库
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--name postgres \
+</span></span><span class="line"><span class="cl">-v /opt/postgres/data:/var/lib/postgresql/data \
+</span></span><span class="line"><span class="cl">-e POSTGRES_PASSWORD=root \
+</span></span><span class="line"><span class="cl">-p 5432:5432 \
+</span></span><span class="line"><span class="cl">-d postgres
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#启动sonarqube
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name sonar \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--link postgres \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-e SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonar \
+</span></span><span class="line"><span class="cl">-e SONARQUBE_JDBC_USERNAME=postgres \
+</span></span><span class="line"><span class="cl">-e SONARQUBE_JDBC_PASSWORD=root \
+</span></span><span class="line"><span class="cl">-v /opt/sonarqube/data:/var/lib/postgresql/data \
+</span></span><span class="line"><span class="cl">-v /opt/sonarqube/extensions:/opt/sonarqube/extensions \
+</span></span><span class="line"><span class="cl">-v /opt/sonarqube/logs:/opt/sonarqube/logs  \
+</span></span><span class="line"><span class="cl">-v /opt/sonarqube/conf:/opt/sonarqube/conf \
+</span></span><span class="line"><span class="cl">-p 9003:9000 \
+</span></span><span class="line"><span class="cl">-d sonarqube
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">注意事项和异常处理：
+</span></span><span class="line"><span class="cl">1.通过 -e 填入数据库账号密码
+</span></span><span class="line"><span class="cl">2.需要在postgres中提前创建数据库sonar
+</span></span><span class="line"><span class="cl">3.url &lt;postgres:5432&gt;中的postgres为link的数据库镜像名称，不能为localhost或127.0.0.1
+</span></span><span class="line"><span class="cl">4.需要设置java环境
+</span></span><span class="line"><span class="cl">5.启动报错，logs日志中关键词：
+</span></span><span class="line"><span class="cl">max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+</span></span><span class="line"><span class="cl">解决办法：
+</span></span><span class="line"><span class="cl">切换到root用户修改配置sysctl.conf
+</span></span><span class="line"><span class="cl">vi /etc/sysctl.conf 
+</span></span><span class="line"><span class="cl">添加下面配置
+</span></span><span class="line"><span class="cl">vm.max_map_count=655360
+</span></span><span class="line"><span class="cl">并执行命令
+</span></span><span class="line"><span class="cl">sysctl -p
+</span></span><span class="line"><span class="cl">汉化插件安装失败
+</span></span><span class="line"><span class="cl">从gitee上下载符合版本的汉化包（sonar-l10n-zh-plugin-10.0.jar），放入plugins目录中
+</span></span><span class="line"><span class="cl">检测报告pdf导出
+</span></span><span class="line"><span class="cl">从gitee上下载pdf插件（sonar-pdfreport-plugin-4.0.1.jar），放入plugins目录中
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#使用代码检测
+</span></span><span class="line"><span class="cl">mvn compile sonar:sonar \
+</span></span><span class="line"><span class="cl">  -Dsonar.projectKey=plm \
+</span></span><span class="line"><span class="cl">  -Dsonar.host.url=http://10.10.10.8:9001 \
+</span></span><span class="line"><span class="cl">  -Dsonar.login=c531b16a1d0dbb369fa7dfb79890902264017ef6
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="11使用idea连接ubuntu中的docker容器">11使用IDEA连接ubuntu中的docker容器</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#参考链接
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/qq_43107323/article/details/102854705
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#编辑配置文件
+</span></span><span class="line"><span class="cl">sudo vim /lib/systemd/system/docker.service
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#添加开发2375端口
+</span></span><span class="line"><span class="cl">在[Service]标签中，ExecStart行，末尾sock后面, 添加 
+</span></span><span class="line"><span class="cl">-H tcp://0.0.0.0:2375
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#重新加载配置
+</span></span><span class="line"><span class="cl">systemctl daemon-reload
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#查看端口配置是否启动
+</span></span><span class="line"><span class="cl">netstat -tulp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#安装idea的docker插件
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#进入docker设置，选择tcp连接，输入
+</span></span><span class="line"><span class="cl">tcp://虚拟机ip:2375
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#可以再idea的服务中看到已经连接的docker容器内容
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12安装cnnal">12安装cnnal</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取最新canal
+</span></span><span class="line"><span class="cl">docker pull canal/canal-server:latest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#运行canal容器（导出配置文件后关闭）
+</span></span><span class="line"><span class="cl">docker run -p 11111:11111 --name canal -d canal/canal-server
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#复制容器中文件至指定目录
+</span></span><span class="line"><span class="cl">dk cp canal:/home/admin/canal-server /opt/canal/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#重新带配置映射启动
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name canal \
+</span></span><span class="line"><span class="cl">-e canal.instance.master.address=127.0.0.1:3306 \
+</span></span><span class="line"><span class="cl">-e canal.instance.dbUsername=canal \
+</span></span><span class="line"><span class="cl">-e canal.instance.dbPassword=canal \
+</span></span><span class="line"><span class="cl">-v /opt/canal/canal-server:/home/admin/canal-server \
+</span></span><span class="line"><span class="cl">-p 11111:11111 \
+</span></span><span class="line"><span class="cl">-d canal/canal-server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13安装kkfile">13安装kkfile</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取最新
+</span></span><span class="line"><span class="cl">docker pull keking/kkfileview:v4.0.0
+</span></span><span class="line"><span class="cl">#运行
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name=kkfile \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/minio/data:/opt/minio/data \
+</span></span><span class="line"><span class="cl">-v /tmp/:/tmp/ \
+</span></span><span class="line"><span class="cl">-v /opt/kkfile/kkFileView-3.3.1:/opt/kkFileView-3.3.1 \
+</span></span><span class="line"><span class="cl">-p 8012:8012 \
+</span></span><span class="line"><span class="cl">-d keking/kkfileview:v3.3.1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name=kkfile \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/minio/data:/opt/minio/data \
+</span></span><span class="line"><span class="cl">-v /tmp/:/tmp/ \
+</span></span><span class="line"><span class="cl">-v /opt/kkfile/kkFileView-4.0.0:/opt/kkFileView-4.0.0 \
+</span></span><span class="line"><span class="cl">-p 18012:8012 \
+</span></span><span class="line"><span class="cl">-d keking/kkfileview:v4.0.0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dk exec -it kkfile /bin/bash
+</span></span><span class="line"><span class="cl">kkFileView-4.0.0/
+</span></span><span class="line"><span class="cl">libreoffice7.1/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dk cp kkfile:/opt/kkFileView-4.0.0/ /opt/kkfile/
+</span></span><span class="line"><span class="cl">/opt/openoffice4/program/soffice -headless -accept=&#34;socket,host=127.0.0.1,port=8100;urp;&#34; -nofirststartwizard &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="14安装gitea">14安装Gitea</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取最新
+</span></span><span class="line"><span class="cl">docker pull gitea/gitea
+</span></span><span class="line"><span class="cl">#运行
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--name=gitea \
+</span></span><span class="line"><span class="cl">-p 10025:22 \
+</span></span><span class="line"><span class="cl">-p 10026:3000 \
+</span></span><span class="line"><span class="cl">-v /opt/gitea:/data \
+</span></span><span class="line"><span class="cl">gitea/gitea:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="15安装tomcat">15安装tomcat</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull tomcat
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">--name=tomcat \
+</span></span><span class="line"><span class="cl">-p 12000:12000 \
+</span></span><span class="line"><span class="cl">-v /opt/tomcat_map/:/usr/local/tomcat/ \
+</span></span><span class="line"><span class="cl">-v /usr/share/fonts/:/usr/share/fonts/ \
+</span></span><span class="line"><span class="cl">tomcat:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="16安装showdoc">16安装showdoc</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#拉取最新
+</span></span><span class="line"><span class="cl">docker pull registry.cn-shenzhen.aliyuncs.com/star7th/showdoc
+</span></span><span class="line"><span class="cl">#改名tag
+</span></span><span class="line"><span class="cl">docker tag registry.cn-shenzhen.aliyuncs.com/star7th/showdoc:latest lln/showdoc:latest 
+</span></span><span class="line"><span class="cl">#启动showdoc容器
+</span></span><span class="line"><span class="cl">docker run -d --name showdoc \
+</span></span><span class="line"><span class="cl">--user=root \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-p 5000:80 \
+</span></span><span class="line"><span class="cl">-v /opt/showdoc/html:/var/www/html/ lln/showdoc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="17-安装minio">17 安装minio</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -p 10123:9000 --name minio \
+</span></span><span class="line"><span class="cl">  -e &#34;MINIO_ACCESS_KEY=admin&#34; \
+</span></span><span class="line"><span class="cl">  -e &#34;MINIO_SECRET_KEY=12345678&#34; \
+</span></span><span class="line"><span class="cl">  -v /opt/minio/data:/data \
+</span></span><span class="line"><span class="cl">  -v /opt/minio/config:/root/.minio \
+</span></span><span class="line"><span class="cl">  -d \
+</span></span><span class="line"><span class="cl"> minio/minio:RELEASE.2021-06-14T01-29-23Z server /data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="18-安装clickhouse">18 安装clickhouse</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><h2 id="19-安装harbor">19 安装harbor</h2>
+<h2 id="20-安装rancher">20 安装rancher</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://docs.rancher.cn/rancher2.5/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:stable
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="21-linux命令搜索">21 linux命令搜索</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/jaywcjlove/linux-command
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker pull wcjiang/linux-command
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker pull ghcr.io/jaywcjlove/linux-command:latest
+</span></span><span class="line"><span class="cl">docker run --name linux-command --rm -d -p 9665:3000 wcjiang/linux-command:latest
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker run --name linux-command -itd -p 9665:3000 wcjiang/linux-command:latest
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker run --name linux-command -itd -p 9665:3000 ghcr.io/jaywcjlove/linux-command:latest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://192.168.11.127:9665/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull wcjiang/linux-command
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker pull ghcr.io/jaywcjlove/linux-command:latest
+</span></span><span class="line"><span class="cl">docker run --name  linux-command --rm -d -p 9665:3000 wcjiang/linux-command:latest
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker run --name linux-command -itd -p 9665:3000 wcjiang/linux-command:latest
+</span></span><span class="line"><span class="cl"># Or
+</span></span><span class="line"><span class="cl">docker run --name linux-command -itd -p 9665:3000 ghcr.io/jaywcjlove/linux-command:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="22-安装oracle19c">22 安装oracle19c</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 下载镜像
+</span></span><span class="line"><span class="cl">docker pull registry.cn-hangzhou.aliyuncs.com/zhuyijun/oracle:19c
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir -p /home/oracle/data
+</span></span><span class="line"><span class="cl">chmod 777 /home/oracle/data/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d  \
+</span></span><span class="line"><span class="cl">-p 1524:1521 -p 5502:5500 \
+</span></span><span class="line"><span class="cl">-e ORACLE_SID=ORCLCDB \
+</span></span><span class="line"><span class="cl">-e ORACLE_PDB=ORCLPDB1 \
+</span></span><span class="line"><span class="cl">-e ORACLE_PWD=supermap1234! \
+</span></span><span class="line"><span class="cl">-e ORACLE_EDITION=standard \
+</span></span><span class="line"><span class="cl">-e ORACLE_CHARACTERSET=AL32UTF8 \
+</span></span><span class="line"><span class="cl">-v /home/oracle/data:/opt/oracle/oradata \
+</span></span><span class="line"><span class="cl">--name orcl19c \
+</span></span><span class="line"><span class="cl">registry.cn-hangzhou.aliyuncs.com/zhuyijun/oracle:19c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="四-docker常用命令">四 Docker常用命令</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">启动docker
+</span></span><span class="line"><span class="cl">sudo service docker start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">停止docker
+</span></span><span class="line"><span class="cl">sudo service docker stop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">批量停止docker容器
+</span></span><span class="line"><span class="cl">docker ps | grep sinfcloud | awk &#39;{print $1}&#39; | xargs docker stop
+</span></span><span class="line"><span class="cl">说明 批量停止包含 sinfcloud 关键字的镜像，并打印 容器 id
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">批量删除已停止的docker镜像（docker版本大于1.3使用）
+</span></span><span class="line"><span class="cl">sudo docker container prune
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">批量删除包含某个关键字的镜像（）
+</span></span><span class="line"><span class="cl">docker rmi $(docker images | grep &#39;sinfcloud&#39;)
+</span></span><span class="line"><span class="cl">说明 批量删除所有包含 sinfcloud 的镜像包
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">重启docker
+</span></span><span class="line"><span class="cl">sudo service docker restart
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">列出机器上的容器
+</span></span><span class="line"><span class="cl">docker images
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">查看所有容器
+</span></span><span class="line"><span class="cl">docker ps -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">启动容器
+</span></span><span class="line"><span class="cl">docker run -itd 容器名称或镜像编号
+</span></span><span class="line"><span class="cl">启动容器并将容器内端口2222映射到外部宿主机端口1111
+</span></span><span class="line"><span class="cl">docker run -itd -p 1111:2222
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">进入容器
+</span></span><span class="line"><span class="cl">docker attach 容器编号（使用 attach 命令有一个问题。当多个窗口同时使用该命令进入该容器时，所有的窗口都会同步显示。如果有一个窗口阻塞了，那么其他窗口也无法再进行操作。）
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">关闭容器
+</span></span><span class="line"><span class="cl">docker stop 容器编号
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">在容器中开启一个交互模式的终端:
+</span></span><span class="line"><span class="cl">xxx 为 镜像id
+</span></span><span class="line"><span class="cl">docker exec -it xxx /bin/bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">删除容器 容器名称:标签
+</span></span><span class="line"><span class="cl">docker rmi REPOSITORY:TAG 
+</span></span><span class="line"><span class="cl">常见错误:
+</span></span><span class="line"><span class="cl">&#34;Error response from daemon: conflict: unable to delete a838c1b6a0e4 (cannot be forced) - image has dependent child images&#34;
+</span></span><span class="line"><span class="cl">或
+</span></span><span class="line"><span class="cl">&#34;Error response from daemon: conflict: unable to remove repository reference &#34;ubuntu-1215:V0.1&#34; (must force) - container 0257eaaf90a4 is using its referenced image a838c1b6a0e4&#34;
+</span></span><span class="line"><span class="cl">使用以下命令后，再次执行删除镜像命令
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">删除所有停止的容器
+</span></span><span class="line"><span class="cl">docker rm $(docker ps -a -q)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">在docker反复build后，会存留很多none镜像，下面命令一键删除所有none镜像
+</span></span><span class="line"><span class="cl">docker rmi `docker images | grep  &#39;&lt;none&gt;&#39; | awk &#39;{print $3}&#39;`
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">提交修改后的镜像
+</span></span><span class="line"><span class="cl">docker commit -a=&#34;xxx&#34; -m=&#34;test&#34; c8314e7588ad xxx/test:0.1
+</span></span><span class="line"><span class="cl">打包命令          作者    描述信息  原镜像id   新的名字 版本号 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker commit -a=&#34;jdzt.lln&#34; -m=&#34;add:vim&#34; dc6133ec39d8 nginx:0.3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">删除多余tag
+</span></span><span class="line"><span class="cl">docker rmi 仓库名称:TAG
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">设置自启动
+</span></span><span class="line"><span class="cl">docker update --restart=always ID
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 查看本机docker所有网络
+</span></span><span class="line"><span class="cl">docker network ls
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 创建网络  --driver 是网络模式，--subnet是子网掩码，后面的/16表示可以生成6万多个ip， --gateway是网关地址
+</span></span><span class="line"><span class="cl">docker network create 网络名称 --driver bridge --subnet 192.168.0.1/16 --gateway 192.168.0.2 mynet
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 将容器加入到当前网络
+</span></span><span class="line"><span class="cl">docker network connect 网络名称 容器名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 断开容器的网络 （容器必须是运行状态才能断开连接）
+</span></span><span class="line"><span class="cl">docker network disconnect 网络名称 容器名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 查看网络的详细信息
+</span></span><span class="line"><span class="cl">docker network inspect 网络id/网络名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#删除网络
+</span></span><span class="line"><span class="cl">docker network rm 网络id/网络名称
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 删除所有未使用的网络
+</span></span><span class="line"><span class="cl">docker network prune --f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="五-dockerfile">五 Dockerfile</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 基础镜像使用java
+</span></span><span class="line"><span class="cl">FROM java:8
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 作者
+</span></span><span class="line"><span class="cl">MAINTAINER jd-lln
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># VOLUME：用于指定持久化目录
+</span></span><span class="line"><span class="cl">VOLUME /tmp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># ADD：将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
+</span></span><span class="line"><span class="cl">ADD test.jar app.jar 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># EXPOSE：指定于外界交互的端口
+</span></span><span class="line"><span class="cl">EXPOSE 9999
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># RUN：构建镜像时执行的命令
+</span></span><span class="line"><span class="cl">RUN echo &#34;Asia/Shanghai&#34; &gt; /etc/timezone
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># ENTRYPOINT：配置容器，使其可执行化。配合CMD可省去&#34;application&#34;，只使用参数。
+</span></span><span class="line"><span class="cl">ENTRYPOINT [&#34;java&#34;,&#34;-Djava.security.egd=file:/dev/./urandom&#34;,&#34;-jar&#34;,&#34;app.jar&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#构建镜像
+</span></span><span class="line"><span class="cl">docker build -t plm .
+</span></span><span class="line"><span class="cl">#运行镜像
+</span></span><span class="line"><span class="cl">dk run --name=plm \
+</span></span><span class="line"><span class="cl">-p 6003:6003 \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">-d plm 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="六-常见问题">六 常见问题</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">基础镜像没有常用命令
+</span></span><span class="line"><span class="cl">    配置 镜像
+</span></span><span class="line"><span class="cl">    vim /etc/apt/sources.list
+</span></span><span class="line"><span class="cl">    复制阿里云镜像,替换原国外镜像
+</span></span><span class="line"><span class="cl">    deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse 
+</span></span><span class="line"><span class="cl">    deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">常用命令缺失
+</span></span><span class="line"><span class="cl">    安装vim
+</span></span><span class="line"><span class="cl">        apt-get update
+</span></span><span class="line"><span class="cl">        apt-get install vim
+</span></span><span class="line"><span class="cl">    安装ping ifconfig
+</span></span><span class="line"><span class="cl">        apt-get update
+</span></span><span class="line"><span class="cl">        apt install iputils-ping    # ping
+</span></span><span class="line"><span class="cl">        apt install net-tools       # ifconfig 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="七-出现的异常及解决方案">七 出现的异常及解决方案</h1>
+<h3 id="1docker-运行时no-chaintargetmatch-by-that-name">1.docker 运行时No chain/target/match by that name</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">启动镜像出现iptables: No chain/target/match by that name
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解决方案</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">service docker restart
+</span></span><span class="line"><span class="cl">或
+</span></span><span class="line"><span class="cl">systemctl restart  docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2安装sonar启动镜像报错">2.安装sonar启动镜像报错</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">日志内容
+</span></span><span class="line"><span class="cl">max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">解决办法：
+</span></span><span class="line"><span class="cl">切换到root用户修改配置sysctl.conf
+</span></span><span class="line"><span class="cl">vi /etc/sysctl.conf 
+</span></span><span class="line"><span class="cl">添加下面配置：
+</span></span><span class="line"><span class="cl">vm.max_map_count=655360
+</span></span><span class="line"><span class="cl">并执行命令：
+</span></span><span class="line"><span class="cl">sysctl -p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3容器内部时区错误">3，容器内部时区错误</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.复制宿主机上的zoneinfo文件夹到容器下的/usr/share/
+</span></span><span class="line"><span class="cl">docker cp /usr/share/zoneinfo ef761110f5a2:/usr/share/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2.执行
+</span></span><span class="line"><span class="cl">docker exec -it detectronwj /bin/bash
+</span></span><span class="line"><span class="cl">进入dokcer内后，执行以下操作：
+</span></span><span class="line"><span class="cl">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span></span><span class="line"><span class="cl">echo &#34;Asia/Shanghai&#34; &gt; /etc/timezone
+</span></span><span class="line"><span class="cl">输入验证
+</span></span><span class="line"><span class="cl">date
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">2.compose脚本中指定时区（推荐）
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-11-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Dokcer研发环境搭建记录" data-hashtags="运维"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-hashtag="运维"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Dokcer研发环境搭建记录"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Dokcer研发环境搭建记录"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-title="Dokcer研发环境搭建记录"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/" class="prev" rel="prev" title="读书笔记--《浪潮之巅》"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>读书笔记--《浪潮之巅》</a>
+            <a href="/%E4%B8%87%E5%8E%86%E5%8D%81%E4%BA%94%E5%B9%B4/" class="next" rel="next" title="读书笔记--《万历十五年》">读书笔记--《万历十五年》<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

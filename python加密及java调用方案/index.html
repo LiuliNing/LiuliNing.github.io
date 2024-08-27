@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python加密及Java调用方案 - Alex&#39;s Bolg</title><meta name="Description" content="Python加密及Java调用方案"><meta property="og:title" content="Python加密及Java调用方案" />
+<meta property="og:description" content="Python加密及Java调用方案" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-11-05T00:00:00+00:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="Python加密及Java调用方案"/>
+<meta name="twitter:description" content="Python加密及Java调用方案"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" /><link rel="prev" href="http://LiuliNing.github.io/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" /><link rel="next" href="http://LiuliNing.github.io/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python加密及Java调用方案",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "其他","wordcount":  1703 ,
+        "url": "http:\/\/LiuliNing.github.io\/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88\/","datePublished": "2021-11-05T00:00:00+00:00","dateModified": "2021-11-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "Python加密及Java调用方案"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python加密及Java调用方案</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%85%B6%E4%BB%96/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>其他</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-11-05">2021-11-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1703 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#加密方案">加密方案</a>
+      <ul>
+        <li><a href="#windows">Windows</a>
+          <ul>
+            <li><a href="#pyinstaller打包方法">pyinstaller打包方法</a></li>
+            <li><a href="#测试python脚本">测试python脚本</a></li>
+          </ul>
+        </li>
+        <li><a href="#linux">Linux</a>
+          <ul>
+            <li><a href="#将python编译成so文件进行调用">将python编译成so文件进行调用</a></li>
+            <li><a href="#测试python脚本-1">测试python脚本</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#调用方案">调用方案</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#数据对接思路">数据对接思路</a></li>
+            <li><a href="#测试调用代码-java">测试调用代码 Java</a></li>
+            <li><a href="#测试调用代码-python">测试调用代码 Python</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="python加密及java调用方案">Python加密及Java调用方案</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">createBy lln
+</span></span><span class="line"><span class="cl">updateTime 2021-09-28
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="加密方案">加密方案</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">官方网站
+</span></span><span class="line"><span class="cl">http://www.pyinstaller.org
+</span></span><span class="line"><span class="cl">官网文档
+</span></span><span class="line"><span class="cl">https://pyinstaller.readthedocs.io/en/stable/
+</span></span><span class="line"><span class="cl">参考博客
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/weix-l/p/10881373.html
+</span></span><span class="line"><span class="cl">https://zhuanlan.zhihu.com/p/85760495
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/x_w_haohan/article/details/99233561
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/Iv_zzy/article/details/107462210
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/qq_16104903/article/details/90444269
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/qq_41699621/article/details/103596742
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="windows">Windows</h3>
+<h4 id="pyinstaller打包方法">pyinstaller打包方法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#安装pyinstaller
+</span></span><span class="line"><span class="cl">pip install pyinstaller
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PyInstaller提供了两种把.py文件包成.exe文件的方式：
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">第一种：把由.py文件打包而成的.exe文件及相关文件放在一个目录中。
+</span></span><span class="line"><span class="cl">语法：pyinstaller 应用程序
+</span></span><span class="line"><span class="cl">eg：pyinstaller Hello.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">第二种：加上 -F 参数后把制作出的.exe打包成一个独立的.exe格式的可执行文件。
+</span></span><span class="line"><span class="cl">语法：pyinstaller -F 应用程序
+</span></span><span class="line"><span class="cl">eg：pyinstaller -F Hello.py 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">虽然扩平台，但是pyinstaller也只能在当前操作系统中运行，比如你用mac只能打包出mac上的可执行脚本，要是你想打包出windwos电脑上的可执行程序，你就要用windows执行打包命令。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">如果你的脚本文件中包含其他脚本，比如hello.py包含自定义脚本(world.py)或是系统脚本(sys.py)：则需要在打包的时候加上其他脚本的路径。通过-p指定第三方包的路径，一条路径对应一个-p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">eg：pyinstaller -F -p C:\SystemLib\site-packages -p C:\MyLib Hello.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">执行一次打包命令通常会生成两个目录一个附件，分别是build、dist、和xx.spec。build是编译过程中的中间产物，dist是最终可执行程序目录，spec文件是类似缓存，如果你第二次打包，则需要先把spec删掉，否则第二次打包会受影响。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参数介绍
+</span></span><span class="line"><span class="cl">-a：不包含编码.在支持Unicode的python版本上默认包含所有的编码
+</span></span><span class="line"><span class="cl">-c：使用控制台子系统执行(默认)(只对Windows有效)
+</span></span><span class="line"><span class="cl">-d：产生debug版本的可执行文件
+</span></span><span class="line"><span class="cl">-i ：指定打包程序使用的图标（icon）文件
+</span></span><span class="line"><span class="cl">-F：打包成可执行程序
+</span></span><span class="line"><span class="cl">-h：查看帮助
+</span></span><span class="line"><span class="cl">-p：添加使用的第三方库路径
+</span></span><span class="line"><span class="cl">-v：查看 PyInstaller 版本
+</span></span><span class="line"><span class="cl">-w：取消控制台显示（默认是显示控制台的）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">eg:
+</span></span><span class="line"><span class="cl">pyinstaller -F -p C:\SystemLib\site-packages -p C:\MyLib main.py -i C:\image\excel.ico
+</span></span><span class="line"><span class="cl">解释：
+</span></span><span class="line"><span class="cl">打包 main.py 脚本
+</span></span><span class="line"><span class="cl">main.py包含第三方脚本，一个是系统脚本，一个是自定义脚本
+</span></span><span class="line"><span class="cl">设置可执行程序的图标为excel.ico
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试python脚本">测试python脚本</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from tkinter import *
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def btnClick():
+</span></span><span class="line"><span class="cl">    textLabel[&#39;text&#39;] = &#39;我点击了按钮&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">root = Tk(className=&#34;测试打包&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">textLabel = Label(root, text=&#39;提示显示&#39;, justify=LEFT, padx=10)
+</span></span><span class="line"><span class="cl">textLabel.pack(side=TOP)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">btn = Button(root)
+</span></span><span class="line"><span class="cl">btn[&#39;text&#39;] = &#39;点击测试&#39;
+</span></span><span class="line"><span class="cl">btn[&#39;command&#39;] = btnClick
+</span></span><span class="line"><span class="cl">btn.pack(side=BOTTOM)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mainloop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="linux">Linux</h3>
+<h4 id="将python编译成so文件进行调用">将python编译成so文件进行调用</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.安装cython，gcc
+</span></span><span class="line"><span class="cl">sudo apt install python3-dev gcc
+</span></span><span class="line"><span class="cl">2.安装cpython
+</span></span><span class="line"><span class="cl">pip3 install cython
+</span></span><span class="line"><span class="cl">3.将需要转化的python源文件，代码调用python文件，打包加密文件放在同一个目录中
+</span></span><span class="line"><span class="cl">4.在当前目录中执行
+</span></span><span class="line"><span class="cl">python3 setup.py build_ext
+</span></span><span class="line"><span class="cl">5.生成文件 /build/lib.linux-x86_64-3.6/t1.cpython-36m-x86_64-linux-gnu.so*
+</span></span><span class="line"><span class="cl">6.复制 /build/lib.linux-x86_64-3.6/t1.cpython-36m-x86_64-linux-gnu.so* 与
+</span></span><span class="line"><span class="cl">t3 处于同一文件夹
+</span></span><span class="line"><span class="cl">7.删除 t1.py rm t1.py
+</span></span><span class="line"><span class="cl">8.调用t3.py  python t3.py
+</span></span><span class="line"><span class="cl">9.正常输出t1.py 的内容
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试python脚本-1">测试python脚本</h4>
+<p>脚本1 	t1.py</p>
+<p>说明：数据脚本，即需要被加密的源文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import datetime
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class Today():
+</span></span><span class="line"><span class="cl">    def get_time(self):
+</span></span><span class="line"><span class="cl">        print(datetime.datetime.now())
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    def say(self):
+</span></span><span class="line"><span class="cl">        print(&#34;hello from JC!&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>脚本2 t2.py</p>
+<p>说明：加密脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from distutils.core import setup
+</span></span><span class="line"><span class="cl">from Cython.Build import cythonize
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">setup(ext_modules = cythonize([&#34;t1.py&#34;]))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>脚本3   t3.py</p>
+<p>说明： 进行了对脚本  t1 的调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">from mytest import Today
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">t = Today()
+</span></span><span class="line"><span class="cl">t.get_time()
+</span></span><span class="line"><span class="cl">t.say()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="调用方案">调用方案</h2>
+<h4 id="数据对接思路">数据对接思路</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1.python方，
+</span></span><span class="line"><span class="cl">	将核心代码加密为 .so 文件，通过外层函数处理和转换数据，转换后的数据，对加密脚本进行黑箱调用。
+</span></span><span class="line"><span class="cl">2.java方，
+</span></span><span class="line"><span class="cl">	定义python脚本路径，定义JSON数据对象格式，转换JSON数据为数据流，调用python暴露的外层壳函数，使用如下代码进行调用
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试调用代码-java">测试调用代码 Java</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">@Component
+</span></span><span class="line"><span class="cl">public class AlgorithmExecuteHelper {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private static final Logger logger = LoggerFactory.getLogger(AlgorithmExecuteHelper.class);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private final String pythonPath;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private final ThreadPoolTaskExecutor taskExecutor;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public AlgorithmExecuteHelper(@Value(&#34;${python-path}&#34;) String pythonPath, ThreadPoolTaskExecutor taskExecutor) {
+</span></span><span class="line"><span class="cl">        this.pythonPath = pythonPath;
+</span></span><span class="line"><span class="cl">        this.taskExecutor = taskExecutor;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public ProcessResultDto execute( File directory,  File enterFile,  DataConsumer consumer){
+</span></span><span class="line"><span class="cl">        Process process = null;
+</span></span><span class="line"><span class="cl">        try {
+</span></span><span class="line"><span class="cl">            process = new ProcessBuilder()
+</span></span><span class="line"><span class="cl">                    .command(pythonPath, enterFile.getName())
+</span></span><span class="line"><span class="cl">                    .directory(directory)
+</span></span><span class="line"><span class="cl">                    .start();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            final BlockingQueue&lt;String&gt; inputQueue = new LinkedBlockingQueue&lt;&gt;();
+</span></span><span class="line"><span class="cl">            final BlockingQueue&lt;String&gt; errorQueue = new LinkedBlockingQueue&lt;&gt;();
+</span></span><span class="line"><span class="cl">            taskExecutor.execute(this.readStreamToQueue(new BufferedInputStream(process.getInputStream()), inputQueue));
+</span></span><span class="line"><span class="cl">            taskExecutor.execute(this.readStreamToQueue(new BufferedInputStream(process.getErrorStream()), errorQueue));
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            try (final OutputStream outputStream = new BufferedOutputStream(new GZIPOutputStream(process.getOutputStream()))) {
+</span></span><span class="line"><span class="cl">                consumer.accept(outputStream);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            return new ProcessResultDto(process.waitFor(), inputQueue, errorQueue);
+</span></span><span class="line"><span class="cl">        } catch (Exception e) {
+</span></span><span class="line"><span class="cl">            throw new RuntimeException();
+</span></span><span class="line"><span class="cl">        } finally {
+</span></span><span class="line"><span class="cl">            if (Objects.nonNull(process)) {
+</span></span><span class="line"><span class="cl">                process.destroy();
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    private Runnable readStreamToQueue( InputStream inputStream,  BlockingQueue&lt;String&gt; queue) {
+</span></span><span class="line"><span class="cl">        return () -&gt; {
+</span></span><span class="line"><span class="cl">            String line;
+</span></span><span class="line"><span class="cl">            try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+</span></span><span class="line"><span class="cl">                while ((line = reader.readLine()) != null) {
+</span></span><span class="line"><span class="cl">                    queue.add(line);
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">            } catch (Exception e) {
+</span></span><span class="line"><span class="cl">                logger.warn(e.getMessage(), e);
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        };
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    @FunctionalInterface
+</span></span><span class="line"><span class="cl">    public interface DataConsumer {
+</span></span><span class="line"><span class="cl">        void accept(OutputStream out) throws Exception;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试调用代码-python">测试调用代码 Python</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import sys
+</span></span><span class="line"><span class="cl">import gzip
+</span></span><span class="line"><span class="cl">import json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def getInputData():
+</span></span><span class="line"><span class="cl">    gzipByteArray = sys.stdin.buffer.read()
+</span></span><span class="line"><span class="cl">    jsonStr = gzip.decompress(gzipByteArray).decode(&#34;utf-8&#34;)
+</span></span><span class="line"><span class="cl">    return json.loads(jsonStr)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-11-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" data-title="Python加密及Java调用方案" data-hashtags="其他"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" data-hashtag="其他"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" data-title="Python加密及Java调用方案"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" data-title="Python加密及Java调用方案"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/python%E5%8A%A0%E5%AF%86%E5%8F%8Ajava%E8%B0%83%E7%94%A8%E6%96%B9%E6%A1%88/" data-title="Python加密及Java调用方案"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%85%B6%E4%BB%96/">其他</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ubuntu1804-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="prev" rel="prev" title="Ubuntu1804研发环境搭建"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Ubuntu1804研发环境搭建</a>
+            <a href="/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/" class="next" rel="next" title="读书笔记--《浪潮之巅》">读书笔记--《浪潮之巅》<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

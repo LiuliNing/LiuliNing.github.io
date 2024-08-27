@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>系统、数据库性能测试记录 - Alex&#39;s Bolg</title><meta name="Description" content="系统、数据库性能测试记录"><meta property="og:title" content="系统、数据库性能测试记录" />
+<meta property="og:description" content="系统、数据库性能测试记录" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-08-05T00:00:00+00:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="系统、数据库性能测试记录"/>
+<meta name="twitter:description" content="系统、数据库性能测试记录"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" /><link rel="prev" href="http://LiuliNing.github.io/%E4%B8%89%E6%96%B9%E5%AF%B9%E6%8E%A5%E6%80%9D%E8%80%83/" /><link rel="next" href="http://LiuliNing.github.io/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%B5%81%E7%A8%8B/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "系统、数据库性能测试记录",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "测试","wordcount":  1302 ,
+        "url": "http:\/\/LiuliNing.github.io\/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93\/","datePublished": "2023-08-05T00:00:00+00:00","dateModified": "2023-08-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "系统、数据库性能测试记录"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">系统、数据库性能测试记录</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>测试</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-05">2023-08-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1302 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前期思考">前期思考</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#如何评估软件系统所需要的资源信息">如何评估软件系统所需要的资源信息</a></li>
+            <li><a href="#如何进行接口性能测试">如何进行接口性能测试</a></li>
+            <li><a href="#如何进行数据库性能测试">如何进行数据库性能测试</a></li>
+            <li><a href="#如何使用jmeter进行测试">如何使用Jmeter进行测试</a></li>
+            <li><a href="#如何获取测试报告记录">如何获取测试报告记录</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#梳理和拆分测试记录">梳理和拆分&amp;测试记录</a>
+      <ul>
+        <li><a href="#配置元件">配置元件</a></li>
+        <li><a href="#取样器">取样器</a></li>
+        <li><a href="#控制器">控制器</a>
+          <ul>
+            <li><a href="#多线程下取样顺序执行">多线程下取样顺序执行</a></li>
+            <li><a href="#多线程下只进行一次取样">多线程下只进行一次取样</a></li>
+            <li><a href="#cvs文件">CVS文件</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#测试报告">测试报告</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#环境配置及命令">环境配置及命令</a></li>
+            <li><a href="#测试报告的汉化操作">测试报告的汉化操作</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#服务器监控">服务器监控</a></li>
+    <li><a href="#复盘思考">复盘&amp;思考</a>
+      <ul>
+        <li><a href="#jmeter可以在开发中提供哪些帮助">Jmeter可以在开发中提供哪些帮助</a></li>
+        <li><a href="#如果再来一次该如何优化以上过程">如果再来一次，该如何优化以上过程</a></li>
+        <li><a href="#其他思考">其他思考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>系统、数据库性能测试记录</p>
+<h1 id="系统数据库性能测试记录">系统、数据库性能测试记录</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">createBy lln
+</span></span><span class="line"><span class="cl">createTime 2023-03-01
+</span></span><span class="line"><span class="cl">Jmeter version: V5.3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">背景:
+</span></span><span class="line"><span class="cl">公司内部某ToB大型项目前期准备工作之一，评估在特定条件下的系统性能、数据库性能情况，通过此测试决定需要申请的资源数量。
+</span></span><span class="line"><span class="cl">使用Jmeter完成Api接口测试及数据库吞吐测试。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="前期思考">前期思考</h2>
+<h4 id="如何评估软件系统所需要的资源信息">如何评估软件系统所需要的资源信息</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406105253687.png"
+        data-srcset="/image-20230406105253687.png, /image-20230406105253687.png 1.5x, /image-20230406105253687.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406105253687.png"
+        title="image-20230406105253687" /></p>
+<h4 id="如何进行接口性能测试">如何进行接口性能测试</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406105301085.png"
+        data-srcset="/image-20230406105301085.png, /image-20230406105301085.png 1.5x, /image-20230406105301085.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406105301085.png"
+        title="image-20230406105301085" /></p>
+<h4 id="如何进行数据库性能测试">如何进行数据库性能测试</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406105304601.png"
+        data-srcset="/image-20230406105304601.png, /image-20230406105304601.png 1.5x, /image-20230406105304601.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406105304601.png"
+        title="image-20230406105304601" /></p>
+<h4 id="如何使用jmeter进行测试">如何使用Jmeter进行测试</h4>
+<h4 id="如何获取测试报告记录">如何获取测试报告记录</h4>
+<h1 id="jmeter学习记录">Jmeter学习记录</h1>
+<h2 id="梳理和拆分测试记录">梳理和拆分&amp;测试记录</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406110933903.png"
+        data-srcset="/image-20230406110933903.png, /image-20230406110933903.png 1.5x, /image-20230406110933903.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406110933903.png"
+        title="image-20230406110933903" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">线程组
+</span></span><span class="line"><span class="cl">配置原件
+</span></span><span class="line"><span class="cl">控制器
+</span></span><span class="line"><span class="cl">取样器
+</span></span><span class="line"><span class="cl">处理器
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">本质上是对一组资源的生命周期进行管理。
+</span></span><span class="line"><span class="cl">资源即需要测试的场景，这个场景可以是接口、可以是SQL语句等等。
+</span></span><span class="line"><span class="cl">然后针对该资源，进行相应的配置，如接口地址，请求数据，jdbc连接参数等等。
+</span></span><span class="line"><span class="cl">对于资源的请求，又可以进行各种逻辑的控制，如多线程的执行，顺序的执行，循环执行等等。
+</span></span><span class="line"><span class="cl">对于资源的请求结果，可以进行后置的处理，断言，数据处理等等。
+</span></span><span class="line"><span class="cl">对于资源的整个生命周期，又可以生成报告，包含了资源的请求信息，结果信息，异常信息，吞吐信息等等。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="配置元件">配置元件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">HTTP配置
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">JDBC配置，需要将驱动文件，导入指定目录，或者放入jmeter中lib目录下
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="取样器">取样器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">自定义url，token变量
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">测试线程递增配置-插件 Stepping Thread Group 的安装和处理 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111012047.png"
+        data-srcset="/image-20230406111012047.png, /image-20230406111012047.png 1.5x, /image-20230406111012047.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111012047.png"
+        title="image-20230406111012047" /></p>
+<h3 id="控制器">控制器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">一些特殊测试情况，不可让测试用例随机执行，如顺序执行，循环执行等情况。使用控制器进行管理。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="多线程下取样顺序执行">多线程下取样顺序执行</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">逻辑控制器-临界资源控制器，给每个请求进行加锁 || 或单线程，设置一个线程顺序执行，会按照取样上下顺序
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="多线程下只进行一次取样">多线程下只进行一次取样</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">逻辑控制器-仅一次控制器
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="cvs文件">CVS文件</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111023328.png"
+        data-srcset="/image-20230406111023328.png, /image-20230406111023328.png 1.5x, /image-20230406111023328.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111023328.png"
+        title="image-20230406111023328" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">对于大批量的数据，如批量的URL，批量的SQL语句等，可以通过CVS文件读取的方式，快速执行取样配置
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="测试报告">测试报告</h2>
+<h4 id="环境配置及命令">环境配置及命令</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">linux中环境的配置 
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/Mrlijie00/article/details/121040418
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111032328.png"
+        data-srcset="/image-20230406111032328.png, /image-20230406111032328.png 1.5x, /image-20230406111032328.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111032328.png"
+        title="image-20230406111032328" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-n 非GUI 模式运行 JMeter
+</span></span><span class="line"><span class="cl">-t 选择 .jmx   运行的jMeter 测试脚本文件
+</span></span><span class="line"><span class="cl">-l 结果 日志文件，记录结果的文件  后缀要是 .jtl
+</span></span><span class="line"><span class="cl">-e 生成报告
+</span></span><span class="line"><span class="cl">-o 输出报告文件
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">删除测试报告记录
+</span></span><span class="line"><span class="cl">rm -rf /sda/apache-jmeter-5.3/bin/report_output
+</span></span><span class="line"><span class="cl">删除测试日志
+</span></span><span class="line"><span class="cl">rm -rf /sda/apache-jmeter-5.3/bin/logFile
+</span></span><span class="line"><span class="cl">执行测试语句
+</span></span><span class="line"><span class="cl">./jmeter.sh -n -t /sda/apache-jmeter-5.3/jmx/test.jmx -l logFile-e -o ./report_output
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="测试报告的汉化操作">测试报告的汉化操作</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://gitee.com/smooth00/jmeter-cn-report-template
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="服务器监控">服务器监控</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">对于Api测试，试用k8s中的Prometheus+Grafana 进行性能的监控
+</span></span><span class="line"><span class="cl">对于数据测试，因为是裸服务器，只有基本数据库和数据，无权限按照其他监控软件。故使用 sar 命令进行监控，将监控数据导出为文件，处理至excel后，转为折线图，展示性能情况。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111138954.png"
+        data-srcset="/image-20230406111138954.png, /image-20230406111138954.png 1.5x, /image-20230406111138954.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111138954.png"
+        title="/image-20230406111138954.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111200988.png"
+        data-srcset="/image-20230406111200988.png, /image-20230406111200988.png 1.5x, /image-20230406111200988.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111200988.png"
+        title="image-20230406111200988" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111203674.png"
+        data-srcset="/image-20230406111203674.png, /image-20230406111203674.png 1.5x, /image-20230406111203674.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111203674.png"
+        title="image-20230406111203674" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">后台执行cpu监测，5秒一次，执行180次==15分钟
+</span></span><span class="line"><span class="cl">	nohup sar -u 5 180 &gt;/sarCpu.txt &amp;
+</span></span><span class="line"><span class="cl">后台执行Mem监测，5秒一次，执行180次==15分钟
+</span></span><span class="line"><span class="cl">	nohup sar -r 5 180 &gt;/sarMem.txt &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="复盘思考">复盘&amp;思考</h2>
+<h3 id="jmeter可以在开发中提供哪些帮助">Jmeter可以在开发中提供哪些帮助</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111214384.png"
+        data-srcset="/image-20230406111214384.png, /image-20230406111214384.png 1.5x, /image-20230406111214384.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111214384.png"
+        title="image-20230406111214384" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">分布式数据幂等性测试，大批测试数据入库
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如果再来一次该如何优化以上过程">如果再来一次，该如何优化以上过程</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">使用工具如jenkins，将脚本自动化执行，完成测试，输出报告，输出内容的过程。可以写代码处理。而不是手动执行，手动录入。（经验不足导致）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="其他思考">其他思考</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">【设计】GUI界面设计的灵活性
+</span></span><span class="line"><span class="cl">【对比】postman、apipost差异
+</span></span><span class="line"><span class="cl">【源码】线程组设计，自己设计一个线程处理函数，可以扩展，动态配置
+</span></span><span class="line"><span class="cl">【源码】POI模板报告的组合与生成
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111226562.png"
+        data-srcset="/image-20230406111226562.png, /image-20230406111226562.png 1.5x, /image-20230406111226562.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111226562.png"
+        title="image-20230406111226562" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image-20230406111238954.png"
+        data-srcset="/image-20230406111238954.png, /image-20230406111238954.png 1.5x, /image-20230406111238954.png 2x"
+        data-sizes="auto"
+        alt="/image-20230406111238954.png"
+        title="image-20230406111238954" /></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" data-title="系统、数据库性能测试记录" data-hashtags="测试"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" data-hashtag="测试"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" data-title="系统、数据库性能测试记录"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" data-title="系统、数据库性能测试记录"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E9%97%AE%E9%A2%98%E5%92%8C%E6%80%BB%E7%BB%93/" data-title="系统、数据库性能测试记录"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E6%B5%8B%E8%AF%95/">测试</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E4%B8%89%E6%96%B9%E5%AF%B9%E6%8E%A5%E6%80%9D%E8%80%83/" class="prev" rel="prev" title="三方对接思考"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>三方对接思考</a>
+            <a href="/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%B5%81%E7%A8%8B/" class="next" rel="next" title="项目各阶段流程图">项目各阶段流程图<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

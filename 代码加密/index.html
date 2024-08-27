@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>代码加密工具Proguard使用说明 - Alex&#39;s Bolg</title><meta name="Description" content="代码加密工具Proguard使用说明"><meta property="og:title" content="代码加密工具Proguard使用说明" />
+<meta property="og:description" content="代码加密工具Proguard使用说明" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-04T00:00:00+00:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="代码加密工具Proguard使用说明"/>
+<meta name="twitter:description" content="代码加密工具Proguard使用说明"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" /><link rel="prev" href="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" /><link rel="next" href="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "代码加密工具Proguard使用说明",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "其他","wordcount":  1233 ,
+        "url": "http:\/\/LiuliNing.github.io\/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86\/","datePublished": "2023-03-04T00:00:00+00:00","dateModified": "2023-03-04T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "代码加密工具Proguard使用说明"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">代码加密工具Proguard使用说明</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%85%B6%E4%BB%96/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>其他</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-04">2023-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1233 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一需求背景">一、需求背景</a></li>
+    <li><a href="#二技术选型">二、技术选型</a></li>
+    <li><a href="#三混淆效果展示">三、混淆效果展示</a></li>
+    <li><a href="#四配置流程">四、配置流程</a>
+      <ul>
+        <li><a href="#1-打开gui界面">1 、打开GUI界面</a></li>
+        <li><a href="#2功能菜单说明">2、功能菜单说明</a></li>
+        <li><a href="#3加载配置文件">3、加载配置文件</a></li>
+        <li><a href="#4添加包信息">4、添加包信息</a></li>
+        <li><a href="#5进行加密配置">5、进行加密配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#五采坑记录">五、采坑记录</a></li>
+    <li><a href="#六配置文件修改步骤">六、配置文件修改步骤</a></li>
+    <li><a href="#七思考和总结">七、思考和总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>系统、数据库性能测试记录</p>
+<h1 id="代码加密工具proguard使用说明">代码加密工具Proguard使用说明</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CreateBy lln
+</span></span><span class="line"><span class="cl">CreateTime 2023-02-01
+</span></span><span class="line"><span class="cl">ProguardVersion 7.2.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一需求背景">一、需求背景</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">需要对提供给客户的Java客户端代码进行混淆，破坏其可读性，防止核心代码被反编译。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二技术选型">二、技术选型</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">采用 ProGuard 工具软件进行代码加密混淆工作。
+</span></span><span class="line"><span class="cl">ProGuard是Java类文件收缩器、优化器、混淆器和预验证器。可以使代码库更小、更有效、更好地抵御逆向工程。
+</span></span><span class="line"><span class="cl">官网地址
+</span></span><span class="line"><span class="cl">https://github.com/Guardsquare/proguard
+</span></span><span class="line"><span class="cl">参考博客
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/weixin_44462773/article/details/124172382
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="三混淆效果展示">三、混淆效果展示</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">对于包名称，不进行混淆（可在加密时进行配置，但不推荐，会影响反射调用）
+</span></span><span class="line"><span class="cl">对于类，进行名称混淆。
+</span></span><span class="line"><span class="cl">对于特定的文件，如启动类、资源文件，不进行混淆。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/1.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/1.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/1.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/1.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/1.png"
+        title="1.png" width="674" height="416" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/2.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/2.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/2.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/2.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/2.png"
+        title="2.png" width="744" height="417" /></p>
+<h2 id="四配置流程">四、配置流程</h2>
+<p>以下是配置加密的步骤流程。</p>
+<h3 id="1-打开gui界面">1 、打开GUI界面</h3>
+<p>通过官网下载最新的安装包，打开如图所示GUI操作界面，如下图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/3.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/3.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/3.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/3.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/3.png"
+        title="3.png" width="701" height="258" /></p>
+<h3 id="2功能菜单说明">2、功能菜单说明</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.png"
+        title="5.png" width="157" height="283" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ProGuard 主界面，用于加载配置文件
+</span></span><span class="line"><span class="cl">Input/Output 包选择界面，配置目标包信息和依赖包信息
+</span></span><span class="line"><span class="cl">Shrinking 代码收缩配置【未测试使用】
+</span></span><span class="line"><span class="cl">Obfuscation 代码加密配置
+</span></span><span class="line"><span class="cl">Optimization 代码优化配置【未测试使用】
+</span></span><span class="line"><span class="cl">Information 相关信息
+</span></span><span class="line"><span class="cl">Process 运行界面
+</span></span><span class="line"><span class="cl">ReTrace 回溯界面
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3加载配置文件">3、加载配置文件</h3>
+<p>选择【Load configuration】加载【qjdc3d.pro】配置文件。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/4.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/4.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/4.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/4.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/4.png"
+        title="4.png" width="959" height="962" /></p>
+<h3 id="4添加包信息">4、添加包信息</h3>
+<p>添加要加密的jar包、导出的jar包、依赖的jar包</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.1.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.1.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.1.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.1.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/5.1.png"
+        title="5.1.png" width="977" height="974" /></p>
+<h3 id="5进行加密配置">5、进行加密配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">需要特殊配置的信息如下
+</span></span><span class="line"><span class="cl">1、项目代码的包结构，包的名称、不可变（影响部分反射代码）
+</span></span><span class="line"><span class="cl">2、ctrlAction相关的代码，类名称不可变（桌面端插件信息读取，需要扫描配置在xml中的类名称）
+</span></span><span class="line"><span class="cl">3、所有反射用到的实体类信息，字段及构造方法，不可变（有部分工具代码，是从dataset数据中通过实体对象的字段反射进行数据的匹配）
+</span></span><span class="line"><span class="cl">4、启动配置类，类名称、方法不可变（启动类有main函数）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/6.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/6.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/6.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/6.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/6.png"
+        title="6.png" width="798" height="932" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/7.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/7.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/7.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/7.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/7.png"
+        title="7.png" width="977" height="974" /></p>
+<h2 id="五采坑记录">五、采坑记录</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、所有参与了反射调用的代码、第三方框架的代码，通过类加载器进行特殊操作的代码，都不可变。否则会出现难以理解和调试的错误。如奇怪的Npe调用，奇怪的报错，程序秒退等。
+</span></span><span class="line"><span class="cl">2、不建议对包结构和路径进行改变，如名称混淆、压缩等。
+</span></span><span class="line"><span class="cl">3、在客户端插件系统中，不建议对代码进行压缩和优化操作，出现了很多无法处理的问题，如action无法识别，打不开部分功能。只建议进行加密操作。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="六配置文件修改步骤">六、配置文件修改步骤</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">加载配置文件后，导入的包路径，都不是自己的本地路径，可以将【.pro】文件打开，批量替换路径为自己的本地包，如下图。建议将jre的包和desktopx的所有包，都放在同一文件夹中，便于修改和关联。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/8.png"
+        data-srcset="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/8.png, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/8.png 1.5x, /%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/8.png 2x"
+        data-sizes="auto"
+        alt="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/8.png"
+        title="8.png" width="1928" height="1058" /></p>
+<h2 id="七思考和总结">七、思考和总结</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、如果需要代码加密工作，最好是在软件开发之初就进行规划，和不断集成测试。而不是在收尾阶段进行。
+</span></span><span class="line"><span class="cl">2、java代码的加密工作，注意事项，总得来说有2点，其一是所有和反射调用有上下文关联的代码，都要筛选出来进行特殊处理；其二是和资源文件关联的代码，也要注意不要因为特殊的混淆，导致文件名找不到而引发的后续报错。
+</span></span><span class="line"><span class="cl">3、如何进行有效的规划？最好在代码设计之初，就规划好哪些包需要加密（如核心算法，核心业务逻辑），在代码结构上加以区分，以便于后续处理。
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" data-title="代码加密工具Proguard使用说明" data-hashtags="其他"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" data-hashtag="其他"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" data-title="代码加密工具Proguard使用说明"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" data-title="代码加密工具Proguard使用说明"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" data-title="代码加密工具Proguard使用说明"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%85%B6%E4%BB%96/">其他</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" class="prev" rel="prev" title="多租户设计记录"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>多租户设计记录</a>
+            <a href="/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" class="next" rel="next" title="Docker集群迁移K8s记录">Docker集群迁移K8s记录<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

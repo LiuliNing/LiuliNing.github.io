@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>ELK日志框架集成 - Alex&#39;s Bolg</title><meta name="Description" content="ELK日志框架集成"><meta property="og:title" content="ELK日志框架集成" />
+<meta property="og:description" content="ELK日志框架集成" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-05T00:00:00+00:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="ELK日志框架集成"/>
+<meta name="twitter:description" content="ELK日志框架集成"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" /><link rel="prev" href="http://LiuliNing.github.io/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0--%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D--1/" /><link rel="next" href="http://LiuliNing.github.io/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "ELK日志框架集成",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/elk%E6%97%A5%E5%BF%97\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "分布式","wordcount":  1767 ,
+        "url": "http:\/\/LiuliNing.github.io\/elk%E6%97%A5%E5%BF%97\/","datePublished": "2022-03-05T00:00:00+00:00","dateModified": "2022-03-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": "ELK日志框架集成"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">ELK日志框架集成</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span>&nbsp;<span class="post-category">included in <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>分布式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-05">2022-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1767 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一--elasticsearch安装">一  Elasticsearch安装</a></li>
+    <li><a href="#11-elasticsearch安装">1.1 Elasticsearch安装</a>
+      <ul>
+        <li><a href="#111-docker">1.1.1 docker</a></li>
+        <li><a href="#112-docker-compose">1.1.2 docker-compose</a></li>
+      </ul>
+    </li>
+    <li><a href="#12-elasticsearch-head安装">1.2 Elasticsearch-Head安装</a>
+      <ul>
+        <li><a href="#121-docker">1.2.1 docker</a></li>
+        <li><a href="#122--docker-compose">1.2.2  docker-compose</a></li>
+      </ul>
+    </li>
+    <li><a href="#13配置文件">1.3配置文件</a>
+      <ul>
+        <li><a href="#elasticsearchyml">elasticsearch.yml</a></li>
+      </ul>
+    </li>
+    <li><a href="#二-logstash安装">二 Logstash安装</a>
+      <ul>
+        <li><a href="#21-docker">2.1 docker</a></li>
+        <li><a href="#22--docker-compos">2.2  docker-compos</a></li>
+        <li><a href="#23-配置文件">2.3 配置文件</a>
+          <ul>
+            <li><a href="#主配置文件">主配置文件</a></li>
+            <li><a href="#日志conf文件配置示例">日志conf文件配置（示例）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#三-kibana安装">三 kibana安装</a>
+      <ul>
+        <li><a href="#31-docker">3.1 docker</a></li>
+        <li><a href="#32-docker-compose">3.2 docker-compose</a></li>
+        <li><a href="#33--配置文件">3.3  配置文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#四-合并docker-compose文件">四 合并docker-compose文件</a></li>
+    <li><a href="#五-安装时异常处理记录">五 安装时异常处理记录</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="elk日志框架集成">ELK日志框架集成</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">createBy jdzt.lln
+</span></span><span class="line"><span class="cl">createTime 2022-01-01
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">业务场景及需求说明
+</span></span><span class="line"><span class="cl">公司现在有内网虚拟机多台，分别部署了多个不同环境（测试环境、试用环境、演示环境等）的项目（地灾、岩土、地勘等），同时对接了多个外部服务（致远OA，在线预览、python算法等），在开发阶段处理不同环境出现的问题时，基于日志来定位问题十分关键，但现阶段对于日志管理还处于十分混乱的情况，没有进行统一的收集和处理，导致开发人员在定位和处理不同项目的不同环境的不同数据的相同问题时，定位和分析十分困难。
+</span></span><span class="line"><span class="cl">ELK即作为新框架EasyCloud的架构的重要组成部分，也为解决以上问题，具备了实际需求和场景。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ELK是由elasticsearch+Logstash+kibana三款开源软件组合而成的日志收集处理套件，其中Logstash负责日志收集，elasticsearch负责日志的搜索、统计，而kibana则是ES的展示。
+</span></span><span class="line"><span class="cl">使用版本信息如下：
+</span></span><span class="line"><span class="cl">Elasticsearch version 7.16.2
+</span></span><span class="line"><span class="cl">Logstash version 7.16.2
+</span></span><span class="line"><span class="cl">kibana version 7.16.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">参考文档
+</span></span><span class="line"><span class="cl">官网文档
+</span></span><span class="line"><span class="cl">https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+</span></span><span class="line"><span class="cl">https://www.elastic.co/guide/en/logstash/current/docker.html
+</span></span><span class="line"><span class="cl">博客
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/shykevin/article/details/108251996
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/chinda/p/13125625.html
+</span></span><span class="line"><span class="cl">https://www.cnblogs.com/xiao987334176/p/13565468.html
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/soulteary/article/details/105921729
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一--elasticsearch安装">一  Elasticsearch安装</h2>
+<h2 id="11-elasticsearch安装">1.1 Elasticsearch安装</h2>
+<h3 id="111-docker">1.1.1 docker</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name elk_es \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-d \
+</span></span><span class="line"><span class="cl">-e ES_JAVA_OPTS=&#34;-Xms512m -Xmx512m&#34; \
+</span></span><span class="line"><span class="cl">-e &#34;discovery.type=single-node&#34; \
+</span></span><span class="line"><span class="cl">-v /opt/elk/es/:/usr/elasticsearch/data \
+</span></span><span class="line"><span class="cl">-v /opt/elk/es/conf/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+</span></span><span class="line"><span class="cl">-v /opt/elk/es/plugins:/usr/share/elasticsearch/plugins \
+</span></span><span class="line"><span class="cl">-p 9200:9200 \
+</span></span><span class="line"><span class="cl">-p 9300:9300 \
+</span></span><span class="line"><span class="cl">66c29cde15ce
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run \
+</span></span><span class="line"><span class="cl">--name elk_es \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-d \
+</span></span><span class="line"><span class="cl">-e ES_JAVA_OPTS=&#34;-Xms512m -Xmx512m&#34; \
+</span></span><span class="line"><span class="cl">-e &#34;discovery.type=single-node&#34; \
+</span></span><span class="line"><span class="cl">-v /opt/elk/elasticsearch:/usr/share/elasticsearch \
+</span></span><span class="line"><span class="cl">-p 9200:9200 \
+</span></span><span class="line"><span class="cl">-p 9300:9300 \
+</span></span><span class="line"><span class="cl">elasticsearch:7.16.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="112-docker-compose">1.1.2 docker-compose</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;3.7&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  elasticsearch:
+</span></span><span class="line"><span class="cl">    container_name: es
+</span></span><span class="line"><span class="cl">    image: elasticsearch:7.16.2
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;9200:9200&#34;
+</span></span><span class="line"><span class="cl">      - &#34;9300:9300&#34;
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/conf/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/data:/usr/share/elasticsearch/data
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/plugins:/usr/share/elasticsearch/plugins
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      - &#34;ES_JAVA_OPTS=-Xms512m -Xmx512m&#34;
+</span></span><span class="line"><span class="cl">      - &#34;discovery.type=single-node&#34;
+</span></span><span class="line"><span class="cl">      - &#34;COMPOSE_PROJECT_NAME=es-server&#34;
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="12-elasticsearch-head安装">1.2 Elasticsearch-Head安装</h2>
+<h3 id="121-docker">1.2.1 docker</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull mobz/elasticsearch-head:5-alpine
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">  --name=elasticsearch-head \
+</span></span><span class="line"><span class="cl">  --restart=always \
+</span></span><span class="line"><span class="cl">  -p 9100:9100 \
+</span></span><span class="line"><span class="cl">  docker.io/mobz/elasticsearch-head:5-alpine
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="122--docker-compose">1.2.2  docker-compose</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;3.7&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  elasticsearch-head:
+</span></span><span class="line"><span class="cl">    image: mobz/elasticsearch-head:5-alpine
+</span></span><span class="line"><span class="cl">    container_name: elk_es_head
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;9100:9100&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">networks:
+</span></span><span class="line"><span class="cl">  elk:
+</span></span><span class="line"><span class="cl">    driver: bridge
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="13配置文件">1.3配置文件</h2>
+<h3 id="elasticsearchyml">elasticsearch.yml</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">## Default Elasticsearch configuration from elasticsearch-docker.
+</span></span><span class="line"><span class="cl">## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">cluster.name: &#34;docker-cluster&#34;
+</span></span><span class="line"><span class="cl">network.host: 0.0.0.0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># minimum_master_nodes need to be explicitly set when bound on a public IP
+</span></span><span class="line"><span class="cl"># set to 1 to allow single node clusters
+</span></span><span class="line"><span class="cl"># Details: https://github.com/elastic/elasticsearch/pull/17288
+</span></span><span class="line"><span class="cl">discovery.zen.minimum_master_nodes: 1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">## Use single node discovery in order to disable production mode and avoid bootstrap checks
+</span></span><span class="line"><span class="cl">## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">discovery.type: single-node
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">## Disable X-Pack
+</span></span><span class="line"><span class="cl">## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
+</span></span><span class="line"><span class="cl">##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">xpack.security.enabled: false
+</span></span><span class="line"><span class="cl">xpack.monitoring.enabled: false
+</span></span><span class="line"><span class="cl">xpack.ml.enabled: false
+</span></span><span class="line"><span class="cl">xpack.graph.enabled: false
+</span></span><span class="line"><span class="cl">xpack.watcher.enabled: false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http.cors.enabled : true
+</span></span><span class="line"><span class="cl">http.cors.allow-origin : &#34;*&#34;
+</span></span><span class="line"><span class="cl">http.cors.allow-methods : OPTIONS, HEAD, GET, POST
+</span></span><span class="line"><span class="cl">http.cors.allow-headers : X-Requested-With, Content-Type, Content-Length
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">访问
+</span></span><span class="line"><span class="cl">curl http://127.0.0.1:9200/
+</span></span><span class="line"><span class="cl">返回
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;name&#34; : &#34;4a8f92502f14&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_name&#34; : &#34;docker-cluster&#34;,
+</span></span><span class="line"><span class="cl">  &#34;cluster_uuid&#34; : &#34;cRd8xKAcRyCEa5eO9kuntw&#34;,
+</span></span><span class="line"><span class="cl">  &#34;version&#34; : {
+</span></span><span class="line"><span class="cl">    &#34;number&#34; : &#34;7.16.2&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_flavor&#34; : &#34;default&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_type&#34; : &#34;docker&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_hash&#34; : &#34;2b937c44140b6559905130a8650c64dbd0879cfb&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_date&#34; : &#34;2021-12-18T19:42:46.604893745Z&#34;,
+</span></span><span class="line"><span class="cl">    &#34;build_snapshot&#34; : false,
+</span></span><span class="line"><span class="cl">    &#34;lucene_version&#34; : &#34;8.10.1&#34;,
+</span></span><span class="line"><span class="cl">    &#34;minimum_wire_compatibility_version&#34; : &#34;6.8.0&#34;,
+</span></span><span class="line"><span class="cl">    &#34;minimum_index_compatibility_version&#34; : &#34;6.0.0-beta1&#34;
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  &#34;tagline&#34; : &#34;You Know, for Search&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">安装成功
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二-logstash安装">二 Logstash安装</h2>
+<h3 id="21-docker">2.1 docker</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull logstash:7.16.2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--name=elk_logstash \
+</span></span><span class="line"><span class="cl">-p 5045:5045 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/elk/logstash:/usr/share/logstash \
+</span></span><span class="line"><span class="cl">-v /www/wwwroot/plmlogs:/www/wwwroot/plmlogs \
+</span></span><span class="line"><span class="cl">logstash:7.16.2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--name=elk_logstash \
+</span></span><span class="line"><span class="cl">-p 5045:5045 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/elk/logstash:/usr/share/logstash \
+</span></span><span class="line"><span class="cl">-v /www/wwwroot/plmLogs:/www/wwwroot/plmLogs \
+</span></span><span class="line"><span class="cl">logstash:7.16.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22--docker-compos">2.2  docker-compos</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;3.7&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  logstash:
+</span></span><span class="line"><span class="cl">    image: logstash:7.16.2
+</span></span><span class="line"><span class="cl">    container_name: elk_logstash
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/config/conf.d/:/opt/elk/logstash/config/conf.d/ \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/data:/usr/share/logstash/data \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/pipeline:/usr/share/logstash/pipeline \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/logs:/opt/elk/logstash/logs \
+</span></span><span class="line"><span class="cl">      - /www/wwwroot/plmlogs:/www/wwwroot/plmlogs \
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      LS_JAVA_OPTS: &#34;-Xmx512m -Xms512m&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">networks:
+</span></span><span class="line"><span class="cl">  elk:
+</span></span><span class="line"><span class="cl">    driver: bridge
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-配置文件">2.3 配置文件</h3>
+<h4 id="主配置文件">主配置文件</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http.host: &#34;0.0.0.0&#34;
+</span></span><span class="line"><span class="cl">xpack.monitoring.elasticsearch.hosts: [ &#34;http://192.168.23.128:9200&#34; ]
+</span></span><span class="line"><span class="cl">path.config: /opt/elk/logstash/config/conf.d/*.conf
+</span></span><span class="line"><span class="cl">path.logs: /opt/elk/logstash/logs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="日志conf文件配置示例">日志conf文件配置（示例）</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">input {
+</span></span><span class="line"><span class="cl">  file {
+</span></span><span class="line"><span class="cl">    #标签
+</span></span><span class="line"><span class="cl">    type =&gt; &#34;systemlog-localhost&#34;
+</span></span><span class="line"><span class="cl">    #采集点
+</span></span><span class="line"><span class="cl">    path =&gt; &#34;/opt/plmLogs/&#34;
+</span></span><span class="line"><span class="cl">    #开始收集点
+</span></span><span class="line"><span class="cl">    start_position =&gt; &#34;beginning&#34;
+</span></span><span class="line"><span class="cl">    #扫描间隔时间，默认是1s，建议5s
+</span></span><span class="line"><span class="cl">    stat_interval =&gt; &#34;5&#34;
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">output {
+</span></span><span class="line"><span class="cl">  elasticsearch {
+</span></span><span class="line"><span class="cl">    hosts =&gt; [&#34;127.0.0.1:9200&#34;]
+</span></span><span class="line"><span class="cl">    index =&gt; &#34;logstash-system-localhost-%{+YYYY.MM.dd}&#34;
+</span></span><span class="line"><span class="cl"> }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="三-kibana安装">三 kibana安装</h2>
+<h3 id="31-docker">3.1 docker</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker pull kibana:7.16.2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">docker run -d \
+</span></span><span class="line"><span class="cl">--name=elk_kibana \
+</span></span><span class="line"><span class="cl">--privileged=true \
+</span></span><span class="line"><span class="cl">-p 5601:5601 \
+</span></span><span class="line"><span class="cl">--restart=always \
+</span></span><span class="line"><span class="cl">-v /opt/elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml \
+</span></span><span class="line"><span class="cl">kibana:7.16.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-docker-compose">3.2 docker-compose</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;3.7&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  kibana:
+</span></span><span class="line"><span class="cl">    image: kibana:7.16.2
+</span></span><span class="line"><span class="cl">    container_name: elk_kibana
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;5601:5601&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">networks:
+</span></span><span class="line"><span class="cl">  elk:
+</span></span><span class="line"><span class="cl">    driver: bridge
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33--配置文件">3.3  配置文件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><h2 id="四-合并docker-compose文件">四 合并docker-compose文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;3.7&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  elasticsearch:
+</span></span><span class="line"><span class="cl">    image: elasticsearch:7.16.2
+</span></span><span class="line"><span class="cl">    container_name: elk_es
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;9200:9200&#34;
+</span></span><span class="line"><span class="cl">      - &#34;9300:9300&#34;
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      ES_JAVA_OPTS: &#34;-Xmx512m -Xms512m&#34;
+</span></span><span class="line"><span class="cl">      xpack.security.enabled: &#34;false&#34;
+</span></span><span class="line"><span class="cl">      xpack.monitoring.enabled: &#34;false&#34;
+</span></span><span class="line"><span class="cl">      xpack.graph.enabled: &#34;false&#34;
+</span></span><span class="line"><span class="cl">      xpack.watcher.enabled: &#34;false&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/data:/usr/share/elasticsearch/data
+</span></span><span class="line"><span class="cl">      - /opt/elk/es/plugins:/usr/share/elasticsearch/plugins
+</span></span><span class="line"><span class="cl">  elasticsearch-head:
+</span></span><span class="line"><span class="cl">    image: mobz/elasticsearch-head:5-alpine
+</span></span><span class="line"><span class="cl">    container_name: elk_es_head
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;9100:9100&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">  logstash:
+</span></span><span class="line"><span class="cl">    image: logstash:7.16.2
+</span></span><span class="line"><span class="cl">    container_name: elk_logstash
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/config/conf.d/:/opt/elk/logstash/config/conf.d/ \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/data:/usr/share/logstash/data \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/pipeline:/usr/share/logstash/pipeline \
+</span></span><span class="line"><span class="cl">      - /opt/elk/logstash/logs:/opt/elk/logstash/logs \
+</span></span><span class="line"><span class="cl">      - /www/wwwroot/plmlogs:/www/wwwroot/plmlogs \
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      LS_JAVA_OPTS: &#34;-Xmx512m -Xms512m&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">    depends_on:
+</span></span><span class="line"><span class="cl">      - elasticsearch
+</span></span><span class="line"><span class="cl">  kibana:
+</span></span><span class="line"><span class="cl">    image: kibana:7.16.2
+</span></span><span class="line"><span class="cl">    container_name: elk_kibana
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    volumes:
+</span></span><span class="line"><span class="cl">      - /opt/elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+</span></span><span class="line"><span class="cl">    ports:
+</span></span><span class="line"><span class="cl">      - &#34;5601:5601&#34;
+</span></span><span class="line"><span class="cl">    networks:
+</span></span><span class="line"><span class="cl">      - elk
+</span></span><span class="line"><span class="cl">    depends_on:
+</span></span><span class="line"><span class="cl">      - elasticsearch
+</span></span><span class="line"><span class="cl">networks:
+</span></span><span class="line"><span class="cl">  elk:
+</span></span><span class="line"><span class="cl">    driver: bridge
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="五-安装时异常处理记录">五 安装时异常处理记录</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 启动报错1
+</span></span><span class="line"><span class="cl">bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
+</span></span><span class="line"><span class="cl">areas vm.max_map_count [65530] is too low, increase to at least [262144]
+</span></span><span class="line"><span class="cl">解决方案
+</span></span><span class="line"><span class="cl">https://blog.csdn.net/weixin_44186547/article/details/111474430
+</span></span><span class="line"><span class="cl">启动用户内存设置问题
+</span></span><span class="line"><span class="cl">sysctl -w vm.max_map_count=262144
+</span></span><span class="line"><span class="cl">sysctl -a|grep vm.max_map_count
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#启动报错2
+</span></span><span class="line"><span class="cl">{&#34;@timestamp&#34;:&#34;2022-02-24T06:13:29.287Z&#34;, &#34;log.level&#34;: &#34;WARN&#34;, &#34;message&#34;:&#34;received plaintext http traffic on an https channel, closing connection Netty4HttpChannel{localAddress=/172.21.0.2:9200, remoteAddress=/192.168.23.1:52180}&#34;, &#34;ecs.version&#34;: &#34;1.2.0&#34;,&#34;service.name&#34;:&#34;ES_ECS&#34;,&#34;event.dataset&#34;:&#34;elasticsearch.server&#34;,&#34;process.thread.name&#34;:&#34;elasticsearch[6c35a2a32c9e][transport_worker][T#7]&#34;,&#34;log.logger&#34;:&#34;org.elasticsearch.xpack.security.transport.netty4.SecurityNetty4HttpServerTransport&#34;,&#34;elasticsearch.cluster.uuid&#34;:&#34;VUG2U5RzQBisYw2XewbopA&#34;,&#34;elasticsearch.node.id&#34;:&#34;Z-IvopcWQfGf-05cDPdlLA&#34;,&#34;elasticsearch.node.name&#34;:&#34;6c35a2a32c9e&#34;,&#34;elasticsearch.cluster.name&#34;:&#34;docker-cluster&#34;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># kibana启动异常报错
+</span></span><span class="line"><span class="cl">FATAL  Error: TaskManager is unable to start as Kibana has no valid UUID assigned to it.
+</span></span><span class="line"><span class="cl">Unable to write to UUID file at /usr/share/kibana/data/uuid. Ensure Kibana has sufficient permissions to read / write to this file.  Error was: ENOSPC
+</span></span><span class="line"><span class="cl">解决方案
+</span></span><span class="line"><span class="cl">权限不足，修改映射宿主机目录权限为 777
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 启动找不到es地址
+</span></span><span class="line"><span class="cl">Unable to retrieve version information from Elasticsearch nodes.
+</span></span><span class="line"><span class="cl">解决方案
+</span></span><span class="line"><span class="cl">配置elasticsearch.yml和kibana.yml，修改es的ip为docker0 的ip，不是宿主机ip
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 无法启动
+</span></span><span class="line"><span class="cl">server is not ready yet
+</span></span><span class="line"><span class="cl">解决方案
+</span></span><span class="line"><span class="cl">映射配置文件位置异常，重新核对解决。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># logstash 启动报错
+</span></span><span class="line"><span class="cl">/usr/local/bin/docker-entrypoint: line 12: exec: logstash: not found
+</span></span><span class="line"><span class="cl">解决方案
+</span></span><span class="line"><span class="cl">权限不足，修改映射宿主机目录权限为 777
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/elk%E6%97%A5%E5%BF%97/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" data-title="ELK日志框架集成" data-hashtags="分布式"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" data-hashtag="分布式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" data-title="ELK日志框架集成"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" data-title="ELK日志框架集成"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/elk%E6%97%A5%E5%BF%97/" data-title="ELK日志框架集成"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0--%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D--1/" class="prev" rel="prev" title="读书笔记--《人月神话》-- 1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>读书笔记--《人月神话》-- 1</a>
+            <a href="/%E5%A4%9A%E7%A7%9F%E6%88%B7%E8%AE%BE%E8%AE%A1/" class="next" rel="next" title="多租户设计记录">多租户设计记录<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

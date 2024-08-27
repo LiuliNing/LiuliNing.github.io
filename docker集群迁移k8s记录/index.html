@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Docker集群迁移K8s记录 - Alex&#39;s Bolg</title><meta name="Description" content="Alex&#39;s Bolg"><meta property="og:title" content="Docker集群迁移K8s记录" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" /><meta property="og:image" content="http://LiuliNing.github.io/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-04-16T00:00:00+00:00" /><meta property="og:site_name" content="Alex&#39;s Bolg" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://LiuliNing.github.io/"/>
+
+<meta name="twitter:title" content="Docker集群迁移K8s记录"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" /><link rel="prev" href="http://LiuliNing.github.io/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" /><link rel="next" href="http://LiuliNing.github.io/%E4%BF%A1%E5%88%9B/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Docker集群迁移K8s记录",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/LiuliNing.github.io\/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "http:\/\/LiuliNing.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","wordcount":  8420 ,
+        "url": "http:\/\/LiuliNing.github.io\/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95\/","datePublished": "2023-04-16T00:00:00+00:00","dateModified": "2023-04-16T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "LLN"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex&#39;s Bolg"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/favicon.ico"
+        data-srcset="/favicon.ico, /favicon.ico 1.5x, /favicon.ico 2x"
+        data-sizes="auto"
+        alt="/favicon.ico"
+        title="/favicon.ico" />Welcome to my blog~~</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Docker集群迁移K8s记录</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>LLN</a>
+</span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-16">2023-04-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;8420 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;17 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一k8s学习">一、K8s学习</a>
+      <ul>
+        <li><a href="#官网文档">官网文档</a></li>
+        <li><a href="#目标">目标</a></li>
+        <li><a href="#差异对比">差异对比</a></li>
+        <li><a href="#关键概念">关键概念</a></li>
+        <li><a href="#docker镜像管理">Docker镜像管理</a></li>
+        <li><a href="#文件系统-nfs系统">文件系统 NFS系统</a></li>
+        <li><a href="#异常处理">异常处理</a></li>
+        <li><a href="#语句">语句</a></li>
+      </ul>
+    </li>
+    <li><a href="#二迁移准备和环境布置">二、迁移准备和环境布置</a>
+      <ul>
+        <li><a href="#清理docker镜像">清理Docker镜像</a></li>
+        <li><a href="#配置环境变量">配置环境变量</a></li>
+        <li><a href="#创建deployment">创建Deployment</a></li>
+        <li><a href="#创建service">创建Service</a></li>
+        <li><a href="#添加健康检查">添加健康检查</a></li>
+        <li><a href="#采用kubernetes标准">采用Kubernetes标准</a></li>
+        <li><a href="#使用pvpvc管理持久化数据">使用PV/PVC管理持久化数据</a></li>
+        <li><a href="#使用configmap管理应用配置文件">使用ConfigMap管理应用配置文件</a></li>
+        <li><a href="#实施滚动更新和回滚策略">实施滚动更新和回滚策略</a>
+          <ul>
+            <li><a href="#滚动更新">滚动更新</a></li>
+            <li><a href="#回滚策略">回滚策略</a></li>
+          </ul>
+        </li>
+        <li><a href="#资源定义">资源定义</a></li>
+        <li><a href="#节点选择和亲和性">节点选择和亲和性</a></li>
+        <li><a href="#横向pod自动伸缩">横向Pod自动伸缩</a></li>
+        <li><a href="#pod的水平扩展">Pod的水平扩展</a></li>
+        <li><a href="#自动缩放">自动缩放</a></li>
+        <li><a href="#网络通信">网络通信</a></li>
+        <li><a href="#容器间的网络隔离">容器间的网络隔离</a></li>
+        <li><a href="#pod之间的通信">Pod之间的通信</a></li>
+        <li><a href="#监控和管理">监控和管理</a></li>
+        <li><a href="#日志收集">日志收集</a></li>
+        <li><a href="#配置cicd流水线">配置CI/CD流水线</a></li>
+        <li><a href="#其他">其他：</a></li>
+        <li><a href="#时区的配置问题">时区的配置问题</a></li>
+        <li><a href="#使用-helm">使用 Helm</a></li>
+        <li><a href="#service-的命名">Service 的命名</a></li>
+        <li><a href="#namespace的区分">NameSpace的区分</a></li>
+      </ul>
+    </li>
+    <li><a href="#三脚本记录">三、脚本记录</a>
+      <ul>
+        <li><a href="#namespace">Namespace</a></li>
+        <li><a href="#pvc">Pvc</a></li>
+        <li><a href="#k8syaml">K8sYaml</a></li>
+        <li><a href="#dockerfile">DockerFile</a></li>
+        <li><a href="#dockercompose">DockerCompose</a></li>
+        <li><a href="#jenkinsfile">jenkinsFile</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><!--more-->
+<h1 id="总体流程学习和记录">总体流程学习和记录</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、K8s学习，研发环境搭建
+</span></span><span class="line"><span class="cl">2、评估和规划迁移资源的范围
+</span></span><span class="line"><span class="cl">3、整理当前集群所使用的配置信息和依赖卷信息以及在k8s中如何配置
+</span></span><span class="line"><span class="cl">4、使用Kompose工具Docker Compose文件转换为K8s配置文件（如Deployment、Service、ConfigMap、Secret、Pod、Volume等）
+</span></span><span class="line"><span class="cl">5、研发环境打包脚本，流水线自动化到k8s
+</span></span><span class="line"><span class="cl">6、腾讯云TKE、TSF组件学习
+</span></span><span class="line"><span class="cl">7、云服务资源申请，网络申请，迁移云服务后的测试、性能监控与调试
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一k8s学习">一、K8s学习</h2>
+<h3 id="官网文档">官网文档</h3>
+<p><a href="https://kubernetes.io/zh-cn/docs/concepts/security/secrets-good-practices/" target="_blank" rel="noopener noreffer">https://kubernetes.io/zh-cn/docs/concepts/security/secrets-good-practices/</a>
+</p>
+<p>博客</p>
+<p><a href="https://jimmysong.io/" target="_blank" rel="noopener noreffer">https://jimmysong.io/</a>
+</p>
+<h3 id="目标">目标</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">安装 kubernetes 集群。包括 minikube，云平台搭建，裸机搭建  
+</span></span><span class="line"><span class="cl">部署项目到集群中，对外暴露服务端口  
+</span></span><span class="line"><span class="cl">部署数据库这种有状态的应用，数据持久化  
+</span></span><span class="line"><span class="cl">集群中配置文件和密码文件
+</span></span><span class="line"><span class="cl">使用 Helm 应用商店快速安装第三方应用  
+</span></span><span class="line"><span class="cl">Ingress 对外提供服务
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="差异对比">差异对比</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">传统部署方式：  
+</span></span><span class="line"><span class="cl">应用直接在物理机上部署，机器资源分配不好控制，出现Bug时，可能机器的大部分资源被某个应用占用，导致其他应用无法正常运行，无法做到应用隔离。  
+</span></span><span class="line"><span class="cl">虚拟机部署  
+</span></span><span class="line"><span class="cl">在单个物理机上运行多个虚拟机，每个虚拟机都是完整独立的系统，性能损耗大。  
+</span></span><span class="line"><span class="cl">容器部署  
+</span></span><span class="line"><span class="cl">所有容器共享主机的系统，轻量级的虚拟机，性能损耗小，资源隔离，CPU和内存可按需分配
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="关键概念">关键概念</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">master  
+</span></span><span class="line"><span class="cl">主节点，控制平台，不需要很高性能，不跑任务，通常一个就行了，也可以开多个主节点来提高集群可用度。  
+</span></span><span class="line"><span class="cl">worker  
+</span></span><span class="line"><span class="cl">工作节点，可以是虚拟机或物理计算机，任务都在这里跑，机器性能需要好点；通常都有很多个，可以不断加机器扩大集群；每个工作节点由主节点管理  
+</span></span><span class="line"><span class="cl">Pod  
+</span></span><span class="line"><span class="cl">K8S 调度、管理的最小单位，一个 Pod 可以包含一个或多个容器，每个 Pod 有自己的虚拟IP。一个工作节点可以有多个 pod，主节点会考量负载自动调度 pod 到哪个节点运行。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">### Kubernetes 组件
+</span></span><span class="line"><span class="cl">kube-apiserver API 服务器，公开了 Kubernetes API  
+</span></span><span class="line"><span class="cl">etcd 键值数据库，可以作为保存 Kubernetes 所有集群数据的后台数据库  
+</span></span><span class="line"><span class="cl">kube-scheduler 调度 Pod 到哪个节点运行  
+</span></span><span class="line"><span class="cl">kube-controller 集群控制器  
+</span></span><span class="line"><span class="cl">cloud-controller 与云服务商交互
+</span></span><span class="line"><span class="cl">namespace
+</span></span><span class="line"><span class="cl">pvc
+</span></span><span class="line"><span class="cl">service
+</span></span><span class="line"><span class="cl">pod
+</span></span><span class="line"><span class="cl">StatefulSet 持久化配置
+</span></span><span class="line"><span class="cl">Deployment
+</span></span><span class="line"><span class="cl">configmap
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="docker镜像管理">Docker镜像管理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker Registry  Harbor
+</span></span><span class="line"><span class="cl">harbor离线搭建，本地登录
+</span></span><span class="line"><span class="cl">	离线安装
+</span></span><span class="line"><span class="cl">		使用官方离线包，解压后一键进行安装
+</span></span><span class="line"><span class="cl">			离线镜像导入和同步
+</span></span><span class="line"><span class="cl">				单个镜像导入
+</span></span><span class="line"><span class="cl">				离线框架多镜像批量导入
+</span></span><span class="line"><span class="cl">					获取当前容器中所有离线sinfcloud镜像
+</span></span><span class="line"><span class="cl">						dk images | grep sinfcloud | awk &#39;{print $1}&#39;
+</span></span><span class="line"><span class="cl">					脚本批量循环导入
+</span></span><span class="line"><span class="cl">	在线安装
+</span></span><span class="line"><span class="cl">		在线镜像同步，远程库-本地库
+</span></span><span class="line"><span class="cl">			配置远程仓库的同步复制，指定标签、版本等信息
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="文件系统-nfs系统">文件系统 NFS系统</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">主节点搭建NFS，存储共享文件，安装包及配置文件，子节点挂载目录
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="异常处理">异常处理</h3>
+<pre><code>yaml文件写错
+	kube-linter这个工具来检查yaml语法是否有误
+系统版本与脚本不匹配
+节点ip变化
+	主节点
+	node
+	如何保障ip变化不影响集群运行
+ndf客户端挂载报错
+	mount: 文件系统类型错误、选项错误  上有坏超级块......
+		将节点机器安装nfs客户端依赖，再进行连接测试
+	写错挂载地址，且未使用软连接，导致挂载目录无法df -h 、ll 等命令进行查看
+		强行取消挂载点
+			umount -fl /opt/nfs_data
+	nfs实现共享目录对于集群高可用风险，nfs客户端容易卡死
+		客户端nfs中有一个内核级别的线程，nfsv4.1-svc，该线程会一直和nfs服务端进行通信，且无法被kill掉。（停止客户端Nfs服务，设置开机不自启动，并卸载nfs，重启主机才能让该线程停掉）。
+		mount -t nfs  -o rw,intr,soft,timeo=30,retry=3 nfs-server://share-path local-path
+
+主节点ip变化
+	固定虚拟机ip，进行端口转发配置
+harbor
+	离线导入失败
+		镜像命名需要与harbor的规则一致
+	导入镜像时区不正确
+</code></pre>
+<h3 id="语句">语句</h3>
+<pre><code>k8s
+	删除指定名称的子节点
+		kubectl delete node &lt;nodeName&gt;
+	配置主机hostname
+		hostnamectl set-hostname 
+	kubernetes调度pod运行于master节点上
+		让 master节点恢复不参与POD负载的命令为
+			kubectl taint nodes &lt;node-name&gt; node-role.kubernetes.io/master=:NoSchedule
+		让 master节点恢复不参与POD负载，并将Node上已经存在的Pod驱逐出去的命令
+			kubectl taint nodes &lt;node-name&gt; node-role.kubernetes.io/master=:NoExecute
+	子节点加入主节点
+		kubeadm join &lt;master‐ip&gt;:6443 ‐‐token &lt;kubernetes‐token&gt; --discovery-tokenunsafe-skip-ca-verification
+	脚本执行
+		子节点安装并加入主节点
+			chmod +x install.sh &amp;&amp; ./install.sh join &lt;master‐ip&gt;:6443 ‐‐token &lt;kubernetes‐token&gt;
+		安装主节点
+			chmod +x install.sh &amp;&amp; ./install.sh master
+docker
+	离线安装compose
+		复制离线文件、授权
+			sudo chmod +x /usr/local/bin/docker-compose
+	常用命令
+		重新加载配置文件并重启
+			systemctl daemon-reload &amp;&amp; systemctl restart docker
+		查看包含某个名字的镜像信息，查看列
+			dk images | grep sinfcloud | awk '{print $1}'
+</code></pre>
+<h2 id="二迁移准备和环境布置">二、迁移准备和环境布置</h2>
+<p>因为所有服务已经容器化，基本上无需特殊处理，修改部署脚本后进行上传测试即可</p>
+<p>以下流程整理自各种博客和chatgpt的提示，基本上迁移的步骤也是按照这个来的</p>
+<h3 id="清理docker镜像">清理Docker镜像</h3>
+<p>审查并清理Docker镜像，删除不必要的组件和文件，确保镜像精简且包含应用程序的所有必要部分。</p>
+<h3 id="配置环境变量">配置环境变量</h3>
+<p>将Docker容器中使用的环境变量和配置文件迁移到Kubernetes中的ConfigMaps和Secrets中，以确保在Kubernetes中正确设置运行时变量。</p>
+<h3 id="创建deployment">创建Deployment</h3>
+<p>使用Kubernetes的Deployment资源来定义应用程序的期望状态和副本数量。Deployment负责在集群中创建Pod，并确保它们按照定义的规则进行运行。</p>
+<h3 id="创建service">创建Service</h3>
+<p>使用Service资源定义将外部流量引导到应用程序的方式。Service提供了一个稳定的网络端点，使得应用程序可以被集群内和集群外的其他组件访问。</p>
+<h3 id="添加健康检查">添加健康检查</h3>
+<p>Kubernetes通过健康检查确定Pod的运行状况。确保在Docker容器中添加适当的健康检查，以便Kubernetes可以正确监控和管理Pod的状态。</p>
+<h3 id="采用kubernetes标准">采用Kubernetes标准</h3>
+<p>遵循Kubernetes的最佳实践，例如使用标签（Labels）和注释（Annotations）来描述和组织应用程序。</p>
+<h3 id="使用pvpvc管理持久化数据">使用PV/PVC管理持久化数据</h3>
+<p>容器中的存储都是临时的，因此Pod重启的时候，内部的数据会发生丢失。实际应用中，我们有些应用是无状态，有些应用则需要保持状态数据，确保Pod重启之后能够读取到之前的状态数据，有些应用则作为集群提供服务。这三种服务归纳为无状态服务、有状态服务以及有状态的集群服务，其中后面两个存在数据保存与共享的需求，因此就要采用容器外的存储方案。</p>
+<h3 id="使用configmap管理应用配置文件">使用ConfigMap管理应用配置文件</h3>
+<p>在DevOps的部署流水线中，我们强调代码和配置的分离，这样更容易实现流水线的编排。在Kubernetes中提供了ConfigMap资源对象，其实ConfigMap和Secret都是一种卷类型，可以从文件、文件夹等途径创建ConfigMap。然后再Pod中挂载使用。</p>
+<h3 id="实施滚动更新和回滚策略">实施滚动更新和回滚策略</h3>
+<h4 id="滚动更新">滚动更新</h4>
+<p>使用Deployment的滚动更新功能，逐步将新版本的Pod引入集群，确保应用程序在升级过程中保持稳定。</p>
+<h4 id="回滚策略">回滚策略</h4>
+<p>如果升级后发现问题，可以使用Deployment的回滚策略，将应用程序回滚到之前的稳定版本。</p>
+<h3 id="资源定义">资源定义</h3>
+<p>Kubernetes使用资源定义（Resource Requests）和资源限制（Resource Limits）来控制Pod对集群资源的使用。Requests定义了Pod所需资源的最小量，而Limits定义了Pod在超出此限制时可能被终止的资源量。</p>
+<h3 id="节点选择和亲和性">节点选择和亲和性</h3>
+<p>通过Node选择器和亲和性规则，可以将Pod调度到特定的节点上，以满足应用程序对硬件特性或数据存储的需求，从而实现更灵活的资源管理。</p>
+<h3 id="横向pod自动伸缩">横向Pod自动伸缩</h3>
+<p>使用Horizontal Pod Autoscaler（HPA）自动根据CPU或内存的使用情况调整Pod的副本数量。HPA可确保在高负载时增加实例，在低负载时减少实例，以有效利用集群资源。</p>
+<h3 id="pod的水平扩展">Pod的水平扩展</h3>
+<p>Kubernetes允许手动调整Deployment的副本数量，实现Pod的水平扩展。通过以下命令可以增加或减少Pod的实例数量。</p>
+<h3 id="自动缩放">自动缩放</h3>
+<p>利用Kubernetes的自动缩放机制，集群可以根据负载的变化自动增加或减少节点的数量。这样可以确保在高负载时有足够的资源，并在低负载时减少资源浪费。</p>
+<h3 id="网络通信">网络通信</h3>
+<p>在Kubernetes环境中，确保容器之间的安全网络通信至关重要。本节将介绍如何实现容器间的网络隔离以及使用Kubernetes Network Policies加强安全性。</p>
+<h3 id="容器间的网络隔离">容器间的网络隔离</h3>
+<p>Kubernetes使用命名空间（Namespace）来提供虚拟的集群，可以将不同的资源隔离开。容器在同一命名空间中共享网络命名空间，但可以通过使用不同的命名空间来实现网络隔离。</p>
+<h3 id="pod之间的通信">Pod之间的通信</h3>
+<p>通过Service资源，Kubernetes提供了一种逻辑上的抽象，将一组Pod封装在一个虚拟的服务IP地址下。这种方式实现了容器间的通信，同时隐藏了底层Pod的IP地址变化。</p>
+<h3 id="监控和管理">监控和管理</h3>
+<p>使用开源监控工具（如Prometheus、Grafana）或云服务提供商的监控服务，设置应用程序的监控系统。监控关键指标，如CPU使用率、内存消耗、请求响应时间等。</p>
+<h3 id="日志收集">日志收集</h3>
+<p>使用日志收集工具（如ELK Stack、Fluentd）或云服务提供商的日志服务，集中管理应用程序生成的日志。通过搜索和分析日志，可以更容易地诊断问题并进行性能优化。</p>
+<h3 id="配置cicd流水线">配置CI/CD流水线</h3>
+<p>选择适用于Kubernetes的CI/CD工具（如Jenkins、GitLab CI、CircleCI），配置流水线以自动构建Docker镜像、运行测试，并将应用程序部署到Kubernetes集群。</p>
+<h3 id="其他">其他：</h3>
+<h3 id="时区的配置问题">时区的配置问题</h3>
+<p>从官方下载的镜像都会有默认时区，一般我们使用的时候都需要更改时区，更改时区的方式有多种，这里简单说两种。一是将容器镜像的/etc/loacltime根据需要设置为对应的时区，二是采用配置文件中的volume挂载宿主机对应的localtime文件的方式。推荐采用第二种方式。</p>
+<h3 id="使用-helm">使用 Helm</h3>
+<p>使用 Helm 管理所有的 资源对象的定义（yaml文件）；</p>
+<h3 id="service-的命名">Service 的命名</h3>
+<p>一般是 “业务名-应用服务器类型-其他标识”</p>
+<h3 id="namespace的区分">NameSpace的区分</h3>
+<p>集群内部同时运行开发、测试、staging、生产环境，通过NameSpace实现不同运行环境的隔离，同时应用软件在不同的运行环境之间也不会产生命名冲突。</p>
+<h2 id="三脚本记录">三、脚本记录</h2>
+<h3 id="namespace">Namespace</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: v1
+</span></span><span class="line"><span class="cl">kind: Namespace
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: sinfcloud
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="pvc">Pvc</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">############################
+</span></span><span class="line"><span class="cl">####### 默认nfs为存储 ########
+</span></span><span class="line"><span class="cl">############################
+</span></span><span class="line"><span class="cl">kind: PersistentVolume
+</span></span><span class="line"><span class="cl">apiVersion: v1
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: sc-pv-sinfcloud-data
+</span></span><span class="line"><span class="cl">  namespace: sinfcloud
+</span></span><span class="line"><span class="cl">  annotations:
+</span></span><span class="line"><span class="cl">    pv.kubernetes.io/provisioned-by: cluster.local/nfs-client-nfs-client-provisioner
+</span></span><span class="line"><span class="cl">  finalizers:
+</span></span><span class="line"><span class="cl">    - kubernetes.io/pv-protection
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  capacity:
+</span></span><span class="line"><span class="cl">    storage: 10Gi
+</span></span><span class="line"><span class="cl">  nfs:
+</span></span><span class="line"><span class="cl">    server: 192.168.1.187
+</span></span><span class="line"><span class="cl">    path: /home/nfs #确保当前路径存在
+</span></span><span class="line"><span class="cl">  accessModes:
+</span></span><span class="line"><span class="cl">    - ReadWriteOnce
+</span></span><span class="line"><span class="cl">  persistentVolumeReclaimPolicy: Delete
+</span></span><span class="line"><span class="cl">  storageClassName: nfs-client
+</span></span><span class="line"><span class="cl">  volumeMode: Filesystem
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">kind: PersistentVolumeClaim
+</span></span><span class="line"><span class="cl">apiVersion: v1
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: sincloud-pvc
+</span></span><span class="line"><span class="cl">  namespace: sinfcloud
+</span></span><span class="line"><span class="cl">  annotations:
+</span></span><span class="line"><span class="cl">    kubesphere.io/creator: admin
+</span></span><span class="line"><span class="cl">    pv.kubernetes.io/bind-completed: &#39;yes&#39;
+</span></span><span class="line"><span class="cl">    pv.kubernetes.io/bound-by-controller: &#39;yes&#39;
+</span></span><span class="line"><span class="cl">    volume.beta.kubernetes.io/storage-provisioner: cluster.local/nfs-client-nfs-client-provisioner
+</span></span><span class="line"><span class="cl">  finalizers:
+</span></span><span class="line"><span class="cl">   - kubernetes.io/pvc-protection
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  accessModes:
+</span></span><span class="line"><span class="cl">    - ReadWriteOnce
+</span></span><span class="line"><span class="cl">  resources:
+</span></span><span class="line"><span class="cl">    requests:
+</span></span><span class="line"><span class="cl">      storage: 10Gi
+</span></span><span class="line"><span class="cl">  volumeName: sc-pv-sinfcloud-data
+</span></span><span class="line"><span class="cl">  storageClassName: nfs-client
+</span></span><span class="line"><span class="cl">  volumeMode: Filesystem
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="k8syaml">K8sYaml</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kind: Deployment
+</span></span><span class="line"><span class="cl">apiVersion: apps/v1
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: remp-nrp-tpi
+</span></span><span class="line"><span class="cl">  namespace: remp
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  replicas: 1
+</span></span><span class="line"><span class="cl">  strategy:
+</span></span><span class="line"><span class="cl">    rollingUpdate:
+</span></span><span class="line"><span class="cl">      maxSurge: 1
+</span></span><span class="line"><span class="cl">      maxUnavailable: 25%
+</span></span><span class="line"><span class="cl">    type: RollingUpdate
+</span></span><span class="line"><span class="cl">  selector:
+</span></span><span class="line"><span class="cl">    matchLabels:
+</span></span><span class="line"><span class="cl">      app: remp-nrp-tpi
+</span></span><span class="line"><span class="cl">  template:
+</span></span><span class="line"><span class="cl">    metadata:
+</span></span><span class="line"><span class="cl">      creationTimestamp: null
+</span></span><span class="line"><span class="cl">      labels:
+</span></span><span class="line"><span class="cl">        app: remp-nrp-tpi
+</span></span><span class="line"><span class="cl">    spec:
+</span></span><span class="line"><span class="cl">      imagePullSecrets:
+</span></span><span class="line"><span class="cl">        - name: remp-harbor-secret
+</span></span><span class="line"><span class="cl">      containers:
+</span></span><span class="line"><span class="cl">        - name: consumer-public-ability-nrp-tpi-app
+</span></span><span class="line"><span class="cl">          image: hub.sinfcloud.com/remp/consumer-public-ability-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">          imagePullPolicy: Always
+</span></span><span class="line"><span class="cl">          env:
+</span></span><span class="line"><span class="cl">            - name: TZ
+</span></span><span class="line"><span class="cl">              value: Asia/Shanghai
+</span></span><span class="line"><span class="cl">            - name: NACOS_URL
+</span></span><span class="line"><span class="cl">              value: ibase-nacos-headless.ibase-kingbase:8848
+</span></span><span class="line"><span class="cl">            - name: REGISTRY_MODE
+</span></span><span class="line"><span class="cl">              value: nacos
+</span></span><span class="line"><span class="cl">            - name: CONFIG_USERNAME
+</span></span><span class="line"><span class="cl">              value: ibaseconf
+</span></span><span class="line"><span class="cl">            - name: CONFIG_PASSWORD
+</span></span><span class="line"><span class="cl">              value: super56&amp;*9
+</span></span><span class="line"><span class="cl">          resources: {}
+</span></span><span class="line"><span class="cl">          command: [&#34;/bin/sh&#34;]
+</span></span><span class="line"><span class="cl">          args: [&#34;-c&#34;,&#34;java -Djava.security.egd=file:/dev/./urandom -jar ./app.jar&#34;]
+</span></span><span class="line"><span class="cl">        - name: consumer-sso-nrp-tpi-app
+</span></span><span class="line"><span class="cl">          image: hub.sinfcloud.com/remp/consumer-sso-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">          imagePullPolicy: Always
+</span></span><span class="line"><span class="cl">          env:
+</span></span><span class="line"><span class="cl">            - name: TZ
+</span></span><span class="line"><span class="cl">              value: Asia/Shanghai
+</span></span><span class="line"><span class="cl">            - name: NACOS_URL
+</span></span><span class="line"><span class="cl">              value: ibase-nacos-headless.ibase-kingbase:8848
+</span></span><span class="line"><span class="cl">            - name: REGISTRY_MODE
+</span></span><span class="line"><span class="cl">              value: nacos
+</span></span><span class="line"><span class="cl">            - name: CONFIG_USERNAME
+</span></span><span class="line"><span class="cl">              value: ibaseconf
+</span></span><span class="line"><span class="cl">            - name: CONFIG_PASSWORD
+</span></span><span class="line"><span class="cl">              value: super56&amp;*9
+</span></span><span class="line"><span class="cl">          resources: {}
+</span></span><span class="line"><span class="cl">          command: [&#34;/bin/sh&#34;]
+</span></span><span class="line"><span class="cl">          args: [&#34;-c&#34;,&#34;java -Djava.security.egd=file:/dev/./urandom -jar ./app.jar&#34;]
+</span></span><span class="line"><span class="cl">        - name: consumer-user-nrp-tpi-app
+</span></span><span class="line"><span class="cl">          image: hub.sinfcloud.com/remp/consumer-user-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">          imagePullPolicy: Always
+</span></span><span class="line"><span class="cl">          env:
+</span></span><span class="line"><span class="cl">            - name: TZ
+</span></span><span class="line"><span class="cl">              value: Asia/Shanghai
+</span></span><span class="line"><span class="cl">            - name: NACOS_URL
+</span></span><span class="line"><span class="cl">              value: ibase-nacos-headless.ibase-kingbase:8848
+</span></span><span class="line"><span class="cl">            - name: REGISTRY_MODE
+</span></span><span class="line"><span class="cl">              value: nacos
+</span></span><span class="line"><span class="cl">            - name: CONFIG_USERNAME
+</span></span><span class="line"><span class="cl">              value: ibaseconf
+</span></span><span class="line"><span class="cl">            - name: CONFIG_PASSWORD
+</span></span><span class="line"><span class="cl">              value: super56&amp;*9
+</span></span><span class="line"><span class="cl">          resources: {}
+</span></span><span class="line"><span class="cl">          command: [&#34;/bin/sh&#34;]
+</span></span><span class="line"><span class="cl">          args: [&#34;-c&#34;,&#34;java -Djava.security.egd=file:/dev/./urandom -jar ./app.jar&#34;]
+</span></span><span class="line"><span class="cl">        - name: provider-public-ability-nrp-tpi-app
+</span></span><span class="line"><span class="cl">          image: hub.sinfcloud.com/remp/provider-public-ability-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">          imagePullPolicy: Always
+</span></span><span class="line"><span class="cl">          env:
+</span></span><span class="line"><span class="cl">            - name: TZ
+</span></span><span class="line"><span class="cl">              value: Asia/Shanghai
+</span></span><span class="line"><span class="cl">            - name: NACOS_URL
+</span></span><span class="line"><span class="cl">              value: ibase-nacos-headless.ibase-kingbase:8848
+</span></span><span class="line"><span class="cl">            - name: REGISTRY_MODE
+</span></span><span class="line"><span class="cl">              value: nacos
+</span></span><span class="line"><span class="cl">            - name: CONFIG_USERNAME
+</span></span><span class="line"><span class="cl">              value: ibaseconf
+</span></span><span class="line"><span class="cl">            - name: CONFIG_PASSWORD
+</span></span><span class="line"><span class="cl">              value: super56&amp;*9
+</span></span><span class="line"><span class="cl">          resources: {}
+</span></span><span class="line"><span class="cl">          command: [&#34;/bin/sh&#34;]
+</span></span><span class="line"><span class="cl">          args: [&#34;-c&#34;,&#34;java -Djava.security.egd=file:/dev/./urandom -jar ./app.jar&#34;]
+</span></span><span class="line"><span class="cl">      restartPolicy: Always
+</span></span><span class="line"><span class="cl">      terminationGracePeriodSeconds: 30
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dockerfile">DockerFile</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#Docker
+</span></span><span class="line"><span class="cl">FROM hub.sinfcloud.com/support/openjdk8-openj9:alpine-slim-jre
+</span></span><span class="line"><span class="cl">#作者邮箱必写
+</span></span><span class="line"><span class="cl">MAINTAINER liulining@supermap.com
+</span></span><span class="line"><span class="cl">#同步时间
+</span></span><span class="line"><span class="cl">RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span></span><span class="line"><span class="cl">#创建一个文件夹
+</span></span><span class="line"><span class="cl">RUN mkdir -p /ThirdParty-PublicAbility-App-v1/agent
+</span></span><span class="line"><span class="cl">#指定一个工作空间
+</span></span><span class="line"><span class="cl">WORKDIR /ThirdParty-PublicAbility-App-v1
+</span></span><span class="line"><span class="cl">#指定端口
+</span></span><span class="line"><span class="cl">EXPOSE 7806
+</span></span><span class="line"><span class="cl">#将其编译之后的jar文件添加
+</span></span><span class="line"><span class="cl">ADD ./target/ThirdParty-PublicAbility-App.jar ./app.jar
+</span></span><span class="line"><span class="cl">#wait-for
+</span></span><span class="line"><span class="cl">ADD ./wait-for ./
+</span></span><span class="line"><span class="cl">RUN chmod +x wait-for
+</span></span><span class="line"><span class="cl"># 添加wait-for-it.sh
+</span></span><span class="line"><span class="cl">ADD ./wait-for-it.sh ./
+</span></span><span class="line"><span class="cl">RUN chmod +x wait-for-it.sh
+</span></span><span class="line"><span class="cl">#运行命令
+</span></span><span class="line"><span class="cl">#CMD java -Djava.security.egd=file:/dev/./urandom -jar app.jar ${JAVA_OPTS: }
+</span></span><span class="line"><span class="cl">ENTRYPOINT [&#34;java&#34;,&#34;-Djava.security.egd=file:/dev/./urandom&#34;,&#34;-jar&#34;,&#34;app.jar&#34;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Arm-aarch64</p>
+<h3 id="dockercompose">DockerCompose</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: &#39;2&#39;
+</span></span><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  ams-consumer-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/ams-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./ams-consumer-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  #  ams-dajy-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/ams-dajy-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./ams-dajy-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  ams-st-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/ams-st-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./ams-st-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-db-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-db-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-db-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  #  remp-dj-gis-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-gis-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./remp-dj-gis-provider-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  remp-dj-sjsh-consumer-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-sjsh-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-sjsh-consumer-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-sjsh-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-sjsh-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-sjsh-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-sl-consumer-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-sl-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-sl-consumer-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-sl-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-sl-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-sl-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-ywcx-consumer-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywcx-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-ywcx-consumer-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-ywcx-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywcx-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-ywcx-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-ywgl-consumer-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywgl-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-ywgl-consumer-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  remp-dj-ywgl-provider-app:
+</span></span><span class="line"><span class="cl">    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywgl-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">      context: ./remp-dj-ywgl-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  #  remp-dj-ywjggl-consumer-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywjggl-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./remp-dj-ywjggl-consumer-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  remp-dj-ywjggl-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/remp-dj-ywjggl-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./remp-dj-ywjggl-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  #  smpm-consumer-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-consumer-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-consumer-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  smpm-dj-arcgis-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-dj-arcgis-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-dj-arcgis-provider-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  smpm-dj-cg-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-dj-cg-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-dj-cg-provider-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  smpm-dj-gis-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-dj-gis-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-dj-gis-provider-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  smpm-dj-jg-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-dj-jg-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-dj-jg-provider-app
+</span></span><span class="line"><span class="cl">  #
+</span></span><span class="line"><span class="cl">  #  smpm-dj-sl-provider-app:
+</span></span><span class="line"><span class="cl">  #    image: ${HUB_URL}/${PROJECT_NAME}/smpm-dj-sl-provider-app:${TAG}
+</span></span><span class="line"><span class="cl">  #    build:
+</span></span><span class="line"><span class="cl">  #      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  #      context: ./smpm-dj-sl-provider-app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # --------------------------------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">  # nrp-tpi 构建 START
+</span></span><span class="line"><span class="cl">  # updateBy lln
+</span></span><span class="line"><span class="cl">  # updateTime 23-08-31
+</span></span><span class="line"><span class="cl">  # 三方接入-公共能力消费者
+</span></span><span class="line"><span class="cl">  ThirdParty-PublicAbility-Consumer-App:
+</span></span><span class="line"><span class="cl">    image: hub.sinfcloud.com/remp/consumer-public-ability-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      context: ./ThirdParty-PublicAbility-Consumer-App
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  # 三方接入-单点登录消费者
+</span></span><span class="line"><span class="cl">  ThirdParty-SSO-Consumer-App:
+</span></span><span class="line"><span class="cl">    image: hub.sinfcloud.com/remp/consumer-sso-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      context: ./ThirdParty-SSO-Consumer-App
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  # 三方接入-用户体系消费者
+</span></span><span class="line"><span class="cl">  ThirdParty-User-Consumer-App:
+</span></span><span class="line"><span class="cl">    image: hub.sinfcloud.com/remp/consumer-user-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      context: ./ThirdParty-User-Consumer-App
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl">  # 三方接入-公共能力提供者
+</span></span><span class="line"><span class="cl">  ThirdParty-PublicAbility-App:
+</span></span><span class="line"><span class="cl">    image: hub.sinfcloud.com/remp/provider-public-ability-nrp-tpi-v1:latest
+</span></span><span class="line"><span class="cl">    build:
+</span></span><span class="line"><span class="cl">      context: ./ThirdParty-PublicAbility-App
+</span></span><span class="line"><span class="cl">      dockerfile: ./Dockerfile
+</span></span><span class="line"><span class="cl"># nrp-tpi 构建 END
+</span></span><span class="line"><span class="cl"># --------------------------------------------------------------------------------------------------------
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#Docker
+</span></span><span class="line"><span class="cl">FROM 19.15.212.28:31104/tsf_100010035/support/openjdk8-openj9:open-8-jre-arm64
+</span></span><span class="line"><span class="cl">#作者邮箱必写
+</span></span><span class="line"><span class="cl">MAINTAINER liulining@supermap.com
+</span></span><span class="line"><span class="cl">#同步时间
+</span></span><span class="line"><span class="cl">RUN echo &#34;Asia/shanghai&#34; &gt; /etc/timezone
+</span></span><span class="line"><span class="cl">RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span></span><span class="line"><span class="cl">#创建一个文件夹
+</span></span><span class="line"><span class="cl">RUN mkdir -p /ThirdParty-PublicAbility-App-v1/agent
+</span></span><span class="line"><span class="cl">#指定一个工作空间
+</span></span><span class="line"><span class="cl">WORKDIR /ThirdParty-PublicAbility-App-v1
+</span></span><span class="line"><span class="cl">#指定端口
+</span></span><span class="line"><span class="cl">EXPOSE 7806
+</span></span><span class="line"><span class="cl">#将其编译之后的jar文件添加
+</span></span><span class="line"><span class="cl">ADD ./target/ThirdParty-PublicAbility-App.jar ./app.jar
+</span></span><span class="line"><span class="cl">#wait-for-it.sh
+</span></span><span class="line"><span class="cl">ADD ./wait-for-it.sh ./
+</span></span><span class="line"><span class="cl">RUN chmod +x wait-for-it.sh
+</span></span><span class="line"><span class="cl">#运行命令
+</span></span><span class="line"><span class="cl">ENTRYPOINT exec java  -Djava.security.egd=file:/dev/./urandom -jar ./app.jar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="jenkinsfile">jenkinsFile</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="err">#</span><span class="p">!</span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">env</span> <span class="nx">groovy</span> <span class="nx">Jenkinsfile</span>
+</span></span><span class="line"><span class="cl"><span class="nx">pipeline</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">agent</span> <span class="nx">any</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">environment</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">MAVEN_HOME</span> <span class="p">=</span> <span class="s">&#34;/home/maven/apache-maven-3.8.8&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">stages</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;拉取代码&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">checkout</span><span class="p">([</span><span class="err">$</span><span class="nx">class</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">SubversionSCM</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">additionalCredentials</span><span class="p">:</span> <span class="p">[],</span> <span class="nx">excludedCommitMessages</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">excludedRegions</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">excludedRevprop</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">excludedUsers</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">filterChangelog</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">ignoreDirPropChanges</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">includedRegions</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">locations</span><span class="p">:</span> <span class="p">[[</span><span class="nx">cancelProcessOnExternalsFail</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">credentialsId</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">remp</span><span class="o">-</span><span class="nx">svn</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">depthOption</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">infinity</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">ignoreExternalsOption</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">local</span><span class="p">:</span> <span class="sc">&#39;.&#39;</span><span class="p">,</span> <span class="nx">remote</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">http</span><span class="p">:</span><span class="c1">//115.236.9.62:20020/NRP-REMPVE6/trunk/nrp-parent/nrp-tpi&#39;]], quietOperation: true, workspaceUpdater: [$class: &#39;UpdateUpdater&#39;]])
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;编译代码&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">echo</span> <span class="s">&#34;开始编译打包&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">sh</span> <span class="s">&#34;mvn clean package -Dmaven.test.skip=true -U -T 4&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">echo</span> <span class="s">&#34;编译打包完成&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">sh</span> <span class="s">&#34;rm -rf ./.svn&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;制作镜像&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">parallel</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;制作消费者【</span><span class="nx">publicAbility</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker build -t hub.sinfcloud.com/remp/consumer-public-ability-nrp-tpi-v1:latest .././nrp-publish/ThirdParty-PublicAbility-Consumer-App&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;制作消费者【</span><span class="nx">sso</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker build -t hub.sinfcloud.com/remp/consumer-sso-nrp-tpi-v1:latest .././nrp-publish/ThirdParty-SSO-Consumer-App&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;制作消费者【</span><span class="nx">user</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker build -t hub.sinfcloud.com/remp/consumer-user-nrp-tpi-v1:latest .././nrp-publish/ThirdParty-User-Consumer-App&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;制作提供者【</span><span class="nx">ThirdParty</span><span class="o">-</span><span class="nx">Provider</span><span class="o">-</span><span class="nx">App</span><span class="err">】&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker build -t hub.sinfcloud.com/remp/provider-public-ability-nrp-tpi-v1:latest .././nrp-publish/ThirdParty-PublicAbility-App&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;推送仓库&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">parallel</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;推送消费者【</span><span class="nx">publicAbility</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker push hub.sinfcloud.com/remp/consumer-public-ability-nrp-tpi-v1:latest&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;推送消费者【</span><span class="nx">sso</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker push hub.sinfcloud.com/remp/consumer-sso-nrp-tpi-v1:latest&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;推送消费者【</span><span class="nx">user</span><span class="o">-</span><span class="nx">consumer</span><span class="err">】&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker push hub.sinfcloud.com/remp/consumer-user-nrp-tpi-v1:latest&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;推送提供者【</span><span class="nx">publicAbility</span><span class="o">-</span><span class="nx">provider</span><span class="err">】&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">sh</span> <span class="s">&#34;docker push hub.sinfcloud.com/remp/provider-public-ability-nrp-tpi-v1:latest&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">stage</span><span class="p">(</span><span class="err">&#39;更新服务&#39;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">steps</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nf">sshPublisher</span><span class="p">(</span><span class="nx">publishers</span><span class="p">:</span> <span class="p">[</span><span class="nf">sshPublisherDesc</span><span class="p">(</span><span class="nx">configName</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">kubernetes</span><span class="o">-</span><span class="nx">master</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">transfers</span><span class="p">:</span> <span class="p">[</span><span class="nf">sshTransfer</span><span class="p">(</span><span class="nx">cleanRemote</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">excludes</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">execCommand</span><span class="p">:</span> <span class="err">&#39;</span><span class="nx">kubectl</span> <span class="nx">rollout</span> <span class="nx">restart</span> <span class="nx">deployment</span> <span class="nx">remp</span><span class="o">-</span><span class="nx">nrp</span><span class="o">-</span><span class="nx">tpi</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">remp</span> <span class="o">&amp;&amp;</span> <span class="nx">kubectl</span> <span class="nx">rollout</span> <span class="nx">status</span> <span class="nx">deployment</span> <span class="nx">remp</span><span class="o">-</span><span class="nx">nrp</span><span class="o">-</span><span class="nx">tpi</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">remp</span><span class="err">&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">execTimeout</span><span class="p">:</span> <span class="mi">120000</span><span class="p">,</span> <span class="nx">flatten</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">makeEmptyDirs</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">noDefaultExcludes</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">patternSeparator</span><span class="p">:</span> <span class="err">&#39;</span><span class="p">[,</span> <span class="p">]</span><span class="o">+</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">remoteDirectory</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">remoteDirectorySDF</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">removePrefix</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span> <span class="nx">sourceFiles</span><span class="p">:</span> <span class="err">&#39;&#39;</span><span class="p">)],</span> <span class="nx">usePromotionTimestamp</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">useWorkspaceInPromotion</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">verbose</span><span class="p">:</span> <span class="kc">true</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="四腾讯云使用">四、腾讯云使用</h1>
+<p>TKE</p>
+<p><a href="https://cloud.tencent.com/document/product/457" target="_blank" rel="noopener noreffer">https://cloud.tencent.com/document/product/457</a>
+</p>
+<p>TSF</p>
+<p><a href="https://cloud.tencent.com/document/product/649" target="_blank" rel="noopener noreffer">https://cloud.tencent.com/document/product/649</a>
+</p>
+<h1 id="五资源申请">五、资源申请</h1>
+<p>基于在研发环境的压测情况，和裸数据库的压测情况，结合各个市租户的历史的并发数量，进行估算。
+提供申请资源量的支撑材料，
+按一个租户（市县）用户200人，因登记中心业务时间较为集中，故按50%人数计算并发量（200<em>50%=100），
+一个租户互联网用户2000，按5%计算并发量（2000</em>5%=100），
+故一个市的并发量为200，一期上线3个市共600并发，按照相应公式申请如下容器资源：</p>
+<table>
+<thead>
+<tr>
+<th>业务名称</th>
+<th>容器名</th>
+<th>负载</th>
+<th>配置</th>
+<th>利用率</th>
+<th>容器数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局管理服务</td>
+<td>全局管理服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>37.89%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>23.28%</td>
+<td></td>
+</tr>
+<tr>
+<td>访问控制服务</td>
+<td>访问控制服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>59.21%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>25.24%</td>
+<td></td>
+</tr>
+<tr>
+<td>工作流服务</td>
+<td>工作流服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>56.68%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>19.2%</td>
+<td></td>
+</tr>
+<tr>
+<td>编码中心服务</td>
+<td>编码中心服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>28.74%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>21.03%</td>
+<td></td>
+</tr>
+<tr>
+<td>单点登录服务</td>
+<td>单点登录服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>76.15%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>18.73%</td>
+<td></td>
+</tr>
+<tr>
+<td>不动产登记系统服务</td>
+<td>不动产登记系统服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>23.24%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>26.99%</td>
+<td></td>
+</tr>
+<tr>
+<td>地籍系统服务</td>
+<td>地籍系统服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>34.28%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>15.79%</td>
+<td></td>
+</tr>
+<tr>
+<td>通用组件服务</td>
+<td>通用组件服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>35.46%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>28.81%</td>
+<td></td>
+</tr>
+<tr>
+<td>档案系统服务</td>
+<td>档案系统服务</td>
+<td>CPU</td>
+<td>16核</td>
+<td>21.26%</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内存</td>
+<td>32 G</td>
+<td>19.51%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>中文名称</th>
+<th>CPU</th>
+<th>内存</th>
+<th>测试规格</th>
+<th>测试场景</th>
+<th>申请规格</th>
+<th>申请数量</th>
+<th>申请说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局管理服务</td>
+<td>37.89%</td>
+<td>23.28%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>8C 16GB</td>
+<td>5</td>
+<td>以100并发进行测试，CPU使用37.89%，内存使用23.28%，按比例得出600并发时，该场景所需资源为：37.89%* 6=227.34%（CPU），转换为CPU核数约为16C*227.34%=36C，23.28%<em>6=139.68%（内存），转换为内存约为32GB</em>139.68%=45GB，故该场景需要申请5个 8核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>访问控制服务</td>
+<td>59.21%</td>
+<td>25.24%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>16C 16GB</td>
+<td>4</td>
+<td>以100并发进行测试，CPU使用59.21%，内存使用25.24%，按比例得出600并发时，该场景所需资源为：59.21%* 6=355.26%（CPU），转换为CPU核数约为16C*355.26%=57C，25.24%<em>6=151.44%（内存），转换为内存约为32GB</em>151.44%=48GB，该服务CPU资源使用率较高，故该场景需要申请4个 16核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>工作流服务</td>
+<td>56.68%</td>
+<td>19.2%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>16C 16GB</td>
+<td>4</td>
+<td>以100并发进行测试，CPU使用56.68%，内存使用19.2%，按比例得出600并发时，该场景所需资源为：56.68%* 6=340.08%（CPU），转换为CPU核数约为16C*340.08%=54C，19.2%<em>6=115.2%（内存），转换为内存约为32GB</em>115.2%=37GB，该服务CPU资源使用率较高，故该场景需要申请4个 16核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>编码中心服务</td>
+<td>28.74%</td>
+<td>21.03%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>8C 16GB</td>
+<td>4</td>
+<td>以100并发进行测试，CPU使用28.74%，内存使用21.03%，按比例得出600并发时，该场景所需资源为：28.74%* 6=172.44%（CPU），转换为CPU核数约为16C*172.44%=28C，21.03%<em>6=126.18%（内存），转换为内存约为32GB</em>126.18%=40GB，该服务CPU资源使用率较高，故该场景需要申请4个 8核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>单点登录服务</td>
+<td>76.15%</td>
+<td>18.73%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>32C 16GB</td>
+<td>3</td>
+<td>以100并发进行测试，CPU使用28.74%，内存使用21.03%，按比例得出600并发时，该场景所需资源为：76.15%* 6=456.9%（CPU），转换为CPU核数约为16C*456.9%=73C，18.73%<em>6=112.38%（内存），转换为内存约为32GB</em>112.38%=36GB，该服务CPU资源使用率较高，故该场景需要申请4个 32核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>不动产登记系统服务</td>
+<td>23.24%</td>
+<td>26.99%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>8C 16GB</td>
+<td>4</td>
+<td>以100并发进行测试，CPU使用23.24%，内存使用26.99%，按比例得出600并发时，该场景所需资源为：23.24%* 6=139.44%（CPU），转换为CPU核数约为16C*139.44%=22C，26.99%<em>6=161.94%（内存），转换为内存约为32GB</em>161.94%=52GB，该服务CPU资源使用率较高，故该场景需要申请4个 8核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>地籍系统服务</td>
+<td>34.28%</td>
+<td>15.79%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>16C 16GB</td>
+<td>3</td>
+<td>以100并发进行测试，CPU使用34.28%，内存使用15.79%，按比例得出600并发时，该场景所需资源为：34.28%* 6=205.68%（CPU），转换为CPU核数约为16C*205.68%=33C，15.79%<em>6=94.74%（内存），转换为内存约为32GB</em>94.74%=30GB，该服务CPU资源使用率较高，故该场景需要申请4个 16核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>通用组件服务</td>
+<td>35.46%</td>
+<td>28.81%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>16C 32GB</td>
+<td>3</td>
+<td>以100并发进行测试，CPU使用35.46%，内存使用28.81%，按比例得出600并发时，该场景所需资源为：35.46%* 6=212.76%（CPU），转换为CPU核数约为16C*212.76%=34C，28.81%<em>6=172.86%（内存），转换为内存约为32GB</em>172.86%=55GB，该服务CPU资源使用率较高，故该场景需要申请4个 16核CPU、内存32 G 容器较为符合场景需求。</td>
+</tr>
+<tr>
+<td>档案系统服务</td>
+<td>21.26%</td>
+<td>19.51%</td>
+<td>16C 32GB</td>
+<td>100</td>
+<td>8C 16GB</td>
+<td>3</td>
+<td>以100并发进行测试，CPU使用21.26%，内存使用19.51%，按比例得出600并发时，该场景所需资源为：21.26%* 6=127.56%（CPU），转换为CPU核数约为16C*127.56%=20C，19.51%<em>6=117.06%（内存），转换为内存约为32GB</em>117.06%=37GB，该服务CPU资源使用率较高，故该场景需要申请3个 8核CPU、内存16 G 容器较为符合场景需求。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="六测试和监控">六、测试和监控</h1>
+<p>测试</p>
+<p>各个微服务是否正常启动</p>
+<p>业务中台能否正常使用，各个流程都走一遍看有无报错</p>
+<p>网络通信正常与否</p>
+<p>监控</p>
+<p>研发环境</p>
+<p>Prometheus+Grafana</p>
+<p><a href="https://zhuanlan.zhihu.com/p/321286313" target="_blank" rel="noopener noreffer">https://zhuanlan.zhihu.com/p/321286313</a>
+</p>
+<p><a href="https://www.jianshu.com/p/8d2c020313f0" target="_blank" rel="noopener noreffer">https://www.jianshu.com/p/8d2c020313f0</a>
+</p>
+<p>云环境</p>
+<p>云平台自带监控</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" data-title="Docker集群迁移K8s记录"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" data-title="Docker集群迁移K8s记录"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" data-title="Docker集群迁移K8s记录"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://LiuliNing.github.io/docker%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BBk8s%E8%AE%B0%E5%BD%95/" data-title="Docker集群迁移K8s记录"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/" class="prev" rel="prev" title="代码加密工具Proguard使用说明"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>代码加密工具Proguard使用说明</a>
+            <a href="/%E4%BF%A1%E5%88%9B/" class="next" rel="next" title="信创适配流程图">信创适配流程图<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">LLN</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004438" rel="noreferrer" target="_blank" 	style="display:inline-block;text-decoration:none;height:20px;color:#939393;" previewlistener="true"><img src="/beian.png" style="float:left;margin: 0px 5px 0px 0px;" >甘公网安备62010202004438</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
